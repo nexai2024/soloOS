@@ -1,0 +1,635 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User Authentication
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String
+  passwordHash   String
+  // Profile fields for Blue Ocean idea generation
+  niche          String?   // e.g., "SaaS", "E-commerce", "Developer Tools"
+  techStack      String[]  @default([]) // e.g., ["React", "Node.js", "PostgreSQL"]
+  interests      String[]  @default([]) // e.g., ["AI/ML", "Productivity", "Fintech"]
+  experience     String?   // e.g., "BEGINNER", "INTERMEDIATE", "EXPERT"
+  targetAudience String?   // e.g., "SMBs", "Developers", "Consumers"
+  bio            String?   // Short bio about the user
+  sessions       Session[]
+  ideas          Idea[]
+  projects       Project[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Idea {
+  id                         String                @id @default(cuid())
+  title                      String
+  description                String
+  status                     IdeaStatus            @default(BRAINSTORM)
+
+  // Scoring - 7 key dimensions (1-100 each)
+  marketSizeScore            Int?                  // TAM/SAM/SOM analysis
+  marketGrowthScore          Int?                  // Market trajectory
+  problemSeverityScore       Int?                  // "Hair on fire" test - highest weight
+  competitiveAdvantageScore  Int?                  // Moat potential
+  executionFeasibilityScore  Int?                  // Build complexity
+  monetizationScore          Int?                  // Revenue clarity
+  timingScore                Int?                  // Market timing
+
+  // Composite weighted score
+  aiScore                    Float?
+
+  // Detailed reasoning for each score
+  marketSizeReason           String?
+  marketGrowthReason         String?
+  problemSeverityReason      String?
+  competitiveAdvantageReason String?
+  executionFeasibilityReason String?
+  monetizationReason         String?
+  timingReason               String?
+  aiScoreReason              String?
+
+  // Comprehensive analysis
+  overallAssessment          String?
+  marketEvaluation           String?
+  strengths                  String[]              @default([])
+  weaknesses                 String[]              @default([])
+  recommendations            String[]              @default([])
+  keyRisks                   String[]              @default([])
+
+  // Legacy fields (kept for backward compatibility)
+  complexityScore            Int?
+  marketMixScore             Int?
+  marketMixReason            String?
+  complexityReason           String?
+
+  createdAt                  DateTime              @default(now())
+  updatedAt                  DateTime              @updatedAt
+  userId                     String?
+  user                       User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  competitors                CompetitorAnalysis[]
+  personas                   Persona[]
+  problemStatements          ProblemStatement[]
+  project                    Project?
+  validationItems            ValidationChecklist[]
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Persona {
+  id         String   @id @default(cuid())
+  name       String
+  role       String
+  painPoints String[]
+  goals      String[]
+  ideaId     String
+  idea       Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+}
+
+model ProblemStatement {
+  id        String    @id @default(cuid())
+  statement String
+  severity  Severity  @default(MEDIUM)
+  frequency Frequency @default(OCCASIONAL)
+  ideaId    String
+  idea      Idea      @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+}
+
+model ValidationChecklist {
+  id             String   @id @default(cuid())
+  task           String
+  isCompleted    Boolean  @default(false)
+  ideaId         String
+  evidenceLinks  String[] @default([])
+  interviewNotes String?
+  customerQuotes String[] @default([])
+  idea           Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+}
+
+model CompetitorAnalysis {
+  id                String   @id @default(cuid())
+  name              String
+  url               String?
+  strengths         String[]
+  weaknesses        String[]
+  ideaId            String
+  pricingModel      String?
+  positioning       String?
+  featureHighlights String[] @default([])
+  idea              Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id              String           @id @default(cuid())
+  title           String
+  description     String
+  status          ProjectStatus    @default(PLANNING)
+  ideaId          String?          @unique
+  userId          String?
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  techStack       String[]
+  estimatedWeeks  Int?
+  complexityScore Int?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  features        Feature[]
+  milestones      Milestone[]
+  Product         Product[]
+  idea            Idea?            @relation(fields: [ideaId], references: [id])
+  ProjectDoc      ProjectDoc[]
+  ProjectPersona  ProjectPersona[]
+  Requirement     Requirement[]
+  tasks           Task[]
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Milestone {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  status      MilestoneStatus @default(NOT_STARTED)
+  order       Int             @default(0)
+  dueDate     DateTime?
+  completedAt DateTime?
+  projectId   String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  project     Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  Task        Task[]
+
+  @@index([projectId])
+}
+
+model Feature {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  type        FeatureType @default(MVP)
+  isCompleted Boolean     @default(false)
+  order       Int         @default(0)
+  projectId   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+
+  @@index([projectId])
+}
+
+model Task {
+  id             String       @id @default(cuid())
+  title          String
+  description    String?
+  status         TaskStatus   @default(TODO)
+  priority       TaskPriority @default(MEDIUM)
+  estimatedHours Int?
+  actualHours    Int?
+  projectId      String
+  milestoneId    String?
+  featureId      String?
+  dueDate        DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  ownerId        String?
+  feature        Feature?     @relation(fields: [featureId], references: [id])
+  Milestone      Milestone?   @relation(fields: [milestoneId], references: [id])
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  Task_A         Task[]       @relation("TaskDependencies")
+  Task_B         Task[]       @relation("TaskDependencies")
+
+  @@index([milestoneId])
+  @@index([projectId, status])
+}
+
+model AdCampaign {
+  id                 String           @id
+  tenantId           String
+  name               String
+  platform           AdPlatform
+  productId          String?
+  budgetCents        Int?
+  spendCents         Int?
+  startDate          DateTime?
+  endDate            DateTime?
+  status             AdCampaignStatus @default(DRAFT)
+  resultClicks       Int?             @default(0)
+  resultSignups      Int?             @default(0)
+  resultRevenueCents Int?             @default(0)
+  notes              String?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime
+  isPublic           Boolean          @default(false)
+  publicId           String           @unique
+  Product            Product?         @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([status])
+  @@index([tenantId])
+}
+
+model Contact {
+  id               String                @id
+  tenantId         String
+  email            String
+  userId           String?               @unique
+  planStatus       String?               @default("FREE")
+  stripeCustomerId String?
+  lifecycleStage   ContactLifecycleStage @default(LEAD)
+  score            Int                   @default(0)
+  tags             String[]              @default([])
+  ContactEvent     ContactEvent[]
+  ContactNote      ContactNote[]
+  Feedback         Feedback[]
+
+  @@unique([tenantId, email])
+}
+
+model ContactEvent {
+  id         String           @id
+  contactId  String
+  type       ContactEventType
+  metadata   Json?
+  occurredAt DateTime         @default(now())
+  Contact    Contact          @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([contactId])
+  @@index([contactId, type])
+}
+
+model ContactNote {
+  id        String   @id
+  tenantId  String
+  contactId String
+  authorId  String
+  body      String
+  createdAt DateTime @default(now())
+  Contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([contactId])
+  @@index([tenantId, contactId])
+  @@index([tenantId])
+}
+
+model ContactSegment {
+  id          String   @id
+  tenantId    String
+  name        String
+  description String?
+  filterQuery Json
+  createdAt   DateTime @default(now())
+}
+
+model DevelopmentPhase {
+  id        String      @id
+  name      String
+  status    PhaseStatus @default(PLANNING)
+  startDate DateTime?
+  endDate   DateTime?
+  productId String
+  createdAt DateTime    @default(now())
+  Product   Product     @relation(fields: [productId], references: [id])
+  PhaseTask PhaseTask[]
+}
+
+model Feedback {
+  id        String   @id
+  tenantId  String
+  contactId String
+  type      String
+  content   String
+  priority  Int      @default(1)
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+  Contact   Contact  @relation(fields: [contactId], references: [id])
+}
+
+model GitHubLink {
+  id         String    @id
+  taskId     String    @unique
+  repoUrl    String
+  branchName String?
+  prUrl      String?
+  createdAt  DateTime  @default(now())
+  PhaseTask  PhaseTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model NewsletterCampaign {
+  id             String             @id
+  tenantId       String
+  name           String
+  subject        String
+  body           String
+  status         NewsletterStatus   @default(DRAFT)
+  audienceType   NewsletterAudience
+  productId      String?
+  scheduledFor   DateTime?
+  sentAt         DateTime?
+  recipientCount Int?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime
+  isPublic       Boolean            @default(false)
+  publicId       String             @unique
+  Product        Product?           @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([tenantId])
+}
+
+model PhaseTask {
+  id               String           @id
+  title            String
+  description      String?
+  status           TaskStatus?
+  position         Int              @default(0)
+  phaseId          String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime
+  ownerId          String?
+  GitHubLink       GitHubLink?
+  DevelopmentPhase DevelopmentPhase @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  TimeEntry        TimeEntry[]
+
+  @@index([phaseId])
+}
+
+model Product {
+  id                 String               @id
+  tenantId           String
+  projectId          String?
+  name               String
+  slug               String               @unique
+  tagline            String?
+  description        String?
+  brandColor         String               @default("#6366f1")
+  logoUrl            String?
+  heroImageUrl       String?
+  isPublic           Boolean              @default(false)
+  showProgress       Boolean              @default(true)
+  showPhases         Boolean              @default(true)
+  showTasks          Boolean              @default(false)
+  showChangelog      Boolean              @default(false)
+  publicPageViews    Int                  @default(0)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime
+  AdCampaign         AdCampaign[]
+  DevelopmentPhase   DevelopmentPhase[]
+  NewsletterCampaign NewsletterCampaign[]
+  Project            Project?             @relation(fields: [projectId], references: [id])
+  ProductChangelog   ProductChangelog[]
+  SocialPost         SocialPost[]
+  WaitlistEntry      WaitlistEntry[]
+}
+
+model ProductChangelog {
+  id         String   @id
+  version    String
+  title      String
+  content    String
+  type       String   @default("RELEASE")
+  releasedAt DateTime @default(now())
+  productId  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  Product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ProjectDoc {
+  id        String   @id
+  title     String
+  content   String
+  type      String
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ProjectPersona {
+  id         String   @id
+  name       String
+  role       String
+  painPoints String[]
+  goals      String[]
+  projectId  String
+  createdAt  DateTime @default(now())
+  Project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Requirement {
+  id          String       @id
+  statement   String
+  priority    TaskPriority @default(MEDIUM)
+  isCompleted Boolean      @default(false)
+  projectId   String
+  createdAt   DateTime     @default(now())
+  Project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model SocialPost {
+  id           String           @id
+  tenantId     String
+  platform     SocialPlatform
+  content      String
+  mediaUrl     String?
+  status       SocialPostStatus @default(DRAFT)
+  productId    String?
+  scheduledFor DateTime?
+  publishedAt  DateTime?
+  externalUrl  String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime
+  isPublic     Boolean          @default(false)
+  publicId     String           @unique
+  Product      Product?         @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([status])
+  @@index([tenantId])
+}
+
+model TimeEntry {
+  id        String    @id
+  taskId    String
+  startedAt DateTime
+  endedAt   DateTime?
+  duration  Int?
+  createdAt DateTime  @default(now())
+  PhaseTask PhaseTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model WaitlistEntry {
+  id              String         @id
+  productId       String?
+  email           String
+  message         String?
+  invitationId    String?        @unique
+  convertedUserId String?        @unique
+  status          WaitlistStatus @default(PENDING)
+  tenantId        String?
+  Product         Product?       @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([tenantId])
+}
+
+enum IdeaStatus {
+  BRAINSTORM
+  VALIDATING
+  RESEARCHING
+  PROMOTED
+  ARCHIVED
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Frequency {
+  RARE
+  OCCASIONAL
+  FREQUENT
+  CONSTANT
+}
+
+enum ProjectStatus {
+  PLANNING
+  BUILDING
+  TESTING
+  DEPLOYED
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum MilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  DELAYED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  REVIEW
+  DONE
+  BACKLOG
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum AdCampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+enum AdPlatform {
+  GOOGLE
+  META
+  REDDIT
+  TIKTOK
+  LINKEDIN
+  OTHER
+}
+
+enum ContactEventType {
+  PAGE_VIEW
+  SIGNUP
+  UPGRADE
+  SUPPORT
+  FEEDBACK
+  EMAIL_OPEN
+  EMAIL_CLICK
+}
+
+enum ContactLifecycleStage {
+  LEAD
+  QUALIFIED
+  OPPORTUNITY
+  CUSTOMER
+  CHAMPION
+  CHURNED
+}
+
+enum FeatureType {
+  MVP
+  NICE_TO_HAVE
+  FUTURE
+}
+
+enum NewsletterAudience {
+  WAITLIST
+  CONTACTS
+}
+
+enum NewsletterStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+}
+
+enum PhaseStatus {
+  PLANNING
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
+}
+
+enum SocialPlatform {
+  TWITTER
+  LINKEDIN
+  THREADS
+  BLUESKY
+  MASTODON
+  OTHER
+}
+
+enum SocialPostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+}
+
+enum WaitlistStatus {
+  PENDING
+  INVITED
+  CONVERTED
+  ARCHIVED
+}
