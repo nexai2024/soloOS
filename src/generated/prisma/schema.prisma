@@ -38,30 +38,56 @@ model Session {
 }
 
 model Idea {
-  id                 String                @id @default(cuid())
-  title              String
-  description        String
-  status             IdeaStatus            @default(BRAINSTORM)
-  marketSizeScore    Int?
-  complexityScore    Int?
-  monetizationScore  Int?
-  aiScore            Float?
-  createdAt          DateTime              @default(now())
-  updatedAt          DateTime              @updatedAt
-  marketEvaluation   String?
-  marketMixScore     Int?
-  marketSizeReason   String?
-  marketMixReason    String?
-  complexityReason   String?
-  monetizationReason String?
-  aiScoreReason      String?
-  userId             String?
-  user               User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  competitors        CompetitorAnalysis[]
-  personas           Persona[]
-  problemStatements  ProblemStatement[]
-  project            Project?
-  validationItems    ValidationChecklist[]
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  status      IdeaStatus @default(BRAINSTORM)
+
+  // Scoring - 7 key dimensions (1-100 each)
+  marketSizeScore           Int? // TAM/SAM/SOM analysis
+  marketGrowthScore         Int? // Market trajectory
+  problemSeverityScore      Int? // "Hair on fire" test - highest weight
+  competitiveAdvantageScore Int? // Moat potential
+  executionFeasibilityScore Int? // Build complexity
+  monetizationScore         Int? // Revenue clarity
+  timingScore               Int? // Market timing
+
+  // Composite weighted score
+  aiScore Float?
+
+  // Detailed reasoning for each score
+  marketSizeReason           String?
+  marketGrowthReason         String?
+  problemSeverityReason      String?
+  competitiveAdvantageReason String?
+  executionFeasibilityReason String?
+  monetizationReason         String?
+  timingReason               String?
+  aiScoreReason              String?
+
+  // Comprehensive analysis
+  overallAssessment String?
+  marketEvaluation  String?
+  strengths         String[] @default([])
+  weaknesses        String[] @default([])
+  recommendations   String[] @default([])
+  keyRisks          String[] @default([])
+
+  // Legacy fields (kept for backward compatibility)
+  complexityScore  Int?
+  marketMixScore   Int?
+  marketMixReason  String?
+  complexityReason String?
+
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  userId            String?
+  user              User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  competitors       CompetitorAnalysis[]
+  personas          Persona[]
+  problemStatements ProblemStatement[]
+  project           Project?
+  validationItems   ValidationChecklist[]
 
   @@index([status])
   @@index([userId])

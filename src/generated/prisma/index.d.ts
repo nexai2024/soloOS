@@ -6425,17 +6425,27 @@ export namespace Prisma {
 
   export type IdeaAvgAggregateOutputType = {
     marketSizeScore: number | null
-    complexityScore: number | null
+    marketGrowthScore: number | null
+    problemSeverityScore: number | null
+    competitiveAdvantageScore: number | null
+    executionFeasibilityScore: number | null
     monetizationScore: number | null
+    timingScore: number | null
     aiScore: number | null
+    complexityScore: number | null
     marketMixScore: number | null
   }
 
   export type IdeaSumAggregateOutputType = {
     marketSizeScore: number | null
-    complexityScore: number | null
+    marketGrowthScore: number | null
+    problemSeverityScore: number | null
+    competitiveAdvantageScore: number | null
+    executionFeasibilityScore: number | null
     monetizationScore: number | null
+    timingScore: number | null
     aiScore: number | null
+    complexityScore: number | null
     marketMixScore: number | null
   }
 
@@ -6445,18 +6455,29 @@ export namespace Prisma {
     description: string | null
     status: $Enums.IdeaStatus | null
     marketSizeScore: number | null
-    complexityScore: number | null
+    marketGrowthScore: number | null
+    problemSeverityScore: number | null
+    competitiveAdvantageScore: number | null
+    executionFeasibilityScore: number | null
     monetizationScore: number | null
+    timingScore: number | null
     aiScore: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    marketEvaluation: string | null
-    marketMixScore: number | null
     marketSizeReason: string | null
+    marketGrowthReason: string | null
+    problemSeverityReason: string | null
+    competitiveAdvantageReason: string | null
+    executionFeasibilityReason: string | null
+    monetizationReason: string | null
+    timingReason: string | null
+    aiScoreReason: string | null
+    overallAssessment: string | null
+    marketEvaluation: string | null
+    complexityScore: number | null
+    marketMixScore: number | null
     marketMixReason: string | null
     complexityReason: string | null
-    monetizationReason: string | null
-    aiScoreReason: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
     userId: string | null
   }
 
@@ -6466,18 +6487,29 @@ export namespace Prisma {
     description: string | null
     status: $Enums.IdeaStatus | null
     marketSizeScore: number | null
-    complexityScore: number | null
+    marketGrowthScore: number | null
+    problemSeverityScore: number | null
+    competitiveAdvantageScore: number | null
+    executionFeasibilityScore: number | null
     monetizationScore: number | null
+    timingScore: number | null
     aiScore: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    marketEvaluation: string | null
-    marketMixScore: number | null
     marketSizeReason: string | null
+    marketGrowthReason: string | null
+    problemSeverityReason: string | null
+    competitiveAdvantageReason: string | null
+    executionFeasibilityReason: string | null
+    monetizationReason: string | null
+    timingReason: string | null
+    aiScoreReason: string | null
+    overallAssessment: string | null
+    marketEvaluation: string | null
+    complexityScore: number | null
+    marketMixScore: number | null
     marketMixReason: string | null
     complexityReason: string | null
-    monetizationReason: string | null
-    aiScoreReason: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
     userId: string | null
   }
 
@@ -6487,18 +6519,33 @@ export namespace Prisma {
     description: number
     status: number
     marketSizeScore: number
-    complexityScore: number
+    marketGrowthScore: number
+    problemSeverityScore: number
+    competitiveAdvantageScore: number
+    executionFeasibilityScore: number
     monetizationScore: number
+    timingScore: number
     aiScore: number
-    createdAt: number
-    updatedAt: number
-    marketEvaluation: number
-    marketMixScore: number
     marketSizeReason: number
+    marketGrowthReason: number
+    problemSeverityReason: number
+    competitiveAdvantageReason: number
+    executionFeasibilityReason: number
+    monetizationReason: number
+    timingReason: number
+    aiScoreReason: number
+    overallAssessment: number
+    marketEvaluation: number
+    strengths: number
+    weaknesses: number
+    recommendations: number
+    keyRisks: number
+    complexityScore: number
+    marketMixScore: number
     marketMixReason: number
     complexityReason: number
-    monetizationReason: number
-    aiScoreReason: number
+    createdAt: number
+    updatedAt: number
     userId: number
     _all: number
   }
@@ -6506,17 +6553,27 @@ export namespace Prisma {
 
   export type IdeaAvgAggregateInputType = {
     marketSizeScore?: true
-    complexityScore?: true
+    marketGrowthScore?: true
+    problemSeverityScore?: true
+    competitiveAdvantageScore?: true
+    executionFeasibilityScore?: true
     monetizationScore?: true
+    timingScore?: true
     aiScore?: true
+    complexityScore?: true
     marketMixScore?: true
   }
 
   export type IdeaSumAggregateInputType = {
     marketSizeScore?: true
-    complexityScore?: true
+    marketGrowthScore?: true
+    problemSeverityScore?: true
+    competitiveAdvantageScore?: true
+    executionFeasibilityScore?: true
     monetizationScore?: true
+    timingScore?: true
     aiScore?: true
+    complexityScore?: true
     marketMixScore?: true
   }
 
@@ -6526,18 +6583,29 @@ export namespace Prisma {
     description?: true
     status?: true
     marketSizeScore?: true
-    complexityScore?: true
+    marketGrowthScore?: true
+    problemSeverityScore?: true
+    competitiveAdvantageScore?: true
+    executionFeasibilityScore?: true
     monetizationScore?: true
+    timingScore?: true
     aiScore?: true
-    createdAt?: true
-    updatedAt?: true
-    marketEvaluation?: true
-    marketMixScore?: true
     marketSizeReason?: true
+    marketGrowthReason?: true
+    problemSeverityReason?: true
+    competitiveAdvantageReason?: true
+    executionFeasibilityReason?: true
+    monetizationReason?: true
+    timingReason?: true
+    aiScoreReason?: true
+    overallAssessment?: true
+    marketEvaluation?: true
+    complexityScore?: true
+    marketMixScore?: true
     marketMixReason?: true
     complexityReason?: true
-    monetizationReason?: true
-    aiScoreReason?: true
+    createdAt?: true
+    updatedAt?: true
     userId?: true
   }
 
@@ -6547,18 +6615,29 @@ export namespace Prisma {
     description?: true
     status?: true
     marketSizeScore?: true
-    complexityScore?: true
+    marketGrowthScore?: true
+    problemSeverityScore?: true
+    competitiveAdvantageScore?: true
+    executionFeasibilityScore?: true
     monetizationScore?: true
+    timingScore?: true
     aiScore?: true
-    createdAt?: true
-    updatedAt?: true
-    marketEvaluation?: true
-    marketMixScore?: true
     marketSizeReason?: true
+    marketGrowthReason?: true
+    problemSeverityReason?: true
+    competitiveAdvantageReason?: true
+    executionFeasibilityReason?: true
+    monetizationReason?: true
+    timingReason?: true
+    aiScoreReason?: true
+    overallAssessment?: true
+    marketEvaluation?: true
+    complexityScore?: true
+    marketMixScore?: true
     marketMixReason?: true
     complexityReason?: true
-    monetizationReason?: true
-    aiScoreReason?: true
+    createdAt?: true
+    updatedAt?: true
     userId?: true
   }
 
@@ -6568,18 +6647,33 @@ export namespace Prisma {
     description?: true
     status?: true
     marketSizeScore?: true
-    complexityScore?: true
+    marketGrowthScore?: true
+    problemSeverityScore?: true
+    competitiveAdvantageScore?: true
+    executionFeasibilityScore?: true
     monetizationScore?: true
+    timingScore?: true
     aiScore?: true
-    createdAt?: true
-    updatedAt?: true
-    marketEvaluation?: true
-    marketMixScore?: true
     marketSizeReason?: true
+    marketGrowthReason?: true
+    problemSeverityReason?: true
+    competitiveAdvantageReason?: true
+    executionFeasibilityReason?: true
+    monetizationReason?: true
+    timingReason?: true
+    aiScoreReason?: true
+    overallAssessment?: true
+    marketEvaluation?: true
+    strengths?: true
+    weaknesses?: true
+    recommendations?: true
+    keyRisks?: true
+    complexityScore?: true
+    marketMixScore?: true
     marketMixReason?: true
     complexityReason?: true
-    monetizationReason?: true
-    aiScoreReason?: true
+    createdAt?: true
+    updatedAt?: true
     userId?: true
     _all?: true
   }
@@ -6676,18 +6770,33 @@ export namespace Prisma {
     description: string
     status: $Enums.IdeaStatus
     marketSizeScore: number | null
-    complexityScore: number | null
+    marketGrowthScore: number | null
+    problemSeverityScore: number | null
+    competitiveAdvantageScore: number | null
+    executionFeasibilityScore: number | null
     monetizationScore: number | null
+    timingScore: number | null
     aiScore: number | null
-    createdAt: Date
-    updatedAt: Date
-    marketEvaluation: string | null
-    marketMixScore: number | null
     marketSizeReason: string | null
+    marketGrowthReason: string | null
+    problemSeverityReason: string | null
+    competitiveAdvantageReason: string | null
+    executionFeasibilityReason: string | null
+    monetizationReason: string | null
+    timingReason: string | null
+    aiScoreReason: string | null
+    overallAssessment: string | null
+    marketEvaluation: string | null
+    strengths: string[]
+    weaknesses: string[]
+    recommendations: string[]
+    keyRisks: string[]
+    complexityScore: number | null
+    marketMixScore: number | null
     marketMixReason: string | null
     complexityReason: string | null
-    monetizationReason: string | null
-    aiScoreReason: string | null
+    createdAt: Date
+    updatedAt: Date
     userId: string | null
     _count: IdeaCountAggregateOutputType | null
     _avg: IdeaAvgAggregateOutputType | null
@@ -6716,18 +6825,33 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     marketSizeScore?: boolean
-    complexityScore?: boolean
+    marketGrowthScore?: boolean
+    problemSeverityScore?: boolean
+    competitiveAdvantageScore?: boolean
+    executionFeasibilityScore?: boolean
     monetizationScore?: boolean
+    timingScore?: boolean
     aiScore?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    marketEvaluation?: boolean
-    marketMixScore?: boolean
     marketSizeReason?: boolean
+    marketGrowthReason?: boolean
+    problemSeverityReason?: boolean
+    competitiveAdvantageReason?: boolean
+    executionFeasibilityReason?: boolean
+    monetizationReason?: boolean
+    timingReason?: boolean
+    aiScoreReason?: boolean
+    overallAssessment?: boolean
+    marketEvaluation?: boolean
+    strengths?: boolean
+    weaknesses?: boolean
+    recommendations?: boolean
+    keyRisks?: boolean
+    complexityScore?: boolean
+    marketMixScore?: boolean
     marketMixReason?: boolean
     complexityReason?: boolean
-    monetizationReason?: boolean
-    aiScoreReason?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     userId?: boolean
     user?: boolean | Idea$userArgs<ExtArgs>
     competitors?: boolean | Idea$competitorsArgs<ExtArgs>
@@ -6744,18 +6868,33 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     marketSizeScore?: boolean
-    complexityScore?: boolean
+    marketGrowthScore?: boolean
+    problemSeverityScore?: boolean
+    competitiveAdvantageScore?: boolean
+    executionFeasibilityScore?: boolean
     monetizationScore?: boolean
+    timingScore?: boolean
     aiScore?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    marketEvaluation?: boolean
-    marketMixScore?: boolean
     marketSizeReason?: boolean
+    marketGrowthReason?: boolean
+    problemSeverityReason?: boolean
+    competitiveAdvantageReason?: boolean
+    executionFeasibilityReason?: boolean
+    monetizationReason?: boolean
+    timingReason?: boolean
+    aiScoreReason?: boolean
+    overallAssessment?: boolean
+    marketEvaluation?: boolean
+    strengths?: boolean
+    weaknesses?: boolean
+    recommendations?: boolean
+    keyRisks?: boolean
+    complexityScore?: boolean
+    marketMixScore?: boolean
     marketMixReason?: boolean
     complexityReason?: boolean
-    monetizationReason?: boolean
-    aiScoreReason?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     userId?: boolean
     user?: boolean | Idea$userArgs<ExtArgs>
   }, ExtArgs["result"]["idea"]>
@@ -6766,18 +6905,33 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     marketSizeScore?: boolean
-    complexityScore?: boolean
+    marketGrowthScore?: boolean
+    problemSeverityScore?: boolean
+    competitiveAdvantageScore?: boolean
+    executionFeasibilityScore?: boolean
     monetizationScore?: boolean
+    timingScore?: boolean
     aiScore?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    marketEvaluation?: boolean
-    marketMixScore?: boolean
     marketSizeReason?: boolean
+    marketGrowthReason?: boolean
+    problemSeverityReason?: boolean
+    competitiveAdvantageReason?: boolean
+    executionFeasibilityReason?: boolean
+    monetizationReason?: boolean
+    timingReason?: boolean
+    aiScoreReason?: boolean
+    overallAssessment?: boolean
+    marketEvaluation?: boolean
+    strengths?: boolean
+    weaknesses?: boolean
+    recommendations?: boolean
+    keyRisks?: boolean
+    complexityScore?: boolean
+    marketMixScore?: boolean
     marketMixReason?: boolean
     complexityReason?: boolean
-    monetizationReason?: boolean
-    aiScoreReason?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     userId?: boolean
     user?: boolean | Idea$userArgs<ExtArgs>
   }, ExtArgs["result"]["idea"]>
@@ -6788,22 +6942,37 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     marketSizeScore?: boolean
-    complexityScore?: boolean
+    marketGrowthScore?: boolean
+    problemSeverityScore?: boolean
+    competitiveAdvantageScore?: boolean
+    executionFeasibilityScore?: boolean
     monetizationScore?: boolean
+    timingScore?: boolean
     aiScore?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    marketEvaluation?: boolean
-    marketMixScore?: boolean
     marketSizeReason?: boolean
+    marketGrowthReason?: boolean
+    problemSeverityReason?: boolean
+    competitiveAdvantageReason?: boolean
+    executionFeasibilityReason?: boolean
+    monetizationReason?: boolean
+    timingReason?: boolean
+    aiScoreReason?: boolean
+    overallAssessment?: boolean
+    marketEvaluation?: boolean
+    strengths?: boolean
+    weaknesses?: boolean
+    recommendations?: boolean
+    keyRisks?: boolean
+    complexityScore?: boolean
+    marketMixScore?: boolean
     marketMixReason?: boolean
     complexityReason?: boolean
-    monetizationReason?: boolean
-    aiScoreReason?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     userId?: boolean
   }
 
-  export type IdeaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "marketSizeScore" | "complexityScore" | "monetizationScore" | "aiScore" | "createdAt" | "updatedAt" | "marketEvaluation" | "marketMixScore" | "marketSizeReason" | "marketMixReason" | "complexityReason" | "monetizationReason" | "aiScoreReason" | "userId", ExtArgs["result"]["idea"]>
+  export type IdeaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "marketSizeScore" | "marketGrowthScore" | "problemSeverityScore" | "competitiveAdvantageScore" | "executionFeasibilityScore" | "monetizationScore" | "timingScore" | "aiScore" | "marketSizeReason" | "marketGrowthReason" | "problemSeverityReason" | "competitiveAdvantageReason" | "executionFeasibilityReason" | "monetizationReason" | "timingReason" | "aiScoreReason" | "overallAssessment" | "marketEvaluation" | "strengths" | "weaknesses" | "recommendations" | "keyRisks" | "complexityScore" | "marketMixScore" | "marketMixReason" | "complexityReason" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["idea"]>
   export type IdeaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Idea$userArgs<ExtArgs>
     competitors?: boolean | Idea$competitorsArgs<ExtArgs>
@@ -6836,18 +7005,33 @@ export namespace Prisma {
       description: string
       status: $Enums.IdeaStatus
       marketSizeScore: number | null
-      complexityScore: number | null
+      marketGrowthScore: number | null
+      problemSeverityScore: number | null
+      competitiveAdvantageScore: number | null
+      executionFeasibilityScore: number | null
       monetizationScore: number | null
+      timingScore: number | null
       aiScore: number | null
-      createdAt: Date
-      updatedAt: Date
-      marketEvaluation: string | null
-      marketMixScore: number | null
       marketSizeReason: string | null
+      marketGrowthReason: string | null
+      problemSeverityReason: string | null
+      competitiveAdvantageReason: string | null
+      executionFeasibilityReason: string | null
+      monetizationReason: string | null
+      timingReason: string | null
+      aiScoreReason: string | null
+      overallAssessment: string | null
+      marketEvaluation: string | null
+      strengths: string[]
+      weaknesses: string[]
+      recommendations: string[]
+      keyRisks: string[]
+      complexityScore: number | null
+      marketMixScore: number | null
       marketMixReason: string | null
       complexityReason: string | null
-      monetizationReason: string | null
-      aiScoreReason: string | null
+      createdAt: Date
+      updatedAt: Date
       userId: string | null
     }, ExtArgs["result"]["idea"]>
     composites: {}
@@ -7283,18 +7467,33 @@ export namespace Prisma {
     readonly description: FieldRef<"Idea", 'String'>
     readonly status: FieldRef<"Idea", 'IdeaStatus'>
     readonly marketSizeScore: FieldRef<"Idea", 'Int'>
-    readonly complexityScore: FieldRef<"Idea", 'Int'>
+    readonly marketGrowthScore: FieldRef<"Idea", 'Int'>
+    readonly problemSeverityScore: FieldRef<"Idea", 'Int'>
+    readonly competitiveAdvantageScore: FieldRef<"Idea", 'Int'>
+    readonly executionFeasibilityScore: FieldRef<"Idea", 'Int'>
     readonly monetizationScore: FieldRef<"Idea", 'Int'>
+    readonly timingScore: FieldRef<"Idea", 'Int'>
     readonly aiScore: FieldRef<"Idea", 'Float'>
-    readonly createdAt: FieldRef<"Idea", 'DateTime'>
-    readonly updatedAt: FieldRef<"Idea", 'DateTime'>
-    readonly marketEvaluation: FieldRef<"Idea", 'String'>
-    readonly marketMixScore: FieldRef<"Idea", 'Int'>
     readonly marketSizeReason: FieldRef<"Idea", 'String'>
+    readonly marketGrowthReason: FieldRef<"Idea", 'String'>
+    readonly problemSeverityReason: FieldRef<"Idea", 'String'>
+    readonly competitiveAdvantageReason: FieldRef<"Idea", 'String'>
+    readonly executionFeasibilityReason: FieldRef<"Idea", 'String'>
+    readonly monetizationReason: FieldRef<"Idea", 'String'>
+    readonly timingReason: FieldRef<"Idea", 'String'>
+    readonly aiScoreReason: FieldRef<"Idea", 'String'>
+    readonly overallAssessment: FieldRef<"Idea", 'String'>
+    readonly marketEvaluation: FieldRef<"Idea", 'String'>
+    readonly strengths: FieldRef<"Idea", 'String[]'>
+    readonly weaknesses: FieldRef<"Idea", 'String[]'>
+    readonly recommendations: FieldRef<"Idea", 'String[]'>
+    readonly keyRisks: FieldRef<"Idea", 'String[]'>
+    readonly complexityScore: FieldRef<"Idea", 'Int'>
+    readonly marketMixScore: FieldRef<"Idea", 'Int'>
     readonly marketMixReason: FieldRef<"Idea", 'String'>
     readonly complexityReason: FieldRef<"Idea", 'String'>
-    readonly monetizationReason: FieldRef<"Idea", 'String'>
-    readonly aiScoreReason: FieldRef<"Idea", 'String'>
+    readonly createdAt: FieldRef<"Idea", 'DateTime'>
+    readonly updatedAt: FieldRef<"Idea", 'DateTime'>
     readonly userId: FieldRef<"Idea", 'String'>
   }
     
@@ -37919,18 +38118,33 @@ export namespace Prisma {
     description: 'description',
     status: 'status',
     marketSizeScore: 'marketSizeScore',
-    complexityScore: 'complexityScore',
+    marketGrowthScore: 'marketGrowthScore',
+    problemSeverityScore: 'problemSeverityScore',
+    competitiveAdvantageScore: 'competitiveAdvantageScore',
+    executionFeasibilityScore: 'executionFeasibilityScore',
     monetizationScore: 'monetizationScore',
+    timingScore: 'timingScore',
     aiScore: 'aiScore',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    marketEvaluation: 'marketEvaluation',
-    marketMixScore: 'marketMixScore',
     marketSizeReason: 'marketSizeReason',
+    marketGrowthReason: 'marketGrowthReason',
+    problemSeverityReason: 'problemSeverityReason',
+    competitiveAdvantageReason: 'competitiveAdvantageReason',
+    executionFeasibilityReason: 'executionFeasibilityReason',
+    monetizationReason: 'monetizationReason',
+    timingReason: 'timingReason',
+    aiScoreReason: 'aiScoreReason',
+    overallAssessment: 'overallAssessment',
+    marketEvaluation: 'marketEvaluation',
+    strengths: 'strengths',
+    weaknesses: 'weaknesses',
+    recommendations: 'recommendations',
+    keyRisks: 'keyRisks',
+    complexityScore: 'complexityScore',
+    marketMixScore: 'marketMixScore',
     marketMixReason: 'marketMixReason',
     complexityReason: 'complexityReason',
-    monetizationReason: 'monetizationReason',
-    aiScoreReason: 'aiScoreReason',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     userId: 'userId'
   };
 
@@ -38871,18 +39085,33 @@ export namespace Prisma {
     description?: StringFilter<"Idea"> | string
     status?: EnumIdeaStatusFilter<"Idea"> | $Enums.IdeaStatus
     marketSizeScore?: IntNullableFilter<"Idea"> | number | null
-    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketGrowthScore?: IntNullableFilter<"Idea"> | number | null
+    problemSeverityScore?: IntNullableFilter<"Idea"> | number | null
+    competitiveAdvantageScore?: IntNullableFilter<"Idea"> | number | null
+    executionFeasibilityScore?: IntNullableFilter<"Idea"> | number | null
     monetizationScore?: IntNullableFilter<"Idea"> | number | null
+    timingScore?: IntNullableFilter<"Idea"> | number | null
     aiScore?: FloatNullableFilter<"Idea"> | number | null
-    createdAt?: DateTimeFilter<"Idea"> | Date | string
-    updatedAt?: DateTimeFilter<"Idea"> | Date | string
-    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
-    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketSizeReason?: StringNullableFilter<"Idea"> | string | null
+    marketGrowthReason?: StringNullableFilter<"Idea"> | string | null
+    problemSeverityReason?: StringNullableFilter<"Idea"> | string | null
+    competitiveAdvantageReason?: StringNullableFilter<"Idea"> | string | null
+    executionFeasibilityReason?: StringNullableFilter<"Idea"> | string | null
+    monetizationReason?: StringNullableFilter<"Idea"> | string | null
+    timingReason?: StringNullableFilter<"Idea"> | string | null
+    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    overallAssessment?: StringNullableFilter<"Idea"> | string | null
+    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
+    strengths?: StringNullableListFilter<"Idea">
+    weaknesses?: StringNullableListFilter<"Idea">
+    recommendations?: StringNullableListFilter<"Idea">
+    keyRisks?: StringNullableListFilter<"Idea">
+    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketMixReason?: StringNullableFilter<"Idea"> | string | null
     complexityReason?: StringNullableFilter<"Idea"> | string | null
-    monetizationReason?: StringNullableFilter<"Idea"> | string | null
-    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    createdAt?: DateTimeFilter<"Idea"> | Date | string
+    updatedAt?: DateTimeFilter<"Idea"> | Date | string
     userId?: StringNullableFilter<"Idea"> | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     competitors?: CompetitorAnalysisListRelationFilter
@@ -38898,18 +39127,33 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     marketSizeScore?: SortOrderInput | SortOrder
-    complexityScore?: SortOrderInput | SortOrder
+    marketGrowthScore?: SortOrderInput | SortOrder
+    problemSeverityScore?: SortOrderInput | SortOrder
+    competitiveAdvantageScore?: SortOrderInput | SortOrder
+    executionFeasibilityScore?: SortOrderInput | SortOrder
     monetizationScore?: SortOrderInput | SortOrder
+    timingScore?: SortOrderInput | SortOrder
     aiScore?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    marketEvaluation?: SortOrderInput | SortOrder
-    marketMixScore?: SortOrderInput | SortOrder
     marketSizeReason?: SortOrderInput | SortOrder
+    marketGrowthReason?: SortOrderInput | SortOrder
+    problemSeverityReason?: SortOrderInput | SortOrder
+    competitiveAdvantageReason?: SortOrderInput | SortOrder
+    executionFeasibilityReason?: SortOrderInput | SortOrder
+    monetizationReason?: SortOrderInput | SortOrder
+    timingReason?: SortOrderInput | SortOrder
+    aiScoreReason?: SortOrderInput | SortOrder
+    overallAssessment?: SortOrderInput | SortOrder
+    marketEvaluation?: SortOrderInput | SortOrder
+    strengths?: SortOrder
+    weaknesses?: SortOrder
+    recommendations?: SortOrder
+    keyRisks?: SortOrder
+    complexityScore?: SortOrderInput | SortOrder
+    marketMixScore?: SortOrderInput | SortOrder
     marketMixReason?: SortOrderInput | SortOrder
     complexityReason?: SortOrderInput | SortOrder
-    monetizationReason?: SortOrderInput | SortOrder
-    aiScoreReason?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     userId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     competitors?: CompetitorAnalysisOrderByRelationAggregateInput
@@ -38928,18 +39172,33 @@ export namespace Prisma {
     description?: StringFilter<"Idea"> | string
     status?: EnumIdeaStatusFilter<"Idea"> | $Enums.IdeaStatus
     marketSizeScore?: IntNullableFilter<"Idea"> | number | null
-    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketGrowthScore?: IntNullableFilter<"Idea"> | number | null
+    problemSeverityScore?: IntNullableFilter<"Idea"> | number | null
+    competitiveAdvantageScore?: IntNullableFilter<"Idea"> | number | null
+    executionFeasibilityScore?: IntNullableFilter<"Idea"> | number | null
     monetizationScore?: IntNullableFilter<"Idea"> | number | null
+    timingScore?: IntNullableFilter<"Idea"> | number | null
     aiScore?: FloatNullableFilter<"Idea"> | number | null
-    createdAt?: DateTimeFilter<"Idea"> | Date | string
-    updatedAt?: DateTimeFilter<"Idea"> | Date | string
-    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
-    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketSizeReason?: StringNullableFilter<"Idea"> | string | null
+    marketGrowthReason?: StringNullableFilter<"Idea"> | string | null
+    problemSeverityReason?: StringNullableFilter<"Idea"> | string | null
+    competitiveAdvantageReason?: StringNullableFilter<"Idea"> | string | null
+    executionFeasibilityReason?: StringNullableFilter<"Idea"> | string | null
+    monetizationReason?: StringNullableFilter<"Idea"> | string | null
+    timingReason?: StringNullableFilter<"Idea"> | string | null
+    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    overallAssessment?: StringNullableFilter<"Idea"> | string | null
+    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
+    strengths?: StringNullableListFilter<"Idea">
+    weaknesses?: StringNullableListFilter<"Idea">
+    recommendations?: StringNullableListFilter<"Idea">
+    keyRisks?: StringNullableListFilter<"Idea">
+    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketMixReason?: StringNullableFilter<"Idea"> | string | null
     complexityReason?: StringNullableFilter<"Idea"> | string | null
-    monetizationReason?: StringNullableFilter<"Idea"> | string | null
-    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    createdAt?: DateTimeFilter<"Idea"> | Date | string
+    updatedAt?: DateTimeFilter<"Idea"> | Date | string
     userId?: StringNullableFilter<"Idea"> | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     competitors?: CompetitorAnalysisListRelationFilter
@@ -38955,18 +39214,33 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     marketSizeScore?: SortOrderInput | SortOrder
-    complexityScore?: SortOrderInput | SortOrder
+    marketGrowthScore?: SortOrderInput | SortOrder
+    problemSeverityScore?: SortOrderInput | SortOrder
+    competitiveAdvantageScore?: SortOrderInput | SortOrder
+    executionFeasibilityScore?: SortOrderInput | SortOrder
     monetizationScore?: SortOrderInput | SortOrder
+    timingScore?: SortOrderInput | SortOrder
     aiScore?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    marketEvaluation?: SortOrderInput | SortOrder
-    marketMixScore?: SortOrderInput | SortOrder
     marketSizeReason?: SortOrderInput | SortOrder
+    marketGrowthReason?: SortOrderInput | SortOrder
+    problemSeverityReason?: SortOrderInput | SortOrder
+    competitiveAdvantageReason?: SortOrderInput | SortOrder
+    executionFeasibilityReason?: SortOrderInput | SortOrder
+    monetizationReason?: SortOrderInput | SortOrder
+    timingReason?: SortOrderInput | SortOrder
+    aiScoreReason?: SortOrderInput | SortOrder
+    overallAssessment?: SortOrderInput | SortOrder
+    marketEvaluation?: SortOrderInput | SortOrder
+    strengths?: SortOrder
+    weaknesses?: SortOrder
+    recommendations?: SortOrder
+    keyRisks?: SortOrder
+    complexityScore?: SortOrderInput | SortOrder
+    marketMixScore?: SortOrderInput | SortOrder
     marketMixReason?: SortOrderInput | SortOrder
     complexityReason?: SortOrderInput | SortOrder
-    monetizationReason?: SortOrderInput | SortOrder
-    aiScoreReason?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     userId?: SortOrderInput | SortOrder
     _count?: IdeaCountOrderByAggregateInput
     _avg?: IdeaAvgOrderByAggregateInput
@@ -38984,18 +39258,33 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Idea"> | string
     status?: EnumIdeaStatusWithAggregatesFilter<"Idea"> | $Enums.IdeaStatus
     marketSizeScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
-    complexityScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    marketGrowthScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    problemSeverityScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    competitiveAdvantageScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    executionFeasibilityScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
     monetizationScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    timingScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
     aiScore?: FloatNullableWithAggregatesFilter<"Idea"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
-    marketEvaluation?: StringNullableWithAggregatesFilter<"Idea"> | string | null
-    marketMixScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
     marketSizeReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    marketGrowthReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    problemSeverityReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    competitiveAdvantageReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    executionFeasibilityReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    monetizationReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    timingReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    aiScoreReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    overallAssessment?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    marketEvaluation?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    strengths?: StringNullableListFilter<"Idea">
+    weaknesses?: StringNullableListFilter<"Idea">
+    recommendations?: StringNullableListFilter<"Idea">
+    keyRisks?: StringNullableListFilter<"Idea">
+    complexityScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
+    marketMixScore?: IntNullableWithAggregatesFilter<"Idea"> | number | null
     marketMixReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
     complexityReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
-    monetizationReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
-    aiScoreReason?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
     userId?: StringNullableWithAggregatesFilter<"Idea"> | string | null
   }
 
@@ -41235,18 +41524,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
@@ -41261,18 +41565,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
@@ -41287,18 +41606,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
@@ -41313,18 +41647,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
@@ -41339,18 +41688,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
   }
 
@@ -41360,18 +41724,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IdeaUncheckedUpdateManyInput = {
@@ -41380,18 +41759,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -43958,26 +44352,46 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     marketSizeScore?: SortOrder
-    complexityScore?: SortOrder
+    marketGrowthScore?: SortOrder
+    problemSeverityScore?: SortOrder
+    competitiveAdvantageScore?: SortOrder
+    executionFeasibilityScore?: SortOrder
     monetizationScore?: SortOrder
+    timingScore?: SortOrder
     aiScore?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    marketEvaluation?: SortOrder
-    marketMixScore?: SortOrder
     marketSizeReason?: SortOrder
+    marketGrowthReason?: SortOrder
+    problemSeverityReason?: SortOrder
+    competitiveAdvantageReason?: SortOrder
+    executionFeasibilityReason?: SortOrder
+    monetizationReason?: SortOrder
+    timingReason?: SortOrder
+    aiScoreReason?: SortOrder
+    overallAssessment?: SortOrder
+    marketEvaluation?: SortOrder
+    strengths?: SortOrder
+    weaknesses?: SortOrder
+    recommendations?: SortOrder
+    keyRisks?: SortOrder
+    complexityScore?: SortOrder
+    marketMixScore?: SortOrder
     marketMixReason?: SortOrder
     complexityReason?: SortOrder
-    monetizationReason?: SortOrder
-    aiScoreReason?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     userId?: SortOrder
   }
 
   export type IdeaAvgOrderByAggregateInput = {
     marketSizeScore?: SortOrder
-    complexityScore?: SortOrder
+    marketGrowthScore?: SortOrder
+    problemSeverityScore?: SortOrder
+    competitiveAdvantageScore?: SortOrder
+    executionFeasibilityScore?: SortOrder
     monetizationScore?: SortOrder
+    timingScore?: SortOrder
     aiScore?: SortOrder
+    complexityScore?: SortOrder
     marketMixScore?: SortOrder
   }
 
@@ -43987,18 +44401,29 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     marketSizeScore?: SortOrder
-    complexityScore?: SortOrder
+    marketGrowthScore?: SortOrder
+    problemSeverityScore?: SortOrder
+    competitiveAdvantageScore?: SortOrder
+    executionFeasibilityScore?: SortOrder
     monetizationScore?: SortOrder
+    timingScore?: SortOrder
     aiScore?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    marketEvaluation?: SortOrder
-    marketMixScore?: SortOrder
     marketSizeReason?: SortOrder
+    marketGrowthReason?: SortOrder
+    problemSeverityReason?: SortOrder
+    competitiveAdvantageReason?: SortOrder
+    executionFeasibilityReason?: SortOrder
+    monetizationReason?: SortOrder
+    timingReason?: SortOrder
+    aiScoreReason?: SortOrder
+    overallAssessment?: SortOrder
+    marketEvaluation?: SortOrder
+    complexityScore?: SortOrder
+    marketMixScore?: SortOrder
     marketMixReason?: SortOrder
     complexityReason?: SortOrder
-    monetizationReason?: SortOrder
-    aiScoreReason?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     userId?: SortOrder
   }
 
@@ -44008,26 +44433,42 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     marketSizeScore?: SortOrder
-    complexityScore?: SortOrder
+    marketGrowthScore?: SortOrder
+    problemSeverityScore?: SortOrder
+    competitiveAdvantageScore?: SortOrder
+    executionFeasibilityScore?: SortOrder
     monetizationScore?: SortOrder
+    timingScore?: SortOrder
     aiScore?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    marketEvaluation?: SortOrder
-    marketMixScore?: SortOrder
     marketSizeReason?: SortOrder
+    marketGrowthReason?: SortOrder
+    problemSeverityReason?: SortOrder
+    competitiveAdvantageReason?: SortOrder
+    executionFeasibilityReason?: SortOrder
+    monetizationReason?: SortOrder
+    timingReason?: SortOrder
+    aiScoreReason?: SortOrder
+    overallAssessment?: SortOrder
+    marketEvaluation?: SortOrder
+    complexityScore?: SortOrder
+    marketMixScore?: SortOrder
     marketMixReason?: SortOrder
     complexityReason?: SortOrder
-    monetizationReason?: SortOrder
-    aiScoreReason?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     userId?: SortOrder
   }
 
   export type IdeaSumOrderByAggregateInput = {
     marketSizeScore?: SortOrder
-    complexityScore?: SortOrder
+    marketGrowthScore?: SortOrder
+    problemSeverityScore?: SortOrder
+    competitiveAdvantageScore?: SortOrder
+    executionFeasibilityScore?: SortOrder
     monetizationScore?: SortOrder
+    timingScore?: SortOrder
     aiScore?: SortOrder
+    complexityScore?: SortOrder
     marketMixScore?: SortOrder
   }
 
@@ -45974,6 +46415,22 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
   }
 
+  export type IdeaCreatestrengthsInput = {
+    set: string[]
+  }
+
+  export type IdeaCreateweaknessesInput = {
+    set: string[]
+  }
+
+  export type IdeaCreaterecommendationsInput = {
+    set: string[]
+  }
+
+  export type IdeaCreatekeyRisksInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutIdeasInput = {
     create?: XOR<UserCreateWithoutIdeasInput, UserUncheckedCreateWithoutIdeasInput>
     connectOrCreate?: UserCreateOrConnectWithoutIdeasInput
@@ -46066,6 +46523,26 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type IdeaUpdatestrengthsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type IdeaUpdateweaknessesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type IdeaUpdaterecommendationsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type IdeaUpdatekeyRisksInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneWithoutIdeasNestedInput = {
@@ -48355,18 +48832,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
@@ -48380,18 +48872,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
@@ -48514,18 +49021,33 @@ export namespace Prisma {
     description?: StringFilter<"Idea"> | string
     status?: EnumIdeaStatusFilter<"Idea"> | $Enums.IdeaStatus
     marketSizeScore?: IntNullableFilter<"Idea"> | number | null
-    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketGrowthScore?: IntNullableFilter<"Idea"> | number | null
+    problemSeverityScore?: IntNullableFilter<"Idea"> | number | null
+    competitiveAdvantageScore?: IntNullableFilter<"Idea"> | number | null
+    executionFeasibilityScore?: IntNullableFilter<"Idea"> | number | null
     monetizationScore?: IntNullableFilter<"Idea"> | number | null
+    timingScore?: IntNullableFilter<"Idea"> | number | null
     aiScore?: FloatNullableFilter<"Idea"> | number | null
-    createdAt?: DateTimeFilter<"Idea"> | Date | string
-    updatedAt?: DateTimeFilter<"Idea"> | Date | string
-    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
-    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketSizeReason?: StringNullableFilter<"Idea"> | string | null
+    marketGrowthReason?: StringNullableFilter<"Idea"> | string | null
+    problemSeverityReason?: StringNullableFilter<"Idea"> | string | null
+    competitiveAdvantageReason?: StringNullableFilter<"Idea"> | string | null
+    executionFeasibilityReason?: StringNullableFilter<"Idea"> | string | null
+    monetizationReason?: StringNullableFilter<"Idea"> | string | null
+    timingReason?: StringNullableFilter<"Idea"> | string | null
+    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    overallAssessment?: StringNullableFilter<"Idea"> | string | null
+    marketEvaluation?: StringNullableFilter<"Idea"> | string | null
+    strengths?: StringNullableListFilter<"Idea">
+    weaknesses?: StringNullableListFilter<"Idea">
+    recommendations?: StringNullableListFilter<"Idea">
+    keyRisks?: StringNullableListFilter<"Idea">
+    complexityScore?: IntNullableFilter<"Idea"> | number | null
+    marketMixScore?: IntNullableFilter<"Idea"> | number | null
     marketMixReason?: StringNullableFilter<"Idea"> | string | null
     complexityReason?: StringNullableFilter<"Idea"> | string | null
-    monetizationReason?: StringNullableFilter<"Idea"> | string | null
-    aiScoreReason?: StringNullableFilter<"Idea"> | string | null
+    createdAt?: DateTimeFilter<"Idea"> | Date | string
+    updatedAt?: DateTimeFilter<"Idea"> | Date | string
     userId?: StringNullableFilter<"Idea"> | string | null
   }
 
@@ -49067,18 +49589,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
@@ -49092,18 +49629,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
@@ -49133,18 +49685,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
@@ -49158,18 +49725,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
@@ -49183,18 +49765,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
@@ -49208,18 +49805,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
@@ -49249,18 +49861,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
@@ -49274,18 +49901,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
@@ -49299,18 +49941,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
@@ -49324,18 +49981,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
@@ -49365,18 +50037,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
@@ -49390,18 +50077,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
@@ -49415,18 +50117,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
@@ -49440,18 +50157,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
@@ -49481,18 +50213,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
@@ -49506,18 +50253,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
@@ -49702,18 +50464,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutIdeasInput
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
@@ -49727,18 +50504,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     userId?: string | null
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
@@ -50046,18 +50838,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutIdeasNestedInput
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
@@ -50071,18 +50878,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
@@ -53224,18 +54046,33 @@ export namespace Prisma {
     description: string
     status?: $Enums.IdeaStatus
     marketSizeScore?: number | null
-    complexityScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
     monetizationScore?: number | null
+    timingScore?: number | null
     aiScore?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    marketEvaluation?: string | null
-    marketMixScore?: number | null
     marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
     marketMixReason?: string | null
     complexityReason?: string | null
-    monetizationReason?: string | null
-    aiScoreReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ProjectCreateManyUserInput = {
@@ -53277,18 +54114,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
@@ -53302,18 +54154,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
@@ -53327,18 +54194,33 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
     marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
-    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
     monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
     aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
-    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
     marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
     complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
-    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
-    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectUpdateWithoutUserInput = {
