@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 const createChangelogSchema = z.object({
   version: z.string().min(1),
@@ -31,6 +32,7 @@ export const POST = withErrorHandler(async (req, { params }) => {
 
   const entry = await prisma.productChangelog.create({
     data: {
+      id: randomUUID(),
       productId: id,
       version: validated.version,
       title: validated.title,

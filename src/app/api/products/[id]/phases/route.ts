@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 const createPhaseSchema = z.object({
   name: z.string().min(1),
-  status: z.string().optional(),
+  status: z.enum(["PLANNING", "IN_PROGRESS", "REVIEW", "COMPLETED"]).optional(),
 });
 
 export const POST = withErrorHandler(async (req, { params }) => {
@@ -28,6 +29,7 @@ export const POST = withErrorHandler(async (req, { params }) => {
 
   const phase = await prisma.developmentPhase.create({
     data: {
+      id: randomUUID(),
       productId: id,
       name: validated.name,
       status: validated.status ?? "PLANNING",

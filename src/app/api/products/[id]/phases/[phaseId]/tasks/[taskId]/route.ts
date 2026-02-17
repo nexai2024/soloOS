@@ -5,7 +5,9 @@ import { z } from "zod";
 const updateTaskSchema = z.object({
   title: z.string().min(1).optional(),
   description: z.string().optional(),
-  status: z.string().optional(),
+  status: z
+    .enum(["TODO", "IN_PROGRESS", "BLOCKED", "REVIEW", "DONE", "BACKLOG"])
+    .optional(),
 });
 
 export const PATCH = withErrorHandler(async (req, { params }) => {

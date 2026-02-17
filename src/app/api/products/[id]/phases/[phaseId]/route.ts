@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const updatePhaseSchema = z.object({
   name: z.string().min(1).optional(),
-  status: z.string().optional(),
+  status: z.enum(["PLANNING", "IN_PROGRESS", "REVIEW", "COMPLETED"]).optional(),
 });
 
 export const PATCH = withErrorHandler(async (req, { params }) => {

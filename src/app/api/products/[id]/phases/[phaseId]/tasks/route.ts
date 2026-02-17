@@ -1,11 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 const createTaskSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  status: z.string().optional(),
+  status: z
+    .enum(["TODO", "IN_PROGRESS", "BLOCKED", "REVIEW", "DONE", "BACKLOG"])
+    .optional(),
 });
 
 export const POST = withErrorHandler(async (req, { params }) => {
@@ -34,10 +37,12 @@ export const POST = withErrorHandler(async (req, { params }) => {
 
   const task = await prisma.phaseTask.create({
     data: {
+      id: randomUUID(),
       phaseId,
       title: validated.title,
       description: validated.description,
       status: validated.status ?? "TODO",
+      updatedAt: new Date(),
     },
   });
 
