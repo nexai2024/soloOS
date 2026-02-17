@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateProductSchema = z.object({
@@ -18,141 +17,71 @@ const updateProductSchema = z.object({
   showChangelog: z.boolean().optional(),
 });
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const GET = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
 
-    const { id } = await params;
-
-    const product = await prisma.product.findFirst({
-      where: { id, tenantId: user.id },
-      include: {
-        Project: {
-          select: { id: true, title: true, status: true },
-        },
-        WaitlistEntry: {
-          orderBy: { email: "asc" },
-        },
-        ProductChangelog: {
-          orderBy: { releasedAt: "desc" },
-        },
-        DevelopmentPhase: {
-          include: {
-            PhaseTask: true,
-          },
+  const product = await prisma.product.findFirst({
+    where: { id, tenantId: user.id },
+    include: {
+      Project: {
+        select: { id: true, title: true, status: true },
+      },
+      WaitlistEntry: {
+        orderBy: { email: "asc" },
+      },
+      ProductChangelog: {
+        orderBy: { releasedAt: "desc" },
+      },
+      DevelopmentPhase: {
+        include: {
+          PhaseTask: true,
         },
       },
-    });
+    },
+  });
 
-    if (!product) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
-    }
+  if (!product) throw new ApiError("Product not found", 404);
 
-    return NextResponse.json(product);
-  } catch (error) {
-    console.error("Failed to fetch product:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch product" },
-      { status: 500 }
-    );
+  return apiSuccess(product);
+});
+
+export const PATCH = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
+
+  const existing = await prisma.product.findFirst({ where: { id, tenantId: user.id } });
+  if (!existing) throw new ApiError("Product not found", 404);
+
+  const body = await req.json();
+  let validated;
+  try { validated = updateProductSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id } = await params;
-    const body = await req.json();
-    const validated = updateProductSchema.parse(body);
-
-    // Verify ownership
-    const existing = await prisma.product.findFirst({
-      where: { id, tenantId: user.id },
-    });
-
-    if (!existing) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
-    }
-
-    // Check slug uniqueness if being changed
-    if (validated.slug && validated.slug !== existing.slug) {
-      const slugExists = await prisma.product.findUnique({
-        where: { slug: validated.slug },
-      });
-      if (slugExists) {
-        return NextResponse.json(
-          { error: "This slug is already taken" },
-          { status: 400 }
-        );
-      }
-    }
-
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        ...validated,
-        updatedAt: new Date(),
-      },
-    });
-
-    return NextResponse.json(product);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to update product:", error);
-    return NextResponse.json(
-      { error: "Failed to update product" },
-      { status: 500 }
-    );
+  if (validated.slug && validated.slug !== existing.slug) {
+    const slugExists = await prisma.product.findUnique({ where: { slug: validated.slug } });
+    if (slugExists) throw new ApiError("This slug is already taken", 400);
   }
-}
 
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const product = await prisma.product.update({
+    where: { id },
+    data: { ...validated, updatedAt: new Date() },
+  });
 
-    const { id } = await params;
+  return apiSuccess(product);
+});
 
-    // Verify ownership
-    const existing = await prisma.product.findFirst({
-      where: { id, tenantId: user.id },
-    });
+export const DELETE = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
 
-    if (!existing) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
-    }
+  const existing = await prisma.product.findFirst({ where: { id, tenantId: user.id } });
+  if (!existing) throw new ApiError("Product not found", 404);
 
-    await prisma.product.delete({ where: { id } });
+  await prisma.product.delete({ where: { id } });
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Failed to delete product:", error);
-    return NextResponse.json(
-      { error: "Failed to delete product" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess({ success: true });
+});

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateCompetitorSchema = z.object({
@@ -9,69 +9,47 @@ const updateCompetitorSchema = z.object({
   weaknesses: z.array(z.string()).optional()
 });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; competitorId: string }> }
-) {
-  try {
-    const { competitorId } = await params;
-    const competitor = await prisma.competitorAnalysis.findUnique({
-      where: { id: competitorId }
-    });
+export const GET = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { competitorId } = await params;
 
-    if (!competitor) {
-      return NextResponse.json({ error: "Competitor not found" }, { status: 404 });
-    }
+  const competitor = await prisma.competitorAnalysis.findUnique({ where: { id: competitorId } });
+  if (!competitor) throw new ApiError("Competitor not found", 404);
 
-    return NextResponse.json(competitor);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch competitor" }, { status: 500 });
+  return apiSuccess(competitor);
+});
+
+export const PATCH = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { competitorId } = await params;
+
+  const competitor = await prisma.competitorAnalysis.findUnique({ where: { id: competitorId } });
+  if (!competitor) throw new ApiError("Competitor not found", 404);
+
+  const body = await req.json();
+  let validated;
+  try { validated = updateCompetitorSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; competitorId: string }> }
-) {
-  try {
-    const { competitorId } = await params;
-    const body = await req.json();
-    const validated = updateCompetitorSchema.parse(body);
+  const updated = await prisma.competitorAnalysis.update({
+    where: { id: competitorId },
+    data: validated
+  });
 
-    const competitor = await prisma.competitorAnalysis.findUnique({ where: { id: competitorId } });
-    if (!competitor) {
-      return NextResponse.json({ error: "Competitor not found" }, { status: 404 });
-    }
+  return apiSuccess(updated);
+});
 
-    const updated = await prisma.competitorAnalysis.update({
-      where: { id: competitorId },
-      data: validated
-    });
+export const DELETE = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { competitorId } = await params;
 
-    return NextResponse.json(updated);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
-    }
-    return NextResponse.json({ error: "Failed to update competitor" }, { status: 500 });
-  }
-}
+  const competitor = await prisma.competitorAnalysis.findUnique({ where: { id: competitorId } });
+  if (!competitor) throw new ApiError("Competitor not found", 404);
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; competitorId: string }> }
-) {
-  try {
-    const { competitorId } = await params;
-    const competitor = await prisma.competitorAnalysis.findUnique({ where: { id: competitorId } });
-    if (!competitor) {
-      return NextResponse.json({ error: "Competitor not found" }, { status: 404 });
-    }
+  await prisma.competitorAnalysis.delete({ where: { id: competitorId } });
 
-    await prisma.competitorAnalysis.delete({ where: { id: competitorId } });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to delete competitor" }, { status: 500 });
-  }
-}
+  return apiSuccess({ success: true });
+});

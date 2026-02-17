@@ -5,6 +5,8 @@ import { ProblemStatement } from "@/generated/prisma/client";
 import { ProblemCard } from "./ProblemCard";
 import { ProblemStatementForm } from "./ProblemStatementForm";
 import { Plus, AlertCircle } from "lucide-react";
+import { fetchPost, fetchDelete } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 
 interface ProblemsTabProps {
   ideaId: string;
@@ -16,41 +18,32 @@ export function ProblemsTab({ ideaId, problems, onUpdate }: ProblemsTabProps) {
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
-  const handleAdd = async (data: any) => {
+  const handleAdd = async (data: Record<string, unknown>) => {
     setError(null);
     setIsLoading(true);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/problems`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add problem");
-      }
-      const newProblem = await response.json();
-      onUpdate([...problems, newProblem]);
+    const result = await fetchPost<ProblemStatement>(`/api/ideas/${ideaId}/problems`, data);
+    if (result.ok) {
+      onUpdate([...problems, result.data]);
       setShowForm(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to add problem");
-    } finally {
-      setIsLoading(false);
+      toast.success("Problem added");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsLoading(false);
   };
 
   const handleDelete = async (id: string) => {
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/problems/${id}`, { method: "DELETE" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete problem");
-      }
+    const result = await fetchDelete(`/api/ideas/${ideaId}/problems/${id}`);
+    if (result.ok) {
       onUpdate(problems.filter(p => p.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete problem");
+      toast.success("Problem deleted");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
   };
 

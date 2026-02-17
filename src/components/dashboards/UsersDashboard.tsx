@@ -13,6 +13,8 @@ import {
   Mail
 } from 'lucide-react';
 import { EmptyState } from '../onboarding/EmptyState';
+import { fetchGet, fetchPost } from '@/lib/fetch';
+import { useToast } from '@/contexts/ToastContext';
 
 interface Contact {
   id: string;
@@ -48,63 +50,51 @@ export default function UsersDashboard() {
     count: 5,
   });
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    try {
-      const [contactsRes, feedbackRes] = await Promise.all([
-        fetch('/api/contacts'),
-        fetch('/api/feedback'),
-      ]);
+    const [contactsResult, feedbackResult] = await Promise.all([
+      fetchGet<Contact[]>('/api/contacts'),
+      fetchGet<Feedback[]>('/api/feedback'),
+    ]);
 
-      if (contactsRes.status === 401 || feedbackRes.status === 401) {
-        router.push('/');
-        return;
-      }
-
-      if (!contactsRes.ok || !feedbackRes.ok) {
-        throw new Error('Failed to fetch user data');
-      }
-
-      const [contactsData, feedbackData] = await Promise.all([
-        contactsRes.json(),
-        feedbackRes.json(),
-      ]);
-
-      setContacts(contactsData);
-      setFeedback(feedbackData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
-    } finally {
-      setIsLoading(false);
+    if (contactsResult.status === 401 || feedbackResult.status === 401) {
+      router.push('/');
+      return;
     }
+
+    if (contactsResult.ok) setContacts(contactsResult.data);
+    if (feedbackResult.ok) setFeedback(feedbackResult.data);
+
+    const firstError = [contactsResult, feedbackResult].find(r => !r.ok);
+    if (firstError && !firstError.ok) {
+      setError(firstError.error);
+      toast.error(firstError.error);
+    }
+
+    setIsLoading(false);
   };
 
   const handleGenerateContacts = async () => {
     if (!generateForm.productName || !generateForm.targetAudience) return;
 
     setIsGenerating(true);
-    try {
-      const response = await fetch('/api/contacts/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(generateForm),
-      });
+    const result = await fetchPost<{ contacts: Contact[] }>('/api/contacts/generate', generateForm);
 
-      if (!response.ok) throw new Error('Failed to generate contacts');
-
-      const data = await response.json();
-      setContacts(prev => [...data.contacts, ...prev]);
+    if (result.ok) {
+      setContacts(prev => [...result.data.contacts, ...prev]);
       setShowGenerateModal(false);
       setGenerateForm({ productName: '', targetAudience: '', count: 5 });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate');
-    } finally {
-      setIsGenerating(false);
+      toast.success('Contacts generated');
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsGenerating(false);
   };
 
   const getLifecycleColor = (stage: string) => {

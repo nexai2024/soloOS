@@ -1,28 +1,9 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { useEffect } from 'react';
-import LoginForm from '@/components/LoginForm';
+import { SignIn } from '@clerk/nextjs';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, router]);
-
-  if (isAuthenticated) {
-    return null;
-  }
-
   return (
-    <LoginForm
-      onSignupClick={() => router.push('/signup')}
-      onBack={() => router.push('/')}
-    />
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+      <SignIn />
+    </div>
   );
 }

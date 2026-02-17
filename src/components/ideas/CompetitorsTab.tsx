@@ -5,6 +5,8 @@ import { CompetitorAnalysis } from "@/generated/prisma/client";
 import { CompetitorCard } from "./CompetitorCard";
 import { CompetitorForm } from "./CompetitorForm";
 import { Plus, AlertCircle } from "lucide-react";
+import { fetchPost, fetchDelete } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 
 interface CompetitorsTabProps {
   ideaId: string;
@@ -16,41 +18,32 @@ export function CompetitorsTab({ ideaId, competitors, onUpdate }: CompetitorsTab
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
-  const handleAdd = async (data: any) => {
+  const handleAdd = async (data: Record<string, unknown>) => {
     setError(null);
     setIsLoading(true);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/competitors`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add competitor");
-      }
-      const newCompetitor = await response.json();
-      onUpdate([...competitors, newCompetitor]);
+    const result = await fetchPost<CompetitorAnalysis>(`/api/ideas/${ideaId}/competitors`, data);
+    if (result.ok) {
+      onUpdate([...competitors, result.data]);
       setShowForm(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to add competitor");
-    } finally {
-      setIsLoading(false);
+      toast.success("Competitor added");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsLoading(false);
   };
 
   const handleDelete = async (id: string) => {
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/competitors/${id}`, { method: "DELETE" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete competitor");
-      }
+    const result = await fetchDelete(`/api/ideas/${ideaId}/competitors/${id}`);
+    if (result.ok) {
       onUpdate(competitors.filter(c => c.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete competitor");
+      toast.success("Competitor deleted");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
   };
 

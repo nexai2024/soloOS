@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Lightbulb, FolderKanban, X, Loader2 } from "lucide-react";
+import { fetchGet } from "@/lib/fetch";
 
 interface SearchResult {
   ideas: {
@@ -38,17 +39,11 @@ export function SearchBar() {
 
     const timer = setTimeout(async () => {
       setIsLoading(true);
-      try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-        if (response.ok) {
-          const data = await response.json();
-          setResults(data);
-        }
-      } catch (error) {
-        console.error("Search error:", error);
-      } finally {
-        setIsLoading(false);
+      const result = await fetchGet<SearchResult>(`/api/search?q=${encodeURIComponent(query)}`);
+      if (result.ok) {
+        setResults(result.data);
       }
+      setIsLoading(false);
     }, 300);
 
     return () => clearTimeout(timer);

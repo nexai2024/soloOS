@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const createTaskSchema = z.object({
@@ -11,92 +10,55 @@ const createTaskSchema = z.object({
   dueDate: z.string().datetime().optional()
 });
 
-const updateTaskSchema = z.object({
-  title: z.string().min(1).optional(),
-  description: z.string().optional(),
-  status: z.enum(["TODO", "IN_PROGRESS", "BLOCKED", "DONE"]).optional(),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).optional(),
-  featureId: z.string().nullable().optional(),
-  dueDate: z.string().datetime().nullable().optional(),
-  blockedById: z.string().nullable().optional()
+export const POST = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id: projectId } = await params;
+
+  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  if (!project) throw new ApiError("Project not found", 404);
+  if (project.userId !== user.id) throw new ApiError("Forbidden", 403);
+
+  const body = await req.json();
+  let validated;
+  try { validated = createTaskSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
+  }
+
+  const task = await prisma.task.create({
+    data: {
+      title: validated.title,
+      description: validated.description,
+      priority: validated.priority,
+      featureId: validated.featureId,
+      dueDate: validated.dueDate ? new Date(validated.dueDate) : undefined,
+      projectId
+    }
+  });
+
+  return apiSuccess(task, 201);
 });
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const GET = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id: projectId } = await params;
 
-    const { id: projectId } = await params;
-    const project = await prisma.project.findUnique({ where: { id: projectId } });
+  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  if (!project || project.userId !== user.id) throw new ApiError("Project not found", 404);
 
-    if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
-
-    if (project.userId !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
-
-    const body = await req.json();
-    const validated = createTaskSchema.parse(body);
-
-    const task = await prisma.task.create({
-      data: {
-        title: validated.title,
-        description: validated.description,
-        priority: validated.priority,
-        featureId: validated.featureId,
-        dueDate: validated.dueDate ? new Date(validated.dueDate) : undefined,
-        projectId
+  const tasks = await prisma.task.findMany({
+    where: { projectId },
+    orderBy: { createdAt: "desc" },
+    include: {
+      feature: {
+        select: { id: true, title: true }
+      },
+      Task_A: {
+        select: { id: true, title: true, status: true }
       }
-    });
-
-    return NextResponse.json(task, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
     }
-    return NextResponse.json({ error: "Failed to create task" }, { status: 500 });
-  }
-}
+  });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id: projectId } = await params;
-    const project = await prisma.project.findUnique({ where: { id: projectId } });
-
-    if (!project || project.userId !== user.id) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
-
-    const tasks = await prisma.task.findMany({
-      where: { projectId },
-      orderBy: { createdAt: "desc" },
-      include: {
-        feature: {
-          select: { id: true, title: true }
-        },
-        Task_A: {
-          select: { id: true, title: true, status: true }
-        }
-      }
-    });
-
-    return NextResponse.json(tasks);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch tasks" }, { status: 500 });
-  }
-}
+  return apiSuccess(tasks);
+});

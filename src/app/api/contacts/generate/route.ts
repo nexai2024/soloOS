@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { aiComplete } from "@/lib/ai-config";
 import { z } from "zod";
 import { randomBytes } from "crypto";
@@ -11,17 +10,18 @@ const generateContactsSchema = z.object({
   count: z.number().min(1).max(10).optional().default(5),
 });
 
-export async function POST(req: NextRequest) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const POST = withErrorHandler(async (req) => {
+  const user = await requireAuth();
+  const body = await req.json();
 
-    const body = await req.json();
-    const validated = generateContactsSchema.parse(body);
+  let validated;
+  try { validated = generateContactsSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
+  }
 
-    const prompt = `Generate ${validated.count} realistic sample contacts for a product called "${validated.productName}" targeting "${validated.targetAudience}".
+  const prompt = `Generate ${validated.count} realistic sample contacts for a product called "${validated.productName}" targeting "${validated.targetAudience}".
 
 For each contact, generate:
 - email: A realistic professional email (use domains like gmail.com, outlook.com, or company domains)
@@ -32,57 +32,43 @@ For each contact, generate:
 
 Return a JSON object with a "contacts" array containing these fields.`;
 
-    const systemPrompt = `You are a helpful assistant that generates realistic sample data for SaaS products.
+  const systemPrompt = `You are a helpful assistant that generates realistic sample data for SaaS products.
 Generate diverse but realistic data that would help a founder understand their potential customer base.
 Always return valid JSON.`;
 
-    const response = await aiComplete({
-      prompt,
-      systemPrompt,
-      jsonMode: true,
-    });
+  const response = await aiComplete({
+    prompt,
+    systemPrompt,
+    jsonMode: true,
+  });
 
-    const parsed = JSON.parse(response);
-    const generatedContacts = parsed.contacts || [];
+  const parsed = JSON.parse(response);
+  const generatedContacts = parsed.contacts || [];
 
-    // Create contacts in database
-    const createdContacts = await Promise.all(
-      generatedContacts.map(async (contact: {
-        email: string;
-        lifecycleStage?: string;
-        planStatus?: string;
-        tags?: string[];
-        score?: number;
-      }) => {
-        return prisma.contact.create({
-          data: {
-            id: randomBytes(12).toString("hex"),
-            tenantId: user.id,
-            email: contact.email,
-            lifecycleStage: (contact.lifecycleStage as "LEAD" | "QUALIFIED" | "OPPORTUNITY" | "CUSTOMER" | "CHAMPION" | "CHURNED") || "LEAD",
-            planStatus: contact.planStatus || "FREE",
-            tags: contact.tags || [],
-            score: contact.score || 0,
-          },
-        });
-      })
-    );
+  const createdContacts = await Promise.all(
+    generatedContacts.map(async (contact: {
+      email: string;
+      lifecycleStage?: string;
+      planStatus?: string;
+      tags?: string[];
+      score?: number;
+    }) => {
+      return prisma.contact.create({
+        data: {
+          id: randomBytes(12).toString("hex"),
+          tenantId: user.id,
+          email: contact.email,
+          lifecycleStage: (contact.lifecycleStage as "LEAD" | "QUALIFIED" | "OPPORTUNITY" | "CUSTOMER" | "CHAMPION" | "CHURNED") || "LEAD",
+          planStatus: contact.planStatus || "FREE",
+          tags: contact.tags || [],
+          score: contact.score || 0,
+        },
+      });
+    })
+  );
 
-    return NextResponse.json({
-      message: `Generated ${createdContacts.length} contacts`,
-      contacts: createdContacts,
-    }, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to generate contacts:", error);
-    return NextResponse.json(
-      { error: "Failed to generate contacts" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess({
+    message: `Generated ${createdContacts.length} contacts`,
+    contacts: createdContacts,
+  }, 201);
+});

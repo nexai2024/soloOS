@@ -11,13 +11,12 @@ import {
   Wrench,
   Menu,
   X,
-  LogOut,
   Moon,
   Sun,
   Bell,
   ChevronRight
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { UserButton } from '@clerk/nextjs';
 import { useTheme } from '@/contexts/ThemeContext';
 import { SearchBar } from './SearchBar';
 
@@ -29,7 +28,6 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children, activeModule, onModuleChange }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
 
   const modules = [
@@ -105,24 +103,16 @@ export default function DashboardLayout({ children, activeModule, onModuleChange
           </nav>
 
           <div className="p-4 border-t border-slate-200 dark:border-slate-700">
-            <div className={`flex items-center ${sidebarOpen ? 'space-x-3' : 'justify-center'}`}>
-              {sidebarOpen && (
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-slate-900 dark:text-white truncate">
-                    {user?.name}
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                    {user?.email}
-                  </div>
-                </div>
-              )}
-              <button
-                onClick={logout}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
-                title="Logout"
-              >
-                <LogOut className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-              </button>
+            <div className={`flex items-center ${sidebarOpen ? 'justify-start' : 'justify-center'}`}>
+              <UserButton
+                afterSignOutUrl="/login"
+                appearance={{
+                  elements: {
+                    avatarBox: 'h-8 w-8',
+                  },
+                }}
+                showName={sidebarOpen}
+              />
             </div>
           </div>
         </div>

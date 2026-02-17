@@ -19,7 +19,9 @@ import {
   Loader2,
   X
 } from "lucide-react";
-import { Idea, Persona, ProblemStatement, ValidationChecklist, CompetitorAnalysis } from "@/generated/prisma/client";
+import { Idea, Persona, ProblemStatement, ValidationChecklist, CompetitorAnalysis, ScoreImprovement } from "@/generated/prisma/client";
+import { fetchPost, fetchDelete } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 import { AIScoreBreakdown } from "./AIScoreBreakdown";
 import { PersonaCard } from "./PersonaCard";
 import { ProblemCard } from "./ProblemCard";
@@ -42,12 +44,14 @@ type IdeaWithRelations = Idea & {
   problemStatements: ProblemStatement[];
   validationItems: ValidationChecklist[];
   competitors: CompetitorAnalysis[];
+  scoreImprovements: ScoreImprovement[];
 };
 
 type Tab = "overview" | "personas" | "problems" | "validation" | "competitors";
 
 export function IdeaDetailClient({ idea: initialIdea }: { idea: IdeaWithRelations }) {
   const router = useRouter();
+  const toast = useToast();
   const [idea, setIdea] = useState(initialIdea);
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [isScoring, setIsScoring] = useState(false);
@@ -70,55 +74,46 @@ export function IdeaDetailClient({ idea: initialIdea }: { idea: IdeaWithRelation
   const handleScore = async () => {
     setIsScoring(true);
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${idea.id}/score`, { method: "POST" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Scoring failed");
-      }
-      const updated = await response.json();
-      setIdea(updated);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Scoring failed");
-    } finally {
-      setIsScoring(false);
+    const result = await fetchPost<IdeaWithRelations>(`/api/ideas/${idea.id}/score`);
+    if (result.ok) {
+      setIdea(result.data);
+      toast.success("AI scoring complete");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsScoring(false);
   };
 
   // Delete Idea
   const handleDelete = async () => {
     setIsDeleting(true);
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${idea.id}`, { method: "DELETE" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Delete failed");
-      }
+    const result = await fetchDelete(`/api/ideas/${idea.id}`);
+    if (result.ok) {
+      toast.success("Idea deleted");
       router.push("/ideas");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
       setShowDeleteModal(false);
-    } finally {
-      setIsDeleting(false);
     }
+    setIsDeleting(false);
   };
 
   // Promote to Project
   const handlePromote = async () => {
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${idea.id}/promote`, { method: "POST" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Promotion failed");
-      }
-      const updated = await response.json();
-      setIdea(updated);
+    const result = await fetchPost<{ idea: IdeaWithRelations }>(`/api/ideas/${idea.id}/promote`);
+    if (result.ok) {
+      setIdea(result.data.idea);
+      toast.success("Idea promoted to project!");
+      router.push(`/ideas/${result.data.idea.id}`);
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Promotion failed");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
   };
 
@@ -128,25 +123,17 @@ export function IdeaDetailClient({ idea: initialIdea }: { idea: IdeaWithRelation
 
     setIsGenerating(true);
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${idea.id}/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ types: selectedGenerateTypes }),
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Generation failed");
-      }
-      const { idea: updatedIdea } = await response.json();
-      setIdea(updatedIdea);
+    const result = await fetchPost<{ idea: IdeaWithRelations }>(`/api/ideas/${idea.id}/generate`, { types: selectedGenerateTypes });
+    if (result.ok) {
+      setIdea(result.data.idea);
       setShowAIGenerateModal(false);
       setSelectedGenerateTypes([]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "AI generation failed");
-    } finally {
-      setIsGenerating(false);
+      toast.success("AI generation complete");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsGenerating(false);
   };
 
   const toggleGenerateType = (type: string) => {
@@ -268,10 +255,28 @@ export function IdeaDetailClient({ idea: initialIdea }: { idea: IdeaWithRelation
         {/* AI Score Section */}
         {idea.aiScore ? (
           <AIScoreBreakdown
-            marketSize={idea.marketSizeScore!}
-            complexity={idea.complexityScore!}
-            monetization={idea.monetizationScore!}
-            composite={idea.aiScore}
+            aiScore={idea.aiScore!}
+            marketSizeScore={idea.marketSizeScore}
+            marketGrowthScore={idea.marketGrowthScore}
+            problemSeverityScore={idea.problemSeverityScore}
+            competitiveAdvantageScore={idea.competitiveAdvantageScore}
+            executionFeasibilityScore={idea.executionFeasibilityScore}
+            monetizationScore={idea.monetizationScore}
+            timingScore={idea.timingScore}
+            marketSizeReason={idea.marketSizeReason}
+            marketGrowthReason={idea.marketGrowthReason}
+            problemSeverityReason={idea.problemSeverityReason}
+            competitiveAdvantageReason={idea.competitiveAdvantageReason}
+            executionFeasibilityReason={idea.executionFeasibilityReason}
+            monetizationReason={idea.monetizationReason}
+            timingReason={idea.timingReason}
+            aiScoreReason={idea.aiScoreReason}
+            overallAssessment={idea.overallAssessment}
+            improvements={idea.scoreImprovements}
+            ideaId={idea.id}
+            onImprovementsChange={(improvements) => setIdea({ ...idea, scoreImprovements: improvements })}
+            onRescore={handleScore}
+            isScoring={isScoring}
           />
         ) : (
           <button

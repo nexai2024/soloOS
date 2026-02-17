@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateContactSchema = z.object({
@@ -11,118 +10,55 @@ const updateContactSchema = z.object({
   score: z.number().optional(),
 });
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const GET = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
 
-    const { id } = await params;
+  const contact = await prisma.contact.findFirst({
+    where: { id, tenantId: user.id },
+    include: {
+      Feedback: true,
+      ContactEvent: { orderBy: { occurredAt: "desc" } },
+      ContactNote: { orderBy: { createdAt: "desc" } },
+    },
+  });
 
-    const contact = await prisma.contact.findFirst({
-      where: { id, tenantId: user.id },
-      include: {
-        Feedback: true,
-        ContactEvent: {
-          orderBy: { occurredAt: "desc" },
-        },
-        ContactNote: {
-          orderBy: { createdAt: "desc" },
-        },
-      },
-    });
+  if (!contact) throw new ApiError("Contact not found", 404);
 
-    if (!contact) {
-      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
-    }
+  return apiSuccess(contact);
+});
 
-    return NextResponse.json(contact);
-  } catch (error) {
-    console.error("Failed to fetch contact:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch contact" },
-      { status: 500 }
-    );
+export const PATCH = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
+
+  const existing = await prisma.contact.findFirst({ where: { id, tenantId: user.id } });
+  if (!existing) throw new ApiError("Contact not found", 404);
+
+  const body = await req.json();
+  let validated;
+  try { validated = updateContactSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const contact = await prisma.contact.update({
+    where: { id },
+    data: validated,
+  });
 
-    const { id } = await params;
-    const body = await req.json();
-    const validated = updateContactSchema.parse(body);
+  return apiSuccess(contact);
+});
 
-    // Verify ownership
-    const existing = await prisma.contact.findFirst({
-      where: { id, tenantId: user.id },
-    });
+export const DELETE = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
 
-    if (!existing) {
-      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
-    }
+  const existing = await prisma.contact.findFirst({ where: { id, tenantId: user.id } });
+  if (!existing) throw new ApiError("Contact not found", 404);
 
-    const contact = await prisma.contact.update({
-      where: { id },
-      data: validated,
-    });
+  await prisma.contact.delete({ where: { id } });
 
-    return NextResponse.json(contact);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to update contact:", error);
-    return NextResponse.json(
-      { error: "Failed to update contact" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id } = await params;
-
-    // Verify ownership
-    const existing = await prisma.contact.findFirst({
-      where: { id, tenantId: user.id },
-    });
-
-    if (!existing) {
-      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
-    }
-
-    await prisma.contact.delete({ where: { id } });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Failed to delete contact:", error);
-    return NextResponse.json(
-      { error: "Failed to delete contact" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess({ success: true });
+});

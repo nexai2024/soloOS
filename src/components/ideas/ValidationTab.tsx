@@ -4,6 +4,8 @@ import { useState, useCallback } from "react";
 import { ValidationChecklist } from "@/generated/prisma/client";
 import { ValidationChecklistForm } from "./ValidationChecklistForm";
 import { Plus, Check, AlertCircle, Loader2 } from "lucide-react";
+import { fetchPost, fetchPatch, fetchDelete } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 
 interface ValidationTabProps {
   ideaId: string;
@@ -17,6 +19,7 @@ export function ValidationTab({ ideaId, items, onUpdate }: ValidationTabProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [pendingToggles, setPendingToggles] = useState<Set<string>>(new Set());
   const [pendingDeletes, setPendingDeletes] = useState<Set<string>>(new Set());
+  const toast = useToast();
 
   const handleAdd = async (data: { task: string }) => {
     setError(null);
@@ -38,26 +41,15 @@ export function ValidationTab({ ideaId, items, onUpdate }: ValidationTabProps) {
     onUpdate([...items, optimisticItem]);
     setShowForm(false);
 
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/validation`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add task");
-      }
-      const newItem = await response.json();
-      // Replace temp item with real one
-      onUpdate(items.filter(i => i.id !== tempId).concat(newItem));
-    } catch (err) {
-      // Rollback
+    const result = await fetchPost<ValidationChecklist>(`/api/ideas/${ideaId}/validation`, data);
+    if (result.ok) {
+      onUpdate(items.filter(i => i.id !== tempId).concat(result.data));
+    } else {
       onUpdate(items.filter(i => i.id !== tempId));
-      setError(err instanceof Error ? err.message : "Failed to add task");
-    } finally {
-      setIsAdding(false);
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsAdding(false);
   };
 
   const handleToggle = useCallback(async (id: string, isCompleted: boolean) => {
@@ -72,30 +64,20 @@ export function ValidationTab({ ideaId, items, onUpdate }: ValidationTabProps) {
       item.id === id ? { ...item, isCompleted } : item
     ));
 
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/validation/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isCompleted })
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to update task");
-      }
-      const updated = await response.json();
-      onUpdate(items.map(item => item.id === id ? updated : item));
-    } catch (err) {
-      // Rollback
+    const result = await fetchPatch<ValidationChecklist>(`/api/ideas/${ideaId}/validation/${id}`, { isCompleted });
+    if (result.ok) {
+      onUpdate(items.map(item => item.id === id ? result.data : item));
+    } else {
       onUpdate(previousItems);
-      setError(err instanceof Error ? err.message : "Failed to update task");
-    } finally {
-      setPendingToggles(prev => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      setError(result.error);
+      toast.error(result.error);
     }
-  }, [ideaId, items, onUpdate]);
+    setPendingToggles(prev => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  }, [ideaId, items, onUpdate, toast]);
 
   const handleDelete = useCallback(async (id: string) => {
     setError(null);
@@ -107,24 +89,18 @@ export function ValidationTab({ ideaId, items, onUpdate }: ValidationTabProps) {
     const previousItems = [...items];
     onUpdate(items.filter(item => item.id !== id));
 
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/validation/${id}`, { method: "DELETE" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete task");
-      }
-    } catch (err) {
-      // Rollback
+    const result = await fetchDelete(`/api/ideas/${ideaId}/validation/${id}`);
+    if (!result.ok) {
       onUpdate(previousItems);
-      setError(err instanceof Error ? err.message : "Failed to delete task");
-    } finally {
-      setPendingDeletes(prev => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      setError(result.error);
+      toast.error(result.error);
     }
-  }, [ideaId, items, onUpdate]);
+    setPendingDeletes(prev => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  }, [ideaId, items, onUpdate, toast]);
 
   const completedCount = items.filter(i => i.isCompleted).length;
   const progressPercent = items.length > 0 ? (completedCount / items.length) * 100 : 0;

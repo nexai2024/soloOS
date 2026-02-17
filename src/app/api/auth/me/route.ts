@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler } from "@/lib/api-utils";
 
-export async function GET() {
+export const GET = withErrorHandler(async () => {
   try {
     const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ user: null }, { status: 200 });
-    }
-    return NextResponse.json({ user });
-  } catch (error) {
-    return NextResponse.json({ user: null }, { status: 200 });
+    return NextResponse.json({ user: user || null });
+  } catch {
+    // Always return a valid response — never crash the auth check
+    return NextResponse.json({ user: null });
   }
-}
+});

@@ -17,6 +17,8 @@ import {
   Calendar
 } from 'lucide-react';
 import { EmptyState } from '../onboarding/EmptyState';
+import { fetchGet, fetchPost } from '@/lib/fetch';
+import { useToast } from '@/contexts/ToastContext';
 
 interface Campaign {
   id: string;
@@ -69,98 +71,79 @@ export default function MarketingDashboard() {
     tone: 'casual' as string,
   });
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    try {
-      const [campaignsRes, socialRes, newslettersRes] = await Promise.all([
-        fetch('/api/campaigns'),
-        fetch('/api/social-posts'),
-        fetch('/api/newsletters'),
-      ]);
+    const [campaignsResult, socialResult, newslettersResult] = await Promise.all([
+      fetchGet<Campaign[]>('/api/campaigns'),
+      fetchGet<SocialPost[]>('/api/social-posts'),
+      fetchGet<Newsletter[]>('/api/newsletters'),
+    ]);
 
-      if (campaignsRes.status === 401 || socialRes.status === 401 || newslettersRes.status === 401) {
-        router.push('/');
-        return;
-      }
-
-      if (!campaignsRes.ok || !socialRes.ok || !newslettersRes.ok) {
-        throw new Error('Failed to fetch marketing data');
-      }
-
-      const [campaignsData, socialData, newslettersData] = await Promise.all([
-        campaignsRes.json(),
-        socialRes.json(),
-        newslettersRes.json(),
-      ]);
-
-      setCampaigns(campaignsData);
-      setSocialPosts(socialData);
-      setNewsletters(newslettersData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
-    } finally {
-      setIsLoading(false);
+    if (campaignsResult.status === 401 || socialResult.status === 401 || newslettersResult.status === 401) {
+      router.push('/');
+      return;
     }
+
+    if (campaignsResult.ok) setCampaigns(campaignsResult.data);
+    if (socialResult.ok) setSocialPosts(socialResult.data);
+    if (newslettersResult.ok) setNewsletters(newslettersResult.data);
+
+    const firstError = [campaignsResult, socialResult, newslettersResult].find(r => !r.ok);
+    if (firstError && !firstError.ok) {
+      setError(firstError.error);
+      toast.error(firstError.error);
+    }
+
+    setIsLoading(false);
   };
 
   const handleGenerateCampaigns = async () => {
     if (!generateForm.productName || !generateForm.productDescription) return;
 
     setIsGenerating('campaign');
-    try {
-      const response = await fetch('/api/campaigns/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productName: generateForm.productName,
-          productDescription: generateForm.productDescription,
-        }),
-      });
+    const result = await fetchPost<{ campaigns: Campaign[] }>('/api/campaigns/generate', {
+      productName: generateForm.productName,
+      productDescription: generateForm.productDescription,
+    });
 
-      if (!response.ok) throw new Error('Failed to generate campaigns');
-
-      const data = await response.json();
-      setCampaigns(prev => [...data.campaigns, ...prev]);
+    if (result.ok) {
+      setCampaigns(prev => [...result.data.campaigns, ...prev]);
       setShowGenerateModal(null);
       setGenerateForm({ productName: '', productDescription: '', platform: 'TWITTER', tone: 'casual' });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate');
-    } finally {
-      setIsGenerating(null);
+      toast.success('Campaigns generated');
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsGenerating(null);
   };
 
   const handleGenerateSocialPosts = async () => {
     if (!generateForm.productName || !generateForm.productDescription) return;
 
     setIsGenerating('social');
-    try {
-      const response = await fetch('/api/social-posts/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productName: generateForm.productName,
-          productDescription: generateForm.productDescription,
-          platform: generateForm.platform,
-          tone: generateForm.tone,
-        }),
-      });
+    const result = await fetchPost<{ posts: SocialPost[] }>('/api/social-posts/generate', {
+      productName: generateForm.productName,
+      productDescription: generateForm.productDescription,
+      platform: generateForm.platform,
+      tone: generateForm.tone,
+    });
 
-      if (!response.ok) throw new Error('Failed to generate social posts');
-
-      const data = await response.json();
-      setSocialPosts(prev => [...data.posts, ...prev]);
+    if (result.ok) {
+      setSocialPosts(prev => [...result.data.posts, ...prev]);
       setShowGenerateModal(null);
       setGenerateForm({ productName: '', productDescription: '', platform: 'TWITTER', tone: 'casual' });
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate');
-    } finally {
-      setIsGenerating(null);
+      toast.success('Social posts generated');
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsGenerating(null);
   };
 
   const getStatusColor = (status: string) => {

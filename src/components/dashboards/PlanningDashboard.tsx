@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Map, Calendar, CheckSquare, FileText, Plus, Loader2, FolderKanban } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { EmptyState } from '../onboarding/EmptyState';
+import { fetchGet } from '@/lib/fetch';
+import { useToast } from '@/contexts/ToastContext';
 
 interface Project {
   id: string;
@@ -22,28 +24,22 @@ export default function PlanningDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
   const fetchProjects = async () => {
-    try {
-      const response = await fetch('/api/projects');
-      if (!response.ok) {
-        if (response.status === 401) {
-          router.push('/');
-          return;
-        }
-        throw new Error('Failed to fetch projects');
-      }
-      const data = await response.json();
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load projects');
-    } finally {
-      setIsLoading(false);
+    const result = await fetchGet<Project[]>('/api/projects');
+    if (result.ok) {
+      setProjects(result.data);
+    } else {
+      if (result.status === 401) { router.push('/'); return; }
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsLoading(false);
   };
 
   const getStatusColor = (status: string) => {

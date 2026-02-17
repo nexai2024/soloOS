@@ -5,6 +5,8 @@ import { Lightbulb, TrendingUp, Brain, Sparkles, Plus, Loader2, Waves, Settings,
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { EmptyState } from '../onboarding/EmptyState';
+import { fetchGet, fetchPost } from '@/lib/fetch';
+import { useToast } from '@/contexts/ToastContext';
 
 interface Idea {
   id: string;
@@ -37,6 +39,7 @@ export default function IdeationDashboard() {
   const [showBlueOceanModal, setShowBlueOceanModal] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     fetchIdeas();
@@ -44,33 +47,24 @@ export default function IdeationDashboard() {
   }, []);
 
   const fetchIdeas = async () => {
-    try {
-      const response = await fetch('/api/ideas');
-      if (!response.ok) {
-        if (response.status === 401) {
-          router.push('/');
-          return;
-        }
-        throw new Error('Failed to fetch ideas');
+    const result = await fetchGet<Idea[]>('/api/ideas');
+    if (result.ok) {
+      setIdeas(result.data);
+    } else {
+      if (result.status === 401) {
+        router.push('/');
+        return;
       }
-      const data = await response.json();
-      setIdeas(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load ideas');
-    } finally {
-      setIsLoading(false);
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsLoading(false);
   };
 
   const fetchProfile = async () => {
-    try {
-      const response = await fetch('/api/user/profile');
-      if (response.ok) {
-        const data = await response.json();
-        setUserProfile(data);
-      }
-    } catch (err) {
-      console.error('Failed to fetch profile:', err);
+    const result = await fetchGet<UserProfile>('/api/user/profile');
+    if (result.ok) {
+      setUserProfile(result.data);
     }
   };
 
@@ -398,32 +392,22 @@ function BlueOceanModal({
     setIsGenerating(true);
     setError(null);
 
-    try {
-      const response = await fetch('/api/ideas/generate-blue-ocean', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          niche: form.niche || undefined,
-          techStack: form.techStack ? form.techStack.split(',').map(s => s.trim()).filter(Boolean) : undefined,
-          interests: form.interests ? form.interests.split(',').map(s => s.trim()).filter(Boolean) : undefined,
-          targetAudience: form.targetAudience || undefined,
-          problemArea: form.problemArea || undefined,
-          constraints: form.constraints || undefined,
-          count: form.count,
-        }),
-      });
+    const result = await fetchPost<{ ideas: Idea[] }>('/api/ideas/generate-blue-ocean', {
+      niche: form.niche || undefined,
+      techStack: form.techStack ? form.techStack.split(',').map(s => s.trim()).filter(Boolean) : undefined,
+      interests: form.interests ? form.interests.split(',').map(s => s.trim()).filter(Boolean) : undefined,
+      targetAudience: form.targetAudience || undefined,
+      problemArea: form.problemArea || undefined,
+      constraints: form.constraints || undefined,
+      count: form.count,
+    });
 
-      if (!response.ok) {
-        throw new Error('Failed to generate ideas');
-      }
-
-      const data = await response.json();
-      onSuccess(data.ideas);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate ideas');
-    } finally {
-      setIsGenerating(false);
+    if (result.ok) {
+      onSuccess(result.data.ideas);
+    } else {
+      setError(result.error);
     }
+    setIsGenerating(false);
   };
 
   return (

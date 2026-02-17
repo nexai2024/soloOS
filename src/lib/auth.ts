@@ -1,5 +1,6 @@
 import { prisma } from "./prisma";
 import { cookies } from "next/headers";
+import { auth as clerkAuth, currentUser as clerkCurrentUser } from "@clerk/nextjs/server";
 import { createHash, randomBytes } from "crypto";
 
 const SESSION_COOKIE_NAME = "session_id";
@@ -91,6 +92,59 @@ export async function deleteSessionCookie() {
 }
 
 export async function getCurrentUser() {
+  // Try Clerk auth first, with try/catch so it doesn't crash if Clerk isn't configured
+  try {
+    const { userId: clerkUserId } = await clerkAuth();
+    if (clerkUserId) {
+      const clerkUser = await clerkCurrentUser();
+      const email = clerkUser?.primaryEmailAddress?.emailAddress;
+      if (!email) {
+        return null;
+      }
+
+      const existingByClerk = await prisma.user.findUnique({
+        where: { clerkId: clerkUserId },
+      });
+      if (existingByClerk) {
+        return {
+          id: existingByClerk.id,
+          email: existingByClerk.email,
+          name: existingByClerk.name,
+        };
+      }
+
+      const existingByEmail = await prisma.user.findUnique({ where: { email } });
+      if (existingByEmail) {
+        const updated = await prisma.user.update({
+          where: { id: existingByEmail.id },
+          data: { clerkId: clerkUserId },
+        });
+        return { id: updated.id, email: updated.email, name: updated.name };
+      }
+
+      const name =
+        clerkUser?.fullName ||
+        clerkUser?.firstName ||
+        email.split("@")[0];
+      const { hash, salt } = hashPassword(randomBytes(16).toString("hex"));
+      const passwordHash = `${salt}:${hash}`;
+
+      const created = await prisma.user.create({
+        data: {
+          clerkId: clerkUserId,
+          email,
+          name,
+          passwordHash,
+        },
+      });
+
+      return { id: created.id, email: created.email, name: created.name };
+    }
+  } catch {
+    // Clerk not configured or unavailable — fall through to session-based auth
+  }
+
+  // Fallback: session-cookie auth for dev without Clerk
   const sessionId = await getSessionCookie();
   if (!sessionId) {
     return null;

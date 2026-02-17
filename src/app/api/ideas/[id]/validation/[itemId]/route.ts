@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateValidationSchema = z.object({
@@ -7,69 +7,47 @@ const updateValidationSchema = z.object({
   isCompleted: z.boolean().optional()
 });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; itemId: string }> }
-) {
-  try {
-    const { itemId } = await params;
-    const item = await prisma.validationChecklist.findUnique({
-      where: { id: itemId }
-    });
+export const GET = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { itemId } = await params;
 
-    if (!item) {
-      return NextResponse.json({ error: "Validation item not found" }, { status: 404 });
-    }
+  const item = await prisma.validationChecklist.findUnique({ where: { id: itemId } });
+  if (!item) throw new ApiError("Validation item not found", 404);
 
-    return NextResponse.json(item);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch validation item" }, { status: 500 });
+  return apiSuccess(item);
+});
+
+export const PATCH = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { itemId } = await params;
+
+  const item = await prisma.validationChecklist.findUnique({ where: { id: itemId } });
+  if (!item) throw new ApiError("Validation item not found", 404);
+
+  const body = await req.json();
+  let validated;
+  try { validated = updateValidationSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; itemId: string }> }
-) {
-  try {
-    const { itemId } = await params;
-    const body = await req.json();
-    const validated = updateValidationSchema.parse(body);
+  const updated = await prisma.validationChecklist.update({
+    where: { id: itemId },
+    data: validated
+  });
 
-    const item = await prisma.validationChecklist.findUnique({ where: { id: itemId } });
-    if (!item) {
-      return NextResponse.json({ error: "Validation item not found" }, { status: 404 });
-    }
+  return apiSuccess(updated);
+});
 
-    const updated = await prisma.validationChecklist.update({
-      where: { id: itemId },
-      data: validated
-    });
+export const DELETE = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { itemId } = await params;
 
-    return NextResponse.json(updated);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
-    }
-    return NextResponse.json({ error: "Failed to update validation item" }, { status: 500 });
-  }
-}
+  const item = await prisma.validationChecklist.findUnique({ where: { id: itemId } });
+  if (!item) throw new ApiError("Validation item not found", 404);
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; itemId: string }> }
-) {
-  try {
-    const { itemId } = await params;
-    const item = await prisma.validationChecklist.findUnique({ where: { id: itemId } });
-    if (!item) {
-      return NextResponse.json({ error: "Validation item not found" }, { status: 404 });
-    }
+  await prisma.validationChecklist.delete({ where: { id: itemId } });
 
-    await prisma.validationChecklist.delete({ where: { id: itemId } });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to delete validation item" }, { status: 500 });
-  }
-}
+  return apiSuccess({ success: true });
+});

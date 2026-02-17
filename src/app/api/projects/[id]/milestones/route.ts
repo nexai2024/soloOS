@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const createMilestoneSchema = z.object({
@@ -9,77 +8,50 @@ const createMilestoneSchema = z.object({
   dueDate: z.string().datetime().optional()
 });
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const POST = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id: projectId } = await params;
 
-    const { id: projectId } = await params;
-    const project = await prisma.project.findUnique({ where: { id: projectId } });
+  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  if (!project) throw new ApiError("Project not found", 404);
+  if (project.userId !== user.id) throw new ApiError("Forbidden", 403);
 
-    if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
-
-    if (project.userId !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
-
-    const body = await req.json();
-    const validated = createMilestoneSchema.parse(body);
-
-    const milestone = await prisma.milestone.create({
-      data: {
-        title: validated.title,
-        description: validated.description,
-        dueDate: validated.dueDate ? new Date(validated.dueDate) : undefined,
-        projectId
-      }
-    });
-
-    return NextResponse.json(milestone, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
-    }
-    return NextResponse.json({ error: "Failed to create milestone" }, { status: 500 });
+  const body = await req.json();
+  let validated;
+  try { validated = createMilestoneSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const milestone = await prisma.milestone.create({
+    data: {
+      title: validated.title,
+      description: validated.description,
+      dueDate: validated.dueDate ? new Date(validated.dueDate) : undefined,
+      projectId
     }
+  });
 
-    const { id: projectId } = await params;
-    const project = await prisma.project.findUnique({ where: { id: projectId } });
+  return apiSuccess(milestone, 201);
+});
 
-    if (!project || project.userId !== user.id) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
+export const GET = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id: projectId } = await params;
 
-    const milestones = await prisma.milestone.findMany({
-      where: { projectId },
-      orderBy: { dueDate: "asc" },
-      include: {
-        Task: {
-          select: { id: true, title: true, status: true }
-        }
+  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  if (!project || project.userId !== user.id) throw new ApiError("Project not found", 404);
+
+  const milestones = await prisma.milestone.findMany({
+    where: { projectId },
+    orderBy: { dueDate: "asc" },
+    include: {
+      Task: {
+        select: { id: true, title: true, status: true }
       }
-    });
+    }
+  });
 
-    return NextResponse.json(milestones);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch milestones" }, { status: 500 });
-  }
-}
+  return apiSuccess(milestones);
+});

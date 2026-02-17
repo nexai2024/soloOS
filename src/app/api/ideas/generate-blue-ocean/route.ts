@@ -1,60 +1,55 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { aiComplete, AI_MODEL_ADVANCED } from "@/lib/ai-config";
 import { z } from "zod";
 
 const generateBlueOceanSchema = z.object({
-  // Optional overrides - if not provided, uses user profile
   niche: z.string().optional(),
   techStack: z.array(z.string()).optional(),
   interests: z.array(z.string()).optional(),
   targetAudience: z.string().optional(),
-  // Additional context
   problemArea: z.string().optional(),
   constraints: z.string().optional(),
   count: z.number().min(1).max(5).optional().default(3),
 });
 
-export async function POST(req: NextRequest) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const POST = withErrorHandler(async (req) => {
+  const user = await requireAuth();
 
-    // Fetch user profile for defaults
-    const userProfile = await prisma.user.findUnique({
-      where: { id: user.id },
-      select: {
-        niche: true,
-        techStack: true,
-        interests: true,
-        experience: true,
-        targetAudience: true,
-      },
-    });
+  const userProfile = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: {
+      niche: true,
+      techStack: true,
+      interests: true,
+      experience: true,
+      targetAudience: true,
+    },
+  });
 
-    const body = await req.json();
-    const validated = generateBlueOceanSchema.parse(body);
+  const body = await req.json();
+  let validated;
+  try { validated = generateBlueOceanSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
+  }
 
-    // Merge user profile with request overrides
-    const context = {
-      niche: validated.niche || userProfile?.niche || "General Tech",
-      techStack: validated.techStack?.length ? validated.techStack : (userProfile?.techStack || []),
-      interests: validated.interests?.length ? validated.interests : (userProfile?.interests || []),
-      targetAudience: validated.targetAudience || userProfile?.targetAudience || "Small businesses and indie developers",
-      experience: userProfile?.experience || "INTERMEDIATE",
-      problemArea: validated.problemArea,
-      constraints: validated.constraints,
-    };
+  const context = {
+    niche: validated.niche || userProfile?.niche || "General Tech",
+    techStack: validated.techStack?.length ? validated.techStack : (userProfile?.techStack || []),
+    interests: validated.interests?.length ? validated.interests : (userProfile?.interests || []),
+    targetAudience: validated.targetAudience || userProfile?.targetAudience || "Small businesses and indie developers",
+    experience: userProfile?.experience || "INTERMEDIATE",
+    problemArea: validated.problemArea,
+    constraints: validated.constraints,
+  };
 
-    // Check if we have enough context
-    const hasProfile = context.niche !== "General Tech" ||
-                       context.techStack.length > 0 ||
-                       context.interests.length > 0;
+  const hasProfile = context.niche !== "General Tech" ||
+                     context.techStack.length > 0 ||
+                     context.interests.length > 0;
 
-    const systemPrompt = `You are a Blue Ocean Strategy expert and startup idea generator.
+  const systemPrompt = `You are a Blue Ocean Strategy expert and startup idea generator.
 
 Your job is to generate innovative, unique business ideas that create new market spaces rather than competing in existing ones. Blue Ocean ideas should:
 1. Create uncontested market space
@@ -73,7 +68,7 @@ For each idea, provide a detailed analysis including potential challenges and wh
 
 Always return valid JSON.`;
 
-    const prompt = `Generate ${validated.count} innovative Blue Ocean business ideas based on the following profile:
+  const prompt = `Generate ${validated.count} innovative Blue Ocean business ideas based on the following profile:
 
 **Builder Profile:**
 - Niche/Industry Focus: ${context.niche}
@@ -97,31 +92,52 @@ For each idea, provide:
 
 Return a JSON object with an "ideas" array containing objects with these fields.`;
 
-    const response = await aiComplete({
-      prompt,
-      systemPrompt,
-      model: AI_MODEL_ADVANCED,
-      jsonMode: true,
-    });
+  const response = await aiComplete({
+    prompt,
+    systemPrompt,
+    model: AI_MODEL_ADVANCED,
+    jsonMode: true,
+  });
 
-    const parsed = JSON.parse(response);
-    const generatedIdeas = parsed.ideas || [];
+  const parsed = JSON.parse(response);
+  const generatedIdeas = Array.isArray(parsed.ideas) ? parsed.ideas : [];
 
-    // Optionally save ideas to database
-    const savedIdeas = await Promise.all(
-      generatedIdeas.map(async (idea: {
-        title: string;
-        description: string;
-        blueOceanAnalysis?: string;
-        targetUsers?: string;
-        techApproach?: string;
-        monetization?: string;
-        mvpScope?: string;
-        challenges?: string;
-        marketGap?: string;
-      }) => {
-        // Create a rich description that includes the Blue Ocean analysis
-        const fullDescription = `${idea.description}
+  const normalizedIdeas = generatedIdeas
+    .map((idea: {
+      title: string;
+      description: string;
+      blueOceanAnalysis?: string;
+      targetUsers?: string;
+      techApproach?: string;
+      monetization?: string;
+      mvpScope?: string;
+      challenges?: string;
+      marketGap?: string;
+    }) => ({
+      ...idea,
+      title: idea.title?.trim() || "",
+      description: idea.description?.trim() || "",
+    }))
+    .filter((idea: { description: string }) => idea.description.length > 0);
+
+  const completedIdeas = normalizedIdeas.map((idea: { title: string }, index: number) => ({
+    ...idea,
+    title: idea.title.length > 0 ? idea.title : `Untitled Idea #${index + 1}`,
+  }));
+
+  const savedIdeas = await Promise.all(
+    completedIdeas.map(async (idea: {
+      title: string;
+      description: string;
+      blueOceanAnalysis?: string;
+      targetUsers?: string;
+      techApproach?: string;
+      monetization?: string;
+      mvpScope?: string;
+      challenges?: string;
+      marketGap?: string;
+    }) => {
+      const fullDescription = `${idea.description}
 
 **Blue Ocean Analysis:** ${idea.blueOceanAnalysis || "N/A"}
 
@@ -137,41 +153,28 @@ Return a JSON object with an "ideas" array containing objects with these fields.
 
 **Key Challenges:** ${idea.challenges || "N/A"}`;
 
-        return prisma.idea.create({
-          data: {
-            title: idea.title,
-            description: fullDescription,
-            status: "BRAINSTORM",
-            userId: user.id,
-            marketEvaluation: idea.blueOceanAnalysis,
-          },
-        });
-      })
-    );
+      return prisma.idea.create({
+        data: {
+          title: idea.title,
+          description: fullDescription,
+          status: "BRAINSTORM",
+          userId: user.id,
+          marketEvaluation: idea.blueOceanAnalysis,
+        },
+      });
+    })
+  );
 
-    return NextResponse.json({
-      message: `Generated ${savedIdeas.length} Blue Ocean ideas`,
-      ideas: savedIdeas,
-      generatedDetails: generatedIdeas, // Include full AI response for UI
-      profileUsed: {
-        niche: context.niche,
-        techStack: context.techStack,
-        interests: context.interests,
-        targetAudience: context.targetAudience,
-        hasCompleteProfile: hasProfile,
-      },
-    }, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to generate Blue Ocean ideas:", error);
-    return NextResponse.json(
-      { error: "Failed to generate Blue Ocean ideas" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess({
+    message: `Generated ${savedIdeas.length} Blue Ocean ideas`,
+    ideas: savedIdeas,
+    generatedDetails: generatedIdeas,
+    profileUsed: {
+      niche: context.niche,
+      techStack: context.techStack,
+      interests: context.interests,
+      targetAudience: context.targetAudience,
+      hasCompleteProfile: hasProfile,
+    },
+  }, 201);
+});

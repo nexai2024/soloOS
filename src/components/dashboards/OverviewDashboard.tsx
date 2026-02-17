@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { EmptyState } from '../onboarding/EmptyState';
+import { fetchGet } from '@/lib/fetch';
+import { useToast } from '@/contexts/ToastContext';
 
 interface OverviewStats {
   stats: {
@@ -56,28 +58,27 @@ export default function OverviewDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     fetchOverviewData();
   }, []);
 
   const fetchOverviewData = async () => {
-    try {
-      const response = await fetch('/api/stats/overview');
-      if (!response.ok) {
-        if (response.status === 401) {
-          router.push('/');
-          return;
-        }
-        throw new Error('Failed to fetch overview data');
-      }
-      const result = await response.json();
-      setData(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
-    } finally {
-      setIsLoading(false);
+    const result = await fetchGet<OverviewStats>('/api/stats/overview');
+
+    if (result.status === 401) {
+      router.push('/');
+      return;
     }
+
+    if (result.ok) {
+      setData(result.data);
+    } else {
+      setError(result.error);
+      toast.error(result.error);
+    }
+    setIsLoading(false);
   };
 
   const formatTimeAgo = (dateString: string) => {

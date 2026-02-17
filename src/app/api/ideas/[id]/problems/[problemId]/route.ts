@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateProblemSchema = z.object({
@@ -8,69 +8,47 @@ const updateProblemSchema = z.object({
   frequency: z.enum(["RARE", "OCCASIONAL", "FREQUENT", "CONSTANT"]).optional()
 });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; problemId: string }> }
-) {
-  try {
-    const { problemId } = await params;
-    const problem = await prisma.problemStatement.findUnique({
-      where: { id: problemId }
-    });
+export const GET = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { problemId } = await params;
 
-    if (!problem) {
-      return NextResponse.json({ error: "Problem statement not found" }, { status: 404 });
-    }
+  const problem = await prisma.problemStatement.findUnique({ where: { id: problemId } });
+  if (!problem) throw new ApiError("Problem statement not found", 404);
 
-    return NextResponse.json(problem);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch problem statement" }, { status: 500 });
+  return apiSuccess(problem);
+});
+
+export const PATCH = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { problemId } = await params;
+
+  const problem = await prisma.problemStatement.findUnique({ where: { id: problemId } });
+  if (!problem) throw new ApiError("Problem statement not found", 404);
+
+  const body = await req.json();
+  let validated;
+  try { validated = updateProblemSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; problemId: string }> }
-) {
-  try {
-    const { problemId } = await params;
-    const body = await req.json();
-    const validated = updateProblemSchema.parse(body);
+  const updated = await prisma.problemStatement.update({
+    where: { id: problemId },
+    data: validated
+  });
 
-    const problem = await prisma.problemStatement.findUnique({ where: { id: problemId } });
-    if (!problem) {
-      return NextResponse.json({ error: "Problem statement not found" }, { status: 404 });
-    }
+  return apiSuccess(updated);
+});
 
-    const updated = await prisma.problemStatement.update({
-      where: { id: problemId },
-      data: validated
-    });
+export const DELETE = withErrorHandler(async (req, { params }) => {
+  await requireAuth();
+  const { problemId } = await params;
 
-    return NextResponse.json(updated);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
-    }
-    return NextResponse.json({ error: "Failed to update problem statement" }, { status: 500 });
-  }
-}
+  const problem = await prisma.problemStatement.findUnique({ where: { id: problemId } });
+  if (!problem) throw new ApiError("Problem statement not found", 404);
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string; problemId: string }> }
-) {
-  try {
-    const { problemId } = await params;
-    const problem = await prisma.problemStatement.findUnique({ where: { id: problemId } });
-    if (!problem) {
-      return NextResponse.json({ error: "Problem statement not found" }, { status: 404 });
-    }
+  await prisma.problemStatement.delete({ where: { id: problemId } });
 
-    await prisma.problemStatement.delete({ where: { id: problemId } });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to delete problem statement" }, { status: 500 });
-  }
-}
+  return apiSuccess({ success: true });
+});

@@ -1,22 +1,61 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
+import { logger } from "@/lib/logger";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+export const POST = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
+
+  const idea = await prisma.idea.findUnique({
+    where: { id },
+    include: {
+      personas: true,
+      problemStatements: true,
+      validationItems: true,
+      competitors: true
+    }
+  });
+
+  if (!idea) throw new ApiError("Idea not found", 404);
+  if (idea.userId !== user.id) throw new ApiError("Unauthorized", 403);
+  if (idea.status === "PROMOTED") throw new ApiError("Idea already promoted", 400);
+
+  const result = await prisma.$transaction(async (tx) => {
+    const project = await tx.project.create({
+      data: {
+        title: idea.title,
+        description: idea.description,
+        userId: user.id,
+        ideaId: idea.id,
+        status: "PLANNING"
+      }
+    });
+
+    if (idea.validationItems.length > 0) {
+      await tx.milestone.create({
+        data: {
+          title: "MVP Launch",
+          description: "Initial product launch milestone",
+          projectId: project.id,
+          status: "NOT_STARTED"
+        }
+      });
     }
 
-    const { id } = await params;
+    for (const problem of idea.problemStatements) {
+      await tx.feature.create({
+        data: {
+          title: `Solve: ${problem.statement.substring(0, 50)}${problem.statement.length > 50 ? '...' : ''}`,
+          description: problem.statement,
+          type: problem.severity === "CRITICAL" || problem.severity === "HIGH" ? "MVP" : "NICE_TO_HAVE",
+          projectId: project.id
+        }
+      });
+    }
 
-    // Get the idea first
-    const idea = await prisma.idea.findUnique({
+    const updatedIdea = await tx.idea.update({
       where: { id },
+      data: { status: "PROMOTED" },
       include: {
         personas: true,
         problemStatements: true,
@@ -25,74 +64,9 @@ export async function POST(
       }
     });
 
-    if (!idea) {
-      return NextResponse.json({ error: "Idea not found" }, { status: 404 });
-    }
+    return { idea: updatedIdea, project };
+  });
 
-    if (idea.userId !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
-
-    // Check if already promoted
-    if (idea.status === "PROMOTED") {
-      return NextResponse.json({ error: "Idea already promoted" }, { status: 400 });
-    }
-
-    // Create project from idea in a transaction
-    const result = await prisma.$transaction(async (tx) => {
-      // Create the project
-      const project = await tx.project.create({
-        data: {
-          title: idea.title,
-          description: idea.description,
-          userId: user.id,
-          ideaId: idea.id,
-          status: "PLANNING"
-        }
-      });
-
-      // Create initial milestone based on validation items
-      if (idea.validationItems.length > 0) {
-        await tx.milestone.create({
-          data: {
-            title: "MVP Launch",
-            description: "Initial product launch milestone",
-            projectId: project.id,
-            status: "NOT_STARTED"
-          }
-        });
-      }
-
-      // Create features from problem statements
-      for (const problem of idea.problemStatements) {
-        await tx.feature.create({
-          data: {
-            title: `Solve: ${problem.statement.substring(0, 50)}${problem.statement.length > 50 ? '...' : ''}`,
-            description: problem.statement,
-            type: problem.severity === "CRITICAL" || problem.severity === "HIGH" ? "MVP" : "NICE_TO_HAVE",
-            projectId: project.id
-          }
-        });
-      }
-
-      // Update idea status
-      const updatedIdea = await tx.idea.update({
-        where: { id },
-        data: { status: "PROMOTED" },
-        include: {
-          personas: true,
-          problemStatements: true,
-          validationItems: true,
-          competitors: true
-        }
-      });
-
-      return { idea: updatedIdea, project };
-    });
-
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error("Promotion error:", error);
-    return NextResponse.json({ error: "Promotion failed" }, { status: 500 });
-  }
-}
+  logger.info("Idea promoted to project", { route: `/api/ideas/${id}/promote`, userId: user.id });
+  return apiSuccess(result);
+});

@@ -11,7 +11,8 @@ export default async function IdeaDetailPage({ params }: { params: Promise<{ id:
       personas: true,
       problemStatements: true,
       validationItems: true,
-      competitors: true
+      competitors: true,
+      scoreImprovements: true
     }
   });
 

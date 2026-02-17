@@ -16,6 +16,8 @@ import {
   Lightbulb,
   Info,
 } from "lucide-react";
+import { ScoreImprovement } from "@/generated/prisma/client";
+import { ScoreImprovementChecklist } from "./ScoreImprovementChecklist";
 
 /**
  * SCORING CATEGORIES & WEIGHTS
@@ -76,6 +78,13 @@ interface AIScoreBreakdownProps {
   complexity?: number;
   monetization?: number;
   composite?: number;
+
+  // Improvement suggestions
+  improvements?: ScoreImprovement[];
+  ideaId?: string;
+  onImprovementsChange?: (improvements: ScoreImprovement[]) => void;
+  onRescore?: () => void;
+  isScoring?: boolean;
 }
 
 export function AIScoreBreakdown(props: AIScoreBreakdownProps) {
@@ -452,6 +461,17 @@ export function AIScoreBreakdown(props: AIScoreBreakdownProps) {
             </div>
           )}
         </div>
+      )}
+
+      {/* Score Improvement Suggestions */}
+      {props.improvements && props.improvements.length > 0 && props.ideaId && props.onImprovementsChange && props.onRescore && (
+        <ScoreImprovementChecklist
+          improvements={props.improvements}
+          ideaId={props.ideaId}
+          onImprovementsChange={props.onImprovementsChange}
+          onRescore={props.onRescore}
+          isScoring={props.isScoring ?? false}
+        />
       )}
 
       {/* Methodology Note */}

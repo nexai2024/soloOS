@@ -29,6 +29,11 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  */
 export type Idea = $Result.DefaultSelection<Prisma.$IdeaPayload>
 /**
+ * Model ScoreImprovement
+ * 
+ */
+export type ScoreImprovement = $Result.DefaultSelection<Prisma.$ScoreImprovementPayload>
+/**
  * Model Persona
  * 
  */
@@ -352,6 +357,15 @@ export const WaitlistStatus: {
 
 export type WaitlistStatus = (typeof WaitlistStatus)[keyof typeof WaitlistStatus]
 
+
+export const ImprovementStatus: {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  DISMISSED: 'DISMISSED'
+};
+
+export type ImprovementStatus = (typeof ImprovementStatus)[keyof typeof ImprovementStatus]
+
 }
 
 export type IdeaStatus = $Enums.IdeaStatus
@@ -425,6 +439,10 @@ export const SocialPostStatus: typeof $Enums.SocialPostStatus
 export type WaitlistStatus = $Enums.WaitlistStatus
 
 export const WaitlistStatus: typeof $Enums.WaitlistStatus
+
+export type ImprovementStatus = $Enums.ImprovementStatus
+
+export const ImprovementStatus: typeof $Enums.ImprovementStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -572,6 +590,16 @@ export class PrismaClient<
     * ```
     */
   get idea(): Prisma.IdeaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scoreImprovement`: Exposes CRUD operations for the **ScoreImprovement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScoreImprovements
+    * const scoreImprovements = await prisma.scoreImprovement.findMany()
+    * ```
+    */
+  get scoreImprovement(): Prisma.ScoreImprovementDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.persona`: Exposes CRUD operations for the **Persona** model.
@@ -1269,6 +1297,7 @@ export namespace Prisma {
     User: 'User',
     Session: 'Session',
     Idea: 'Idea',
+    ScoreImprovement: 'ScoreImprovement',
     Persona: 'Persona',
     ProblemStatement: 'ProblemStatement',
     ValidationChecklist: 'ValidationChecklist',
@@ -1310,7 +1339,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "idea" | "persona" | "problemStatement" | "validationChecklist" | "competitorAnalysis" | "project" | "milestone" | "feature" | "task" | "adCampaign" | "contact" | "contactEvent" | "contactNote" | "contactSegment" | "developmentPhase" | "feedback" | "gitHubLink" | "newsletterCampaign" | "phaseTask" | "product" | "productChangelog" | "projectDoc" | "projectPersona" | "requirement" | "socialPost" | "timeEntry" | "waitlistEntry"
+      modelProps: "user" | "session" | "idea" | "scoreImprovement" | "persona" | "problemStatement" | "validationChecklist" | "competitorAnalysis" | "project" | "milestone" | "feature" | "task" | "adCampaign" | "contact" | "contactEvent" | "contactNote" | "contactSegment" | "developmentPhase" | "feedback" | "gitHubLink" | "newsletterCampaign" | "phaseTask" | "product" | "productChangelog" | "projectDoc" | "projectPersona" | "requirement" | "socialPost" | "timeEntry" | "waitlistEntry"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1533,6 +1562,80 @@ export namespace Prisma {
           count: {
             args: Prisma.IdeaCountArgs<ExtArgs>
             result: $Utils.Optional<IdeaCountAggregateOutputType> | number
+          }
+        }
+      }
+      ScoreImprovement: {
+        payload: Prisma.$ScoreImprovementPayload<ExtArgs>
+        fields: Prisma.ScoreImprovementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScoreImprovementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScoreImprovementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          findFirst: {
+            args: Prisma.ScoreImprovementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScoreImprovementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          findMany: {
+            args: Prisma.ScoreImprovementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>[]
+          }
+          create: {
+            args: Prisma.ScoreImprovementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          createMany: {
+            args: Prisma.ScoreImprovementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScoreImprovementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>[]
+          }
+          delete: {
+            args: Prisma.ScoreImprovementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          update: {
+            args: Prisma.ScoreImprovementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScoreImprovementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScoreImprovementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScoreImprovementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScoreImprovementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScoreImprovementPayload>
+          }
+          aggregate: {
+            args: Prisma.ScoreImprovementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScoreImprovement>
+          }
+          groupBy: {
+            args: Prisma.ScoreImprovementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScoreImprovementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScoreImprovementCountArgs<ExtArgs>
+            result: $Utils.Optional<ScoreImprovementCountAggregateOutputType> | number
           }
         }
       }
@@ -3571,6 +3674,7 @@ export namespace Prisma {
     user?: UserOmit
     session?: SessionOmit
     idea?: IdeaOmit
+    scoreImprovement?: ScoreImprovementOmit
     persona?: PersonaOmit
     problemStatement?: ProblemStatementOmit
     validationChecklist?: ValidationChecklistOmit
@@ -3729,6 +3833,7 @@ export namespace Prisma {
     competitors: number
     personas: number
     problemStatements: number
+    scoreImprovements: number
     validationItems: number
   }
 
@@ -3736,6 +3841,7 @@ export namespace Prisma {
     competitors?: boolean | IdeaCountOutputTypeCountCompetitorsArgs
     personas?: boolean | IdeaCountOutputTypeCountPersonasArgs
     problemStatements?: boolean | IdeaCountOutputTypeCountProblemStatementsArgs
+    scoreImprovements?: boolean | IdeaCountOutputTypeCountScoreImprovementsArgs
     validationItems?: boolean | IdeaCountOutputTypeCountValidationItemsArgs
   }
 
@@ -3769,6 +3875,13 @@ export namespace Prisma {
    */
   export type IdeaCountOutputTypeCountProblemStatementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProblemStatementWhereInput
+  }
+
+  /**
+   * IdeaCountOutputType without action
+   */
+  export type IdeaCountOutputTypeCountScoreImprovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScoreImprovementWhereInput
   }
 
   /**
@@ -4169,6 +4282,7 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
+    clerkId: string | null
     email: string | null
     name: string | null
     passwordHash: string | null
@@ -4182,6 +4296,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: string | null
+    clerkId: string | null
     email: string | null
     name: string | null
     passwordHash: string | null
@@ -4195,6 +4310,7 @@ export namespace Prisma {
 
   export type UserCountAggregateOutputType = {
     id: number
+    clerkId: number
     email: number
     name: number
     passwordHash: number
@@ -4212,6 +4328,7 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    clerkId?: true
     email?: true
     name?: true
     passwordHash?: true
@@ -4225,6 +4342,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
+    clerkId?: true
     email?: true
     name?: true
     passwordHash?: true
@@ -4238,6 +4356,7 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
+    clerkId?: true
     email?: true
     name?: true
     passwordHash?: true
@@ -4326,6 +4445,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
+    clerkId: string | null
     email: string
     name: string
     passwordHash: string
@@ -4358,6 +4478,7 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    clerkId?: boolean
     email?: boolean
     name?: boolean
     passwordHash?: boolean
@@ -4377,6 +4498,7 @@ export namespace Prisma {
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    clerkId?: boolean
     email?: boolean
     name?: boolean
     passwordHash?: boolean
@@ -4392,6 +4514,7 @@ export namespace Prisma {
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    clerkId?: boolean
     email?: boolean
     name?: boolean
     passwordHash?: boolean
@@ -4407,6 +4530,7 @@ export namespace Prisma {
 
   export type UserSelectScalar = {
     id?: boolean
+    clerkId?: boolean
     email?: boolean
     name?: boolean
     passwordHash?: boolean
@@ -4420,7 +4544,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "niche" | "techStack" | "interests" | "experience" | "targetAudience" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "name" | "passwordHash" | "niche" | "techStack" | "interests" | "experience" | "targetAudience" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     ideas?: boolean | User$ideasArgs<ExtArgs>
@@ -4439,6 +4563,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      clerkId: string | null
       email: string
       name: string
       passwordHash: string
@@ -4877,6 +5002,7 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
+    readonly clerkId: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
@@ -6858,6 +6984,7 @@ export namespace Prisma {
     personas?: boolean | Idea$personasArgs<ExtArgs>
     problemStatements?: boolean | Idea$problemStatementsArgs<ExtArgs>
     project?: boolean | Idea$projectArgs<ExtArgs>
+    scoreImprovements?: boolean | Idea$scoreImprovementsArgs<ExtArgs>
     validationItems?: boolean | Idea$validationItemsArgs<ExtArgs>
     _count?: boolean | IdeaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["idea"]>
@@ -6979,6 +7106,7 @@ export namespace Prisma {
     personas?: boolean | Idea$personasArgs<ExtArgs>
     problemStatements?: boolean | Idea$problemStatementsArgs<ExtArgs>
     project?: boolean | Idea$projectArgs<ExtArgs>
+    scoreImprovements?: boolean | Idea$scoreImprovementsArgs<ExtArgs>
     validationItems?: boolean | Idea$validationItemsArgs<ExtArgs>
     _count?: boolean | IdeaCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -6997,6 +7125,7 @@ export namespace Prisma {
       personas: Prisma.$PersonaPayload<ExtArgs>[]
       problemStatements: Prisma.$ProblemStatementPayload<ExtArgs>[]
       project: Prisma.$ProjectPayload<ExtArgs> | null
+      scoreImprovements: Prisma.$ScoreImprovementPayload<ExtArgs>[]
       validationItems: Prisma.$ValidationChecklistPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7432,6 +7561,7 @@ export namespace Prisma {
     personas<T extends Idea$personasArgs<ExtArgs> = {}>(args?: Subset<T, Idea$personasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     problemStatements<T extends Idea$problemStatementsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$problemStatementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemStatementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     project<T extends Idea$projectArgs<ExtArgs> = {}>(args?: Subset<T, Idea$projectArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    scoreImprovements<T extends Idea$scoreImprovementsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$scoreImprovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     validationItems<T extends Idea$validationItemsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$validationItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ValidationChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8001,6 +8131,30 @@ export namespace Prisma {
   }
 
   /**
+   * Idea.scoreImprovements
+   */
+  export type Idea$scoreImprovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    where?: ScoreImprovementWhereInput
+    orderBy?: ScoreImprovementOrderByWithRelationInput | ScoreImprovementOrderByWithRelationInput[]
+    cursor?: ScoreImprovementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ScoreImprovementScalarFieldEnum | ScoreImprovementScalarFieldEnum[]
+  }
+
+  /**
    * Idea.validationItems
    */
   export type Idea$validationItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8040,6 +8194,1172 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: IdeaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ScoreImprovement
+   */
+
+  export type AggregateScoreImprovement = {
+    _count: ScoreImprovementCountAggregateOutputType | null
+    _avg: ScoreImprovementAvgAggregateOutputType | null
+    _sum: ScoreImprovementSumAggregateOutputType | null
+    _min: ScoreImprovementMinAggregateOutputType | null
+    _max: ScoreImprovementMaxAggregateOutputType | null
+  }
+
+  export type ScoreImprovementAvgAggregateOutputType = {
+    estimatedImpact: number | null
+  }
+
+  export type ScoreImprovementSumAggregateOutputType = {
+    estimatedImpact: number | null
+  }
+
+  export type ScoreImprovementMinAggregateOutputType = {
+    id: string | null
+    suggestion: string | null
+    category: string | null
+    estimatedImpact: number | null
+    status: $Enums.ImprovementStatus | null
+    completedAt: Date | null
+    dismissedAt: Date | null
+    ideaId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoreImprovementMaxAggregateOutputType = {
+    id: string | null
+    suggestion: string | null
+    category: string | null
+    estimatedImpact: number | null
+    status: $Enums.ImprovementStatus | null
+    completedAt: Date | null
+    dismissedAt: Date | null
+    ideaId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScoreImprovementCountAggregateOutputType = {
+    id: number
+    suggestion: number
+    category: number
+    targetDimensions: number
+    estimatedImpact: number
+    status: number
+    completedAt: number
+    dismissedAt: number
+    ideaId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScoreImprovementAvgAggregateInputType = {
+    estimatedImpact?: true
+  }
+
+  export type ScoreImprovementSumAggregateInputType = {
+    estimatedImpact?: true
+  }
+
+  export type ScoreImprovementMinAggregateInputType = {
+    id?: true
+    suggestion?: true
+    category?: true
+    estimatedImpact?: true
+    status?: true
+    completedAt?: true
+    dismissedAt?: true
+    ideaId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoreImprovementMaxAggregateInputType = {
+    id?: true
+    suggestion?: true
+    category?: true
+    estimatedImpact?: true
+    status?: true
+    completedAt?: true
+    dismissedAt?: true
+    ideaId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScoreImprovementCountAggregateInputType = {
+    id?: true
+    suggestion?: true
+    category?: true
+    targetDimensions?: true
+    estimatedImpact?: true
+    status?: true
+    completedAt?: true
+    dismissedAt?: true
+    ideaId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScoreImprovementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoreImprovement to aggregate.
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreImprovements to fetch.
+     */
+    orderBy?: ScoreImprovementOrderByWithRelationInput | ScoreImprovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScoreImprovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreImprovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreImprovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScoreImprovements
+    **/
+    _count?: true | ScoreImprovementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScoreImprovementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScoreImprovementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScoreImprovementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScoreImprovementMaxAggregateInputType
+  }
+
+  export type GetScoreImprovementAggregateType<T extends ScoreImprovementAggregateArgs> = {
+        [P in keyof T & keyof AggregateScoreImprovement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScoreImprovement[P]>
+      : GetScalarType<T[P], AggregateScoreImprovement[P]>
+  }
+
+
+
+
+  export type ScoreImprovementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScoreImprovementWhereInput
+    orderBy?: ScoreImprovementOrderByWithAggregationInput | ScoreImprovementOrderByWithAggregationInput[]
+    by: ScoreImprovementScalarFieldEnum[] | ScoreImprovementScalarFieldEnum
+    having?: ScoreImprovementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScoreImprovementCountAggregateInputType | true
+    _avg?: ScoreImprovementAvgAggregateInputType
+    _sum?: ScoreImprovementSumAggregateInputType
+    _min?: ScoreImprovementMinAggregateInputType
+    _max?: ScoreImprovementMaxAggregateInputType
+  }
+
+  export type ScoreImprovementGroupByOutputType = {
+    id: string
+    suggestion: string
+    category: string
+    targetDimensions: string[]
+    estimatedImpact: number
+    status: $Enums.ImprovementStatus
+    completedAt: Date | null
+    dismissedAt: Date | null
+    ideaId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ScoreImprovementCountAggregateOutputType | null
+    _avg: ScoreImprovementAvgAggregateOutputType | null
+    _sum: ScoreImprovementSumAggregateOutputType | null
+    _min: ScoreImprovementMinAggregateOutputType | null
+    _max: ScoreImprovementMaxAggregateOutputType | null
+  }
+
+  type GetScoreImprovementGroupByPayload<T extends ScoreImprovementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScoreImprovementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScoreImprovementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScoreImprovementGroupByOutputType[P]>
+            : GetScalarType<T[P], ScoreImprovementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScoreImprovementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    suggestion?: boolean
+    category?: boolean
+    targetDimensions?: boolean
+    estimatedImpact?: boolean
+    status?: boolean
+    completedAt?: boolean
+    dismissedAt?: boolean
+    ideaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreImprovement"]>
+
+  export type ScoreImprovementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    suggestion?: boolean
+    category?: boolean
+    targetDimensions?: boolean
+    estimatedImpact?: boolean
+    status?: boolean
+    completedAt?: boolean
+    dismissedAt?: boolean
+    ideaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreImprovement"]>
+
+  export type ScoreImprovementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    suggestion?: boolean
+    category?: boolean
+    targetDimensions?: boolean
+    estimatedImpact?: boolean
+    status?: boolean
+    completedAt?: boolean
+    dismissedAt?: boolean
+    ideaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["scoreImprovement"]>
+
+  export type ScoreImprovementSelectScalar = {
+    id?: boolean
+    suggestion?: boolean
+    category?: boolean
+    targetDimensions?: boolean
+    estimatedImpact?: boolean
+    status?: boolean
+    completedAt?: boolean
+    dismissedAt?: boolean
+    ideaId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ScoreImprovementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "suggestion" | "category" | "targetDimensions" | "estimatedImpact" | "status" | "completedAt" | "dismissedAt" | "ideaId" | "createdAt" | "updatedAt", ExtArgs["result"]["scoreImprovement"]>
+  export type ScoreImprovementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type ScoreImprovementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type ScoreImprovementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+
+  export type $ScoreImprovementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScoreImprovement"
+    objects: {
+      idea: Prisma.$IdeaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      suggestion: string
+      category: string
+      targetDimensions: string[]
+      estimatedImpact: number
+      status: $Enums.ImprovementStatus
+      completedAt: Date | null
+      dismissedAt: Date | null
+      ideaId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scoreImprovement"]>
+    composites: {}
+  }
+
+  type ScoreImprovementGetPayload<S extends boolean | null | undefined | ScoreImprovementDefaultArgs> = $Result.GetResult<Prisma.$ScoreImprovementPayload, S>
+
+  type ScoreImprovementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScoreImprovementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScoreImprovementCountAggregateInputType | true
+    }
+
+  export interface ScoreImprovementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScoreImprovement'], meta: { name: 'ScoreImprovement' } }
+    /**
+     * Find zero or one ScoreImprovement that matches the filter.
+     * @param {ScoreImprovementFindUniqueArgs} args - Arguments to find a ScoreImprovement
+     * @example
+     * // Get one ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScoreImprovementFindUniqueArgs>(args: SelectSubset<T, ScoreImprovementFindUniqueArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScoreImprovement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScoreImprovementFindUniqueOrThrowArgs} args - Arguments to find a ScoreImprovement
+     * @example
+     * // Get one ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScoreImprovementFindUniqueOrThrowArgs>(args: SelectSubset<T, ScoreImprovementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScoreImprovement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementFindFirstArgs} args - Arguments to find a ScoreImprovement
+     * @example
+     * // Get one ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScoreImprovementFindFirstArgs>(args?: SelectSubset<T, ScoreImprovementFindFirstArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScoreImprovement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementFindFirstOrThrowArgs} args - Arguments to find a ScoreImprovement
+     * @example
+     * // Get one ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScoreImprovementFindFirstOrThrowArgs>(args?: SelectSubset<T, ScoreImprovementFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScoreImprovements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScoreImprovements
+     * const scoreImprovements = await prisma.scoreImprovement.findMany()
+     * 
+     * // Get first 10 ScoreImprovements
+     * const scoreImprovements = await prisma.scoreImprovement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scoreImprovementWithIdOnly = await prisma.scoreImprovement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScoreImprovementFindManyArgs>(args?: SelectSubset<T, ScoreImprovementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScoreImprovement.
+     * @param {ScoreImprovementCreateArgs} args - Arguments to create a ScoreImprovement.
+     * @example
+     * // Create one ScoreImprovement
+     * const ScoreImprovement = await prisma.scoreImprovement.create({
+     *   data: {
+     *     // ... data to create a ScoreImprovement
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScoreImprovementCreateArgs>(args: SelectSubset<T, ScoreImprovementCreateArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScoreImprovements.
+     * @param {ScoreImprovementCreateManyArgs} args - Arguments to create many ScoreImprovements.
+     * @example
+     * // Create many ScoreImprovements
+     * const scoreImprovement = await prisma.scoreImprovement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScoreImprovementCreateManyArgs>(args?: SelectSubset<T, ScoreImprovementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScoreImprovements and returns the data saved in the database.
+     * @param {ScoreImprovementCreateManyAndReturnArgs} args - Arguments to create many ScoreImprovements.
+     * @example
+     * // Create many ScoreImprovements
+     * const scoreImprovement = await prisma.scoreImprovement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScoreImprovements and only return the `id`
+     * const scoreImprovementWithIdOnly = await prisma.scoreImprovement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScoreImprovementCreateManyAndReturnArgs>(args?: SelectSubset<T, ScoreImprovementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScoreImprovement.
+     * @param {ScoreImprovementDeleteArgs} args - Arguments to delete one ScoreImprovement.
+     * @example
+     * // Delete one ScoreImprovement
+     * const ScoreImprovement = await prisma.scoreImprovement.delete({
+     *   where: {
+     *     // ... filter to delete one ScoreImprovement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScoreImprovementDeleteArgs>(args: SelectSubset<T, ScoreImprovementDeleteArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScoreImprovement.
+     * @param {ScoreImprovementUpdateArgs} args - Arguments to update one ScoreImprovement.
+     * @example
+     * // Update one ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScoreImprovementUpdateArgs>(args: SelectSubset<T, ScoreImprovementUpdateArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScoreImprovements.
+     * @param {ScoreImprovementDeleteManyArgs} args - Arguments to filter ScoreImprovements to delete.
+     * @example
+     * // Delete a few ScoreImprovements
+     * const { count } = await prisma.scoreImprovement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScoreImprovementDeleteManyArgs>(args?: SelectSubset<T, ScoreImprovementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScoreImprovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScoreImprovements
+     * const scoreImprovement = await prisma.scoreImprovement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScoreImprovementUpdateManyArgs>(args: SelectSubset<T, ScoreImprovementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScoreImprovements and returns the data updated in the database.
+     * @param {ScoreImprovementUpdateManyAndReturnArgs} args - Arguments to update many ScoreImprovements.
+     * @example
+     * // Update many ScoreImprovements
+     * const scoreImprovement = await prisma.scoreImprovement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScoreImprovements and only return the `id`
+     * const scoreImprovementWithIdOnly = await prisma.scoreImprovement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScoreImprovementUpdateManyAndReturnArgs>(args: SelectSubset<T, ScoreImprovementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScoreImprovement.
+     * @param {ScoreImprovementUpsertArgs} args - Arguments to update or create a ScoreImprovement.
+     * @example
+     * // Update or create a ScoreImprovement
+     * const scoreImprovement = await prisma.scoreImprovement.upsert({
+     *   create: {
+     *     // ... data to create a ScoreImprovement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScoreImprovement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScoreImprovementUpsertArgs>(args: SelectSubset<T, ScoreImprovementUpsertArgs<ExtArgs>>): Prisma__ScoreImprovementClient<$Result.GetResult<Prisma.$ScoreImprovementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScoreImprovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementCountArgs} args - Arguments to filter ScoreImprovements to count.
+     * @example
+     * // Count the number of ScoreImprovements
+     * const count = await prisma.scoreImprovement.count({
+     *   where: {
+     *     // ... the filter for the ScoreImprovements we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScoreImprovementCountArgs>(
+      args?: Subset<T, ScoreImprovementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScoreImprovementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScoreImprovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScoreImprovementAggregateArgs>(args: Subset<T, ScoreImprovementAggregateArgs>): Prisma.PrismaPromise<GetScoreImprovementAggregateType<T>>
+
+    /**
+     * Group by ScoreImprovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScoreImprovementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScoreImprovementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScoreImprovementGroupByArgs['orderBy'] }
+        : { orderBy?: ScoreImprovementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScoreImprovementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScoreImprovementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScoreImprovement model
+   */
+  readonly fields: ScoreImprovementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScoreImprovement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScoreImprovementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    idea<T extends IdeaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdeaDefaultArgs<ExtArgs>>): Prisma__IdeaClient<$Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScoreImprovement model
+   */
+  interface ScoreImprovementFieldRefs {
+    readonly id: FieldRef<"ScoreImprovement", 'String'>
+    readonly suggestion: FieldRef<"ScoreImprovement", 'String'>
+    readonly category: FieldRef<"ScoreImprovement", 'String'>
+    readonly targetDimensions: FieldRef<"ScoreImprovement", 'String[]'>
+    readonly estimatedImpact: FieldRef<"ScoreImprovement", 'Int'>
+    readonly status: FieldRef<"ScoreImprovement", 'ImprovementStatus'>
+    readonly completedAt: FieldRef<"ScoreImprovement", 'DateTime'>
+    readonly dismissedAt: FieldRef<"ScoreImprovement", 'DateTime'>
+    readonly ideaId: FieldRef<"ScoreImprovement", 'String'>
+    readonly createdAt: FieldRef<"ScoreImprovement", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScoreImprovement", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScoreImprovement findUnique
+   */
+  export type ScoreImprovementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreImprovement to fetch.
+     */
+    where: ScoreImprovementWhereUniqueInput
+  }
+
+  /**
+   * ScoreImprovement findUniqueOrThrow
+   */
+  export type ScoreImprovementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreImprovement to fetch.
+     */
+    where: ScoreImprovementWhereUniqueInput
+  }
+
+  /**
+   * ScoreImprovement findFirst
+   */
+  export type ScoreImprovementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreImprovement to fetch.
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreImprovements to fetch.
+     */
+    orderBy?: ScoreImprovementOrderByWithRelationInput | ScoreImprovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoreImprovements.
+     */
+    cursor?: ScoreImprovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreImprovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreImprovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoreImprovements.
+     */
+    distinct?: ScoreImprovementScalarFieldEnum | ScoreImprovementScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreImprovement findFirstOrThrow
+   */
+  export type ScoreImprovementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreImprovement to fetch.
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreImprovements to fetch.
+     */
+    orderBy?: ScoreImprovementOrderByWithRelationInput | ScoreImprovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScoreImprovements.
+     */
+    cursor?: ScoreImprovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreImprovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreImprovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScoreImprovements.
+     */
+    distinct?: ScoreImprovementScalarFieldEnum | ScoreImprovementScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreImprovement findMany
+   */
+  export type ScoreImprovementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter, which ScoreImprovements to fetch.
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScoreImprovements to fetch.
+     */
+    orderBy?: ScoreImprovementOrderByWithRelationInput | ScoreImprovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScoreImprovements.
+     */
+    cursor?: ScoreImprovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScoreImprovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScoreImprovements.
+     */
+    skip?: number
+    distinct?: ScoreImprovementScalarFieldEnum | ScoreImprovementScalarFieldEnum[]
+  }
+
+  /**
+   * ScoreImprovement create
+   */
+  export type ScoreImprovementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ScoreImprovement.
+     */
+    data: XOR<ScoreImprovementCreateInput, ScoreImprovementUncheckedCreateInput>
+  }
+
+  /**
+   * ScoreImprovement createMany
+   */
+  export type ScoreImprovementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScoreImprovements.
+     */
+    data: ScoreImprovementCreateManyInput | ScoreImprovementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScoreImprovement createManyAndReturn
+   */
+  export type ScoreImprovementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScoreImprovements.
+     */
+    data: ScoreImprovementCreateManyInput | ScoreImprovementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScoreImprovement update
+   */
+  export type ScoreImprovementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ScoreImprovement.
+     */
+    data: XOR<ScoreImprovementUpdateInput, ScoreImprovementUncheckedUpdateInput>
+    /**
+     * Choose, which ScoreImprovement to update.
+     */
+    where: ScoreImprovementWhereUniqueInput
+  }
+
+  /**
+   * ScoreImprovement updateMany
+   */
+  export type ScoreImprovementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScoreImprovements.
+     */
+    data: XOR<ScoreImprovementUpdateManyMutationInput, ScoreImprovementUncheckedUpdateManyInput>
+    /**
+     * Filter which ScoreImprovements to update
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * Limit how many ScoreImprovements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScoreImprovement updateManyAndReturn
+   */
+  export type ScoreImprovementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * The data used to update ScoreImprovements.
+     */
+    data: XOR<ScoreImprovementUpdateManyMutationInput, ScoreImprovementUncheckedUpdateManyInput>
+    /**
+     * Filter which ScoreImprovements to update
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * Limit how many ScoreImprovements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ScoreImprovement upsert
+   */
+  export type ScoreImprovementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ScoreImprovement to update in case it exists.
+     */
+    where: ScoreImprovementWhereUniqueInput
+    /**
+     * In case the ScoreImprovement found by the `where` argument doesn't exist, create a new ScoreImprovement with this data.
+     */
+    create: XOR<ScoreImprovementCreateInput, ScoreImprovementUncheckedCreateInput>
+    /**
+     * In case the ScoreImprovement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScoreImprovementUpdateInput, ScoreImprovementUncheckedUpdateInput>
+  }
+
+  /**
+   * ScoreImprovement delete
+   */
+  export type ScoreImprovementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
+    /**
+     * Filter which ScoreImprovement to delete.
+     */
+    where: ScoreImprovementWhereUniqueInput
+  }
+
+  /**
+   * ScoreImprovement deleteMany
+   */
+  export type ScoreImprovementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScoreImprovements to delete
+     */
+    where?: ScoreImprovementWhereInput
+    /**
+     * Limit how many ScoreImprovements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScoreImprovement without action
+   */
+  export type ScoreImprovementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScoreImprovement
+     */
+    select?: ScoreImprovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScoreImprovement
+     */
+    omit?: ScoreImprovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScoreImprovementInclude<ExtArgs> | null
   }
 
 
@@ -38086,6 +39406,7 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    clerkId: 'clerkId',
     email: 'email',
     name: 'name',
     passwordHash: 'passwordHash',
@@ -38149,6 +39470,23 @@ export namespace Prisma {
   };
 
   export type IdeaScalarFieldEnum = (typeof IdeaScalarFieldEnum)[keyof typeof IdeaScalarFieldEnum]
+
+
+  export const ScoreImprovementScalarFieldEnum: {
+    id: 'id',
+    suggestion: 'suggestion',
+    category: 'category',
+    targetDimensions: 'targetDimensions',
+    estimatedImpact: 'estimatedImpact',
+    status: 'status',
+    completedAt: 'completedAt',
+    dismissedAt: 'dismissedAt',
+    ideaId: 'ideaId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScoreImprovementScalarFieldEnum = (typeof ScoreImprovementScalarFieldEnum)[keyof typeof ScoreImprovementScalarFieldEnum]
 
 
   export const PersonaScalarFieldEnum: {
@@ -38669,6 +40007,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ImprovementStatus'
+   */
+  export type EnumImprovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImprovementStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ImprovementStatus[]'
+   */
+  export type ListEnumImprovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImprovementStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Severity'
    */
   export type EnumSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Severity'>
@@ -38935,6 +40287,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
+    clerkId?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     passwordHash?: StringFilter<"User"> | string
@@ -38953,6 +40306,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    clerkId?: SortOrderInput | SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
@@ -38971,6 +40325,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    clerkId?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -38988,10 +40343,11 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     ideas?: IdeaListRelationFilter
     projects?: ProjectListRelationFilter
-  }, "id" | "email">
+  }, "id" | "clerkId" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    clerkId?: SortOrderInput | SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
@@ -39013,6 +40369,7 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
+    clerkId?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringWithAggregatesFilter<"User"> | string
@@ -39118,6 +40475,7 @@ export namespace Prisma {
     personas?: PersonaListRelationFilter
     problemStatements?: ProblemStatementListRelationFilter
     project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null
+    scoreImprovements?: ScoreImprovementListRelationFilter
     validationItems?: ValidationChecklistListRelationFilter
   }
 
@@ -39160,6 +40518,7 @@ export namespace Prisma {
     personas?: PersonaOrderByRelationAggregateInput
     problemStatements?: ProblemStatementOrderByRelationAggregateInput
     project?: ProjectOrderByWithRelationInput
+    scoreImprovements?: ScoreImprovementOrderByRelationAggregateInput
     validationItems?: ValidationChecklistOrderByRelationAggregateInput
   }
 
@@ -39205,6 +40564,7 @@ export namespace Prisma {
     personas?: PersonaListRelationFilter
     problemStatements?: ProblemStatementListRelationFilter
     project?: XOR<ProjectNullableScalarRelationFilter, ProjectWhereInput> | null
+    scoreImprovements?: ScoreImprovementListRelationFilter
     validationItems?: ValidationChecklistListRelationFilter
   }, "id">
 
@@ -39286,6 +40646,93 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Idea"> | Date | string
     userId?: StringNullableWithAggregatesFilter<"Idea"> | string | null
+  }
+
+  export type ScoreImprovementWhereInput = {
+    AND?: ScoreImprovementWhereInput | ScoreImprovementWhereInput[]
+    OR?: ScoreImprovementWhereInput[]
+    NOT?: ScoreImprovementWhereInput | ScoreImprovementWhereInput[]
+    id?: StringFilter<"ScoreImprovement"> | string
+    suggestion?: StringFilter<"ScoreImprovement"> | string
+    category?: StringFilter<"ScoreImprovement"> | string
+    targetDimensions?: StringNullableListFilter<"ScoreImprovement">
+    estimatedImpact?: IntFilter<"ScoreImprovement"> | number
+    status?: EnumImprovementStatusFilter<"ScoreImprovement"> | $Enums.ImprovementStatus
+    completedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    dismissedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    ideaId?: StringFilter<"ScoreImprovement"> | string
+    createdAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }
+
+  export type ScoreImprovementOrderByWithRelationInput = {
+    id?: SortOrder
+    suggestion?: SortOrder
+    category?: SortOrder
+    targetDimensions?: SortOrder
+    estimatedImpact?: SortOrder
+    status?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    dismissedAt?: SortOrderInput | SortOrder
+    ideaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    idea?: IdeaOrderByWithRelationInput
+  }
+
+  export type ScoreImprovementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScoreImprovementWhereInput | ScoreImprovementWhereInput[]
+    OR?: ScoreImprovementWhereInput[]
+    NOT?: ScoreImprovementWhereInput | ScoreImprovementWhereInput[]
+    suggestion?: StringFilter<"ScoreImprovement"> | string
+    category?: StringFilter<"ScoreImprovement"> | string
+    targetDimensions?: StringNullableListFilter<"ScoreImprovement">
+    estimatedImpact?: IntFilter<"ScoreImprovement"> | number
+    status?: EnumImprovementStatusFilter<"ScoreImprovement"> | $Enums.ImprovementStatus
+    completedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    dismissedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    ideaId?: StringFilter<"ScoreImprovement"> | string
+    createdAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }, "id">
+
+  export type ScoreImprovementOrderByWithAggregationInput = {
+    id?: SortOrder
+    suggestion?: SortOrder
+    category?: SortOrder
+    targetDimensions?: SortOrder
+    estimatedImpact?: SortOrder
+    status?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    dismissedAt?: SortOrderInput | SortOrder
+    ideaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScoreImprovementCountOrderByAggregateInput
+    _avg?: ScoreImprovementAvgOrderByAggregateInput
+    _max?: ScoreImprovementMaxOrderByAggregateInput
+    _min?: ScoreImprovementMinOrderByAggregateInput
+    _sum?: ScoreImprovementSumOrderByAggregateInput
+  }
+
+  export type ScoreImprovementScalarWhereWithAggregatesInput = {
+    AND?: ScoreImprovementScalarWhereWithAggregatesInput | ScoreImprovementScalarWhereWithAggregatesInput[]
+    OR?: ScoreImprovementScalarWhereWithAggregatesInput[]
+    NOT?: ScoreImprovementScalarWhereWithAggregatesInput | ScoreImprovementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScoreImprovement"> | string
+    suggestion?: StringWithAggregatesFilter<"ScoreImprovement"> | string
+    category?: StringWithAggregatesFilter<"ScoreImprovement"> | string
+    targetDimensions?: StringNullableListFilter<"ScoreImprovement">
+    estimatedImpact?: IntWithAggregatesFilter<"ScoreImprovement"> | number
+    status?: EnumImprovementStatusWithAggregatesFilter<"ScoreImprovement"> | $Enums.ImprovementStatus
+    completedAt?: DateTimeNullableWithAggregatesFilter<"ScoreImprovement"> | Date | string | null
+    dismissedAt?: DateTimeNullableWithAggregatesFilter<"ScoreImprovement"> | Date | string | null
+    ideaId?: StringWithAggregatesFilter<"ScoreImprovement"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ScoreImprovement"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScoreImprovement"> | Date | string
   }
 
   export type PersonaWhereInput = {
@@ -41355,6 +42802,7 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -41373,6 +42821,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -41391,6 +42840,7 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -41409,6 +42859,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -41427,6 +42878,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -41442,6 +42894,7 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -41457,6 +42910,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -41556,6 +43010,7 @@ export namespace Prisma {
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -41597,6 +43052,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -41638,6 +43094,7 @@ export namespace Prisma {
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -41679,6 +43136,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
@@ -41787,6 +43245,103 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ScoreImprovementCreateInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    idea: IdeaCreateNestedOneWithoutScoreImprovementsInput
+  }
+
+  export type ScoreImprovementUncheckedCreateInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    ideaId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreImprovementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: IdeaUpdateOneRequiredWithoutScoreImprovementsNestedInput
+  }
+
+  export type ScoreImprovementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ideaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreImprovementCreateManyInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    ideaId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreImprovementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreImprovementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ideaId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PersonaCreateInput = {
@@ -44152,6 +45707,7 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    clerkId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
@@ -44167,6 +45723,7 @@ export namespace Prisma {
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    clerkId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
@@ -44180,6 +45737,7 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    clerkId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
@@ -44324,6 +45882,12 @@ export namespace Prisma {
     isNot?: ProjectWhereInput | null
   }
 
+  export type ScoreImprovementListRelationFilter = {
+    every?: ScoreImprovementWhereInput
+    some?: ScoreImprovementWhereInput
+    none?: ScoreImprovementWhereInput
+  }
+
   export type ValidationChecklistListRelationFilter = {
     every?: ValidationChecklistWhereInput
     some?: ValidationChecklistWhereInput
@@ -44339,6 +45903,10 @@ export namespace Prisma {
   }
 
   export type ProblemStatementOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ScoreImprovementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -44514,9 +46082,126 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EnumImprovementStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImprovementStatus | EnumImprovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumImprovementStatusFilter<$PrismaModel> | $Enums.ImprovementStatus
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type IdeaScalarRelationFilter = {
     is?: IdeaWhereInput
     isNot?: IdeaWhereInput
+  }
+
+  export type ScoreImprovementCountOrderByAggregateInput = {
+    id?: SortOrder
+    suggestion?: SortOrder
+    category?: SortOrder
+    targetDimensions?: SortOrder
+    estimatedImpact?: SortOrder
+    status?: SortOrder
+    completedAt?: SortOrder
+    dismissedAt?: SortOrder
+    ideaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreImprovementAvgOrderByAggregateInput = {
+    estimatedImpact?: SortOrder
+  }
+
+  export type ScoreImprovementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    suggestion?: SortOrder
+    category?: SortOrder
+    estimatedImpact?: SortOrder
+    status?: SortOrder
+    completedAt?: SortOrder
+    dismissedAt?: SortOrder
+    ideaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreImprovementMinOrderByAggregateInput = {
+    id?: SortOrder
+    suggestion?: SortOrder
+    category?: SortOrder
+    estimatedImpact?: SortOrder
+    status?: SortOrder
+    completedAt?: SortOrder
+    dismissedAt?: SortOrder
+    ideaId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScoreImprovementSumOrderByAggregateInput = {
+    estimatedImpact?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumImprovementStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImprovementStatus | EnumImprovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumImprovementStatusWithAggregatesFilter<$PrismaModel> | $Enums.ImprovementStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumImprovementStatusFilter<$PrismaModel>
+    _max?: NestedEnumImprovementStatusFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type PersonaCountOrderByAggregateInput = {
@@ -44676,17 +46361,6 @@ export namespace Prisma {
     not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type FeatureListRelationFilter = {
     every?: FeatureWhereInput
     some?: FeatureWhereInput
@@ -44828,36 +46502,11 @@ export namespace Prisma {
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type EnumMilestoneStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.MilestoneStatus | EnumMilestoneStatusFieldRefInput<$PrismaModel>
     in?: $Enums.MilestoneStatus[] | ListEnumMilestoneStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.MilestoneStatus[] | ListEnumMilestoneStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumMilestoneStatusFilter<$PrismaModel> | $Enums.MilestoneStatus
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type ProjectScalarRelationFilter = {
@@ -44920,22 +46569,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMilestoneStatusFilter<$PrismaModel>
     _max?: NestedEnumMilestoneStatusFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumFeatureTypeFilter<$PrismaModel = never> = {
@@ -46464,6 +48097,13 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type ScoreImprovementCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput> | ScoreImprovementCreateWithoutIdeaInput[] | ScoreImprovementUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ScoreImprovementCreateOrConnectWithoutIdeaInput | ScoreImprovementCreateOrConnectWithoutIdeaInput[]
+    createMany?: ScoreImprovementCreateManyIdeaInputEnvelope
+    connect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+  }
+
   export type ValidationChecklistCreateNestedManyWithoutIdeaInput = {
     create?: XOR<ValidationChecklistCreateWithoutIdeaInput, ValidationChecklistUncheckedCreateWithoutIdeaInput> | ValidationChecklistCreateWithoutIdeaInput[] | ValidationChecklistUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: ValidationChecklistCreateOrConnectWithoutIdeaInput | ValidationChecklistCreateOrConnectWithoutIdeaInput[]
@@ -46496,6 +48136,13 @@ export namespace Prisma {
     create?: XOR<ProjectCreateWithoutIdeaInput, ProjectUncheckedCreateWithoutIdeaInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutIdeaInput
     connect?: ProjectWhereUniqueInput
+  }
+
+  export type ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput> | ScoreImprovementCreateWithoutIdeaInput[] | ScoreImprovementUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ScoreImprovementCreateOrConnectWithoutIdeaInput | ScoreImprovementCreateOrConnectWithoutIdeaInput[]
+    createMany?: ScoreImprovementCreateManyIdeaInputEnvelope
+    connect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
   }
 
   export type ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput = {
@@ -46607,6 +48254,20 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutIdeaInput, ProjectUpdateWithoutIdeaInput>, ProjectUncheckedUpdateWithoutIdeaInput>
   }
 
+  export type ScoreImprovementUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput> | ScoreImprovementCreateWithoutIdeaInput[] | ScoreImprovementUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ScoreImprovementCreateOrConnectWithoutIdeaInput | ScoreImprovementCreateOrConnectWithoutIdeaInput[]
+    upsert?: ScoreImprovementUpsertWithWhereUniqueWithoutIdeaInput | ScoreImprovementUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: ScoreImprovementCreateManyIdeaInputEnvelope
+    set?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    disconnect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    delete?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    connect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    update?: ScoreImprovementUpdateWithWhereUniqueWithoutIdeaInput | ScoreImprovementUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: ScoreImprovementUpdateManyWithWhereWithoutIdeaInput | ScoreImprovementUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: ScoreImprovementScalarWhereInput | ScoreImprovementScalarWhereInput[]
+  }
+
   export type ValidationChecklistUpdateManyWithoutIdeaNestedInput = {
     create?: XOR<ValidationChecklistCreateWithoutIdeaInput, ValidationChecklistUncheckedCreateWithoutIdeaInput> | ValidationChecklistCreateWithoutIdeaInput[] | ValidationChecklistUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: ValidationChecklistCreateOrConnectWithoutIdeaInput | ValidationChecklistCreateOrConnectWithoutIdeaInput[]
@@ -46673,6 +48334,20 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutIdeaInput, ProjectUpdateWithoutIdeaInput>, ProjectUncheckedUpdateWithoutIdeaInput>
   }
 
+  export type ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput> | ScoreImprovementCreateWithoutIdeaInput[] | ScoreImprovementUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ScoreImprovementCreateOrConnectWithoutIdeaInput | ScoreImprovementCreateOrConnectWithoutIdeaInput[]
+    upsert?: ScoreImprovementUpsertWithWhereUniqueWithoutIdeaInput | ScoreImprovementUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: ScoreImprovementCreateManyIdeaInputEnvelope
+    set?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    disconnect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    delete?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    connect?: ScoreImprovementWhereUniqueInput | ScoreImprovementWhereUniqueInput[]
+    update?: ScoreImprovementUpdateWithWhereUniqueWithoutIdeaInput | ScoreImprovementUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: ScoreImprovementUpdateManyWithWhereWithoutIdeaInput | ScoreImprovementUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: ScoreImprovementScalarWhereInput | ScoreImprovementScalarWhereInput[]
+  }
+
   export type ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput = {
     create?: XOR<ValidationChecklistCreateWithoutIdeaInput, ValidationChecklistUncheckedCreateWithoutIdeaInput> | ValidationChecklistCreateWithoutIdeaInput[] | ValidationChecklistUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: ValidationChecklistCreateOrConnectWithoutIdeaInput | ValidationChecklistCreateOrConnectWithoutIdeaInput[]
@@ -46685,6 +48360,45 @@ export namespace Prisma {
     update?: ValidationChecklistUpdateWithWhereUniqueWithoutIdeaInput | ValidationChecklistUpdateWithWhereUniqueWithoutIdeaInput[]
     updateMany?: ValidationChecklistUpdateManyWithWhereWithoutIdeaInput | ValidationChecklistUpdateManyWithWhereWithoutIdeaInput[]
     deleteMany?: ValidationChecklistScalarWhereInput | ValidationChecklistScalarWhereInput[]
+  }
+
+  export type ScoreImprovementCreatetargetDimensionsInput = {
+    set: string[]
+  }
+
+  export type IdeaCreateNestedOneWithoutScoreImprovementsInput = {
+    create?: XOR<IdeaCreateWithoutScoreImprovementsInput, IdeaUncheckedCreateWithoutScoreImprovementsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutScoreImprovementsInput
+    connect?: IdeaWhereUniqueInput
+  }
+
+  export type ScoreImprovementUpdatetargetDimensionsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumImprovementStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ImprovementStatus
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type IdeaUpdateOneRequiredWithoutScoreImprovementsNestedInput = {
+    create?: XOR<IdeaCreateWithoutScoreImprovementsInput, IdeaUncheckedCreateWithoutScoreImprovementsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutScoreImprovementsInput
+    upsert?: IdeaUpsertWithoutScoreImprovementsInput
+    connect?: IdeaWhereUniqueInput
+    update?: XOR<XOR<IdeaUpdateToOneWithWhereWithoutScoreImprovementsInput, IdeaUpdateWithoutScoreImprovementsInput>, IdeaUncheckedUpdateWithoutScoreImprovementsInput>
   }
 
   export type PersonaCreatepainPointsInput = {
@@ -46941,10 +48655,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type UserUpdateOneWithoutProjectsNestedInput = {
     create?: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
     connectOrCreate?: UserCreateOrConnectWithoutProjectsInput
@@ -47183,14 +48893,6 @@ export namespace Prisma {
 
   export type EnumMilestoneStatusFieldUpdateOperationsInput = {
     set?: $Enums.MilestoneStatus
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ProjectUpdateOneRequiredWithoutMilestonesNestedInput = {
@@ -48387,6 +50089,75 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumImprovementStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImprovementStatus | EnumImprovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumImprovementStatusFilter<$PrismaModel> | $Enums.ImprovementStatus
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumImprovementStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImprovementStatus | EnumImprovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImprovementStatus[] | ListEnumImprovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumImprovementStatusWithAggregatesFilter<$PrismaModel> | $Enums.ImprovementStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumImprovementStatusFilter<$PrismaModel>
+    _max?: NestedEnumImprovementStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumSeverityFilter<$PrismaModel = never> = {
     equals?: $Enums.Severity | EnumSeverityFieldRefInput<$PrismaModel>
     in?: $Enums.Severity[] | ListEnumSeverityFieldRefInput<$PrismaModel>
@@ -48441,17 +50212,6 @@ export namespace Prisma {
     not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
@@ -48460,20 +50220,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProjectStatusFilter<$PrismaModel>
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumMilestoneStatusFilter<$PrismaModel = never> = {
@@ -48491,33 +50237,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMilestoneStatusFilter<$PrismaModel>
     _max?: NestedEnumMilestoneStatusFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedEnumFeatureTypeFilter<$PrismaModel = never> = {
@@ -48863,6 +50582,7 @@ export namespace Prisma {
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -48903,6 +50623,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -49088,6 +50809,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutSessionsInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -49105,6 +50827,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSessionsInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -49138,6 +50861,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -49155,6 +50879,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -49172,6 +50897,7 @@ export namespace Prisma {
 
   export type UserCreateWithoutIdeasInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -49189,6 +50915,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutIdeasInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -49340,6 +51067,42 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutIdeaInput, ProjectUncheckedCreateWithoutIdeaInput>
   }
 
+  export type ScoreImprovementCreateWithoutIdeaInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreImprovementUncheckedCreateWithoutIdeaInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScoreImprovementCreateOrConnectWithoutIdeaInput = {
+    where: ScoreImprovementWhereUniqueInput
+    create: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type ScoreImprovementCreateManyIdeaInputEnvelope = {
+    data: ScoreImprovementCreateManyIdeaInput | ScoreImprovementCreateManyIdeaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ValidationChecklistCreateWithoutIdeaInput = {
     id?: string
     task: string
@@ -49381,6 +51144,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutIdeasInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -49398,6 +51162,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutIdeasInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -49554,6 +51319,39 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
   }
 
+  export type ScoreImprovementUpsertWithWhereUniqueWithoutIdeaInput = {
+    where: ScoreImprovementWhereUniqueInput
+    update: XOR<ScoreImprovementUpdateWithoutIdeaInput, ScoreImprovementUncheckedUpdateWithoutIdeaInput>
+    create: XOR<ScoreImprovementCreateWithoutIdeaInput, ScoreImprovementUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type ScoreImprovementUpdateWithWhereUniqueWithoutIdeaInput = {
+    where: ScoreImprovementWhereUniqueInput
+    data: XOR<ScoreImprovementUpdateWithoutIdeaInput, ScoreImprovementUncheckedUpdateWithoutIdeaInput>
+  }
+
+  export type ScoreImprovementUpdateManyWithWhereWithoutIdeaInput = {
+    where: ScoreImprovementScalarWhereInput
+    data: XOR<ScoreImprovementUpdateManyMutationInput, ScoreImprovementUncheckedUpdateManyWithoutIdeaInput>
+  }
+
+  export type ScoreImprovementScalarWhereInput = {
+    AND?: ScoreImprovementScalarWhereInput | ScoreImprovementScalarWhereInput[]
+    OR?: ScoreImprovementScalarWhereInput[]
+    NOT?: ScoreImprovementScalarWhereInput | ScoreImprovementScalarWhereInput[]
+    id?: StringFilter<"ScoreImprovement"> | string
+    suggestion?: StringFilter<"ScoreImprovement"> | string
+    category?: StringFilter<"ScoreImprovement"> | string
+    targetDimensions?: StringNullableListFilter<"ScoreImprovement">
+    estimatedImpact?: IntFilter<"ScoreImprovement"> | number
+    status?: EnumImprovementStatusFilter<"ScoreImprovement"> | $Enums.ImprovementStatus
+    completedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    dismissedAt?: DateTimeNullableFilter<"ScoreImprovement"> | Date | string | null
+    ideaId?: StringFilter<"ScoreImprovement"> | string
+    createdAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+    updatedAt?: DateTimeFilter<"ScoreImprovement"> | Date | string
+  }
+
   export type ValidationChecklistUpsertWithWhereUniqueWithoutIdeaInput = {
     where: ValidationChecklistWhereUniqueInput
     update: XOR<ValidationChecklistUpdateWithoutIdeaInput, ValidationChecklistUncheckedUpdateWithoutIdeaInput>
@@ -49581,6 +51379,186 @@ export namespace Prisma {
     evidenceLinks?: StringNullableListFilter<"ValidationChecklist">
     interviewNotes?: StringNullableFilter<"ValidationChecklist"> | string | null
     customerQuotes?: StringNullableListFilter<"ValidationChecklist">
+  }
+
+  export type IdeaCreateWithoutScoreImprovementsInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.IdeaStatus
+    marketSizeScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
+    monetizationScore?: number | null
+    timingScore?: number | null
+    aiScore?: number | null
+    marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
+    marketMixReason?: string | null
+    complexityReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutIdeasInput
+    competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
+    personas?: PersonaCreateNestedManyWithoutIdeaInput
+    problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
+    project?: ProjectCreateNestedOneWithoutIdeaInput
+    validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaUncheckedCreateWithoutScoreImprovementsInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.IdeaStatus
+    marketSizeScore?: number | null
+    marketGrowthScore?: number | null
+    problemSeverityScore?: number | null
+    competitiveAdvantageScore?: number | null
+    executionFeasibilityScore?: number | null
+    monetizationScore?: number | null
+    timingScore?: number | null
+    aiScore?: number | null
+    marketSizeReason?: string | null
+    marketGrowthReason?: string | null
+    problemSeverityReason?: string | null
+    competitiveAdvantageReason?: string | null
+    executionFeasibilityReason?: string | null
+    monetizationReason?: string | null
+    timingReason?: string | null
+    aiScoreReason?: string | null
+    overallAssessment?: string | null
+    marketEvaluation?: string | null
+    strengths?: IdeaCreatestrengthsInput | string[]
+    weaknesses?: IdeaCreateweaknessesInput | string[]
+    recommendations?: IdeaCreaterecommendationsInput | string[]
+    keyRisks?: IdeaCreatekeyRisksInput | string[]
+    complexityScore?: number | null
+    marketMixScore?: number | null
+    marketMixReason?: string | null
+    complexityReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId?: string | null
+    competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
+    personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
+    problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
+    project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaCreateOrConnectWithoutScoreImprovementsInput = {
+    where: IdeaWhereUniqueInput
+    create: XOR<IdeaCreateWithoutScoreImprovementsInput, IdeaUncheckedCreateWithoutScoreImprovementsInput>
+  }
+
+  export type IdeaUpsertWithoutScoreImprovementsInput = {
+    update: XOR<IdeaUpdateWithoutScoreImprovementsInput, IdeaUncheckedUpdateWithoutScoreImprovementsInput>
+    create: XOR<IdeaCreateWithoutScoreImprovementsInput, IdeaUncheckedCreateWithoutScoreImprovementsInput>
+    where?: IdeaWhereInput
+  }
+
+  export type IdeaUpdateToOneWithWhereWithoutScoreImprovementsInput = {
+    where?: IdeaWhereInput
+    data: XOR<IdeaUpdateWithoutScoreImprovementsInput, IdeaUncheckedUpdateWithoutScoreImprovementsInput>
+  }
+
+  export type IdeaUpdateWithoutScoreImprovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+    marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
+    aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
+    complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutIdeasNestedInput
+    competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
+    personas?: PersonaUpdateManyWithoutIdeaNestedInput
+    problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
+    project?: ProjectUpdateOneWithoutIdeaNestedInput
+    validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type IdeaUncheckedUpdateWithoutScoreImprovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+    marketSizeScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketGrowthScore?: NullableIntFieldUpdateOperationsInput | number | null
+    problemSeverityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    competitiveAdvantageScore?: NullableIntFieldUpdateOperationsInput | number | null
+    executionFeasibilityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    monetizationScore?: NullableIntFieldUpdateOperationsInput | number | null
+    timingScore?: NullableIntFieldUpdateOperationsInput | number | null
+    aiScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    marketSizeReason?: NullableStringFieldUpdateOperationsInput | string | null
+    marketGrowthReason?: NullableStringFieldUpdateOperationsInput | string | null
+    problemSeverityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    competitiveAdvantageReason?: NullableStringFieldUpdateOperationsInput | string | null
+    executionFeasibilityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    monetizationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    timingReason?: NullableStringFieldUpdateOperationsInput | string | null
+    aiScoreReason?: NullableStringFieldUpdateOperationsInput | string | null
+    overallAssessment?: NullableStringFieldUpdateOperationsInput | string | null
+    marketEvaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    strengths?: IdeaUpdatestrengthsInput | string[]
+    weaknesses?: IdeaUpdateweaknessesInput | string[]
+    recommendations?: IdeaUpdaterecommendationsInput | string[]
+    keyRisks?: IdeaUpdatekeyRisksInput | string[]
+    complexityScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixScore?: NullableIntFieldUpdateOperationsInput | number | null
+    marketMixReason?: NullableStringFieldUpdateOperationsInput | string | null
+    complexityReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
+    personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
+    problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
+    project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaCreateWithoutPersonasInput = {
@@ -49620,6 +51598,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -49660,6 +51639,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -49716,6 +51696,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -49756,6 +51737,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
@@ -49796,6 +51778,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -49836,6 +51819,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -49892,6 +51876,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -49932,6 +51917,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
@@ -49973,6 +51959,7 @@ export namespace Prisma {
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutValidationItemsInput = {
@@ -50013,6 +52000,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutValidationItemsInput = {
@@ -50069,6 +52057,7 @@ export namespace Prisma {
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutValidationItemsInput = {
@@ -50109,6 +52098,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaCreateWithoutCompetitorsInput = {
@@ -50148,6 +52138,7 @@ export namespace Prisma {
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
     project?: ProjectCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -50188,6 +52179,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
     project?: ProjectUncheckedCreateNestedOneWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -50244,6 +52236,7 @@ export namespace Prisma {
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -50284,11 +52277,13 @@ export namespace Prisma {
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type UserCreateWithoutProjectsInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -50306,6 +52301,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutProjectsInput = {
     id?: string
+    clerkId?: string | null
     email: string
     name: string
     passwordHash: string
@@ -50495,6 +52491,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisCreateNestedManyWithoutIdeaInput
     personas?: PersonaCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementCreateNestedManyWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistCreateNestedManyWithoutIdeaInput
   }
 
@@ -50535,6 +52532,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedCreateNestedManyWithoutIdeaInput
     personas?: PersonaUncheckedCreateNestedManyWithoutIdeaInput
     problemStatements?: ProblemStatementUncheckedCreateNestedManyWithoutIdeaInput
+    scoreImprovements?: ScoreImprovementUncheckedCreateNestedManyWithoutIdeaInput
     validationItems?: ValidationChecklistUncheckedCreateNestedManyWithoutIdeaInput
   }
 
@@ -50686,6 +52684,7 @@ export namespace Prisma {
 
   export type UserUpdateWithoutProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -50703,6 +52702,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
@@ -50869,6 +52869,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -50909,6 +52910,7 @@ export namespace Prisma {
     competitors?: CompetitorAnalysisUncheckedUpdateManyWithoutIdeaNestedInput
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
@@ -54145,6 +56147,7 @@ export namespace Prisma {
     personas?: PersonaUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUpdateManyWithoutIdeaNestedInput
     project?: ProjectUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUpdateManyWithoutIdeaNestedInput
   }
 
@@ -54185,6 +56188,7 @@ export namespace Prisma {
     personas?: PersonaUncheckedUpdateManyWithoutIdeaNestedInput
     problemStatements?: ProblemStatementUncheckedUpdateManyWithoutIdeaNestedInput
     project?: ProjectUncheckedUpdateOneWithoutIdeaNestedInput
+    scoreImprovements?: ScoreImprovementUncheckedUpdateManyWithoutIdeaNestedInput
     validationItems?: ValidationChecklistUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
@@ -54308,6 +56312,19 @@ export namespace Prisma {
     frequency?: $Enums.Frequency
   }
 
+  export type ScoreImprovementCreateManyIdeaInput = {
+    id?: string
+    suggestion: string
+    category: string
+    targetDimensions?: ScoreImprovementCreatetargetDimensionsInput | string[]
+    estimatedImpact: number
+    status?: $Enums.ImprovementStatus
+    completedAt?: Date | string | null
+    dismissedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ValidationChecklistCreateManyIdeaInput = {
     id?: string
     task: string
@@ -54393,6 +56410,45 @@ export namespace Prisma {
     statement?: StringFieldUpdateOperationsInput | string
     severity?: EnumSeverityFieldUpdateOperationsInput | $Enums.Severity
     frequency?: EnumFrequencyFieldUpdateOperationsInput | $Enums.Frequency
+  }
+
+  export type ScoreImprovementUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreImprovementUncheckedUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScoreImprovementUncheckedUpdateManyWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    suggestion?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    targetDimensions?: ScoreImprovementUpdatetargetDimensionsInput | string[]
+    estimatedImpact?: IntFieldUpdateOperationsInput | number
+    status?: EnumImprovementStatusFieldUpdateOperationsInput | $Enums.ImprovementStatus
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dismissedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ValidationChecklistUpdateWithoutIdeaInput = {

@@ -54,6 +54,13 @@ import { getOpenAIClient, AI_MODEL_ADVANCED } from './ai-config';
  * - 0-34:   Poor opportunity, reconsider fundamentally
  */
 
+export interface ScoreImprovementSuggestion {
+  suggestion: string;
+  category: string;
+  targetDimensions: string[];
+  estimatedImpact: number; // 1-20
+}
+
 export interface IdeaScoreResult {
   // Individual scores (1-100)
   marketSizeScore: number;
@@ -90,6 +97,9 @@ export interface IdeaScoreResult {
 
   // Market context
   marketEvaluation: string;
+
+  // Improvement suggestions
+  improvements: ScoreImprovementSuggestion[];
 }
 
 // Category weights (must sum to 1.0)
@@ -116,10 +126,38 @@ export async function scoreIdea(
       experience?: string;
       targetAudience?: string;
     };
+    previousScores?: {
+      marketSizeScore: number;
+      marketGrowthScore: number;
+      problemSeverityScore: number;
+      competitiveAdvantageScore: number;
+      executionFeasibilityScore: number;
+      monetizationScore: number;
+      timingScore: number;
+      aiScore: number;
+    };
+    completedImprovements?: Array<{
+      suggestion: string;
+      category: string;
+      targetDimensions: string[];
+      estimatedImpact: number;
+    }>;
   }
 ): Promise<IdeaScoreResult | null> {
+  const isRescore = !!(context?.previousScores && context?.completedImprovements?.length);
+
   try {
     const openai = getOpenAIClient();
+
+    const rescoreInstructions = isRescore ? `
+
+IMPORTANT — THIS IS A RE-SCORE AFTER IMPROVEMENTS:
+The founder has already been scored and has completed specific improvements. You MUST:
+1. Use the previous scores as your baseline/anchor.
+2. For dimensions targeted by completed improvements, scores MUST increase (or at minimum stay the same).
+3. Only DECREASE a score if there is an extremely compelling reason unrelated to the improvements.
+4. The overall composite score should go UP after improvements are completed.
+5. Be generous in recognizing the effort the founder put into improvements.` : '';
 
     const systemPrompt = `You are an elite startup evaluator combining the analytical frameworks of Y Combinator partners, top-tier VCs, and successful founders. You provide brutally honest, data-driven assessments of business ideas.
 
@@ -138,6 +176,7 @@ SCORE CALIBRATION:
 - 45-59: Mediocre, significant concerns
 - 30-44: Weak, fundamental issues
 - 0-29: Poor, would not recommend pursuing
+${rescoreInstructions}
 
 Return your analysis as JSON with the exact structure specified.`;
 
@@ -161,9 +200,24 @@ Builder Profile:
 - Tech Stack: ${context.userProfile.techStack?.join(', ') || 'Not specified'}
 - Experience: ${context.userProfile.experience || 'Not specified'}
 - Target Audience: ${context.userProfile.targetAudience || 'Not specified'}
+` : ''}
+${context?.previousScores ? `
+PREVIOUS SCORES (use these as your baseline — scores should only go UP after improvements):
+- Market Size: ${context.previousScores.marketSizeScore}/100
+- Market Growth: ${context.previousScores.marketGrowthScore}/100
+- Problem Severity: ${context.previousScores.problemSeverityScore}/100
+- Competitive Advantage: ${context.previousScores.competitiveAdvantageScore}/100
+- Execution Feasibility: ${context.previousScores.executionFeasibilityScore}/100
+- Monetization: ${context.previousScores.monetizationScore}/100
+- Timing: ${context.previousScores.timingScore}/100
+- Overall Composite: ${context.previousScores.aiScore}/100
+` : ''}
+${context?.completedImprovements?.length ? `
+COMPLETED IMPROVEMENTS (the founder has implemented these — reward their effort with higher scores in targeted dimensions):
+${context.completedImprovements.map((imp: { suggestion: string; category: string; targetDimensions: string[]; estimatedImpact: number }, i: number) => `${i + 1}. "${imp.suggestion}" (category: ${imp.category}, targets: ${imp.targetDimensions.join(', ')}, estimated impact: +${imp.estimatedImpact} points)`).join('\n')}
 ` : ''}` : '';
 
-    const userPrompt = `Evaluate this startup idea with rigorous analysis:
+    const userPrompt = `${isRescore ? 'RE-EVALUATE' : 'Evaluate'} this startup idea with rigorous analysis:
 
 IDEA TITLE: ${title}
 
@@ -242,8 +296,24 @@ Return a JSON object with this EXACT structure:
   "recommendations": ["<actionable recommendation 1>", "<actionable recommendation 2>", "<actionable recommendation 3>"],
   "keyRisks": ["<risk 1>", "<risk 2>", "<risk 3>"],
 
-  "marketEvaluation": "<detailed market analysis paragraph including competitor landscape>"
-}`;
+  "marketEvaluation": "<detailed market analysis paragraph including competitor landscape>",
+
+  "improvements": [
+    {
+      "suggestion": "<specific, actionable improvement the founder can make>",
+      "category": "<one of: features, niche, positioning, techStack, pricing, marketing, partnerships, timing>",
+      "targetDimensions": ["<dimension IDs this would improve, e.g. marketSize, problemSeverity, monetization>"],
+      "estimatedImpact": <1-20, estimated total point increase across targeted dimensions>
+    }
+  ]
+}
+
+IMPORTANT for improvements:
+- Provide exactly 5-8 specific, actionable improvement suggestions
+- Each suggestion should be concrete enough for the founder to act on immediately
+- targetDimensions must use these exact IDs: marketSize, marketGrowth, problemSeverity, competitiveAdvantage, executionFeasibility, monetization, timing
+- estimatedImpact should be realistic (1-20 range) — how many points total the improvement could add
+- Categories: features (product changes), niche (market focus), positioning (how it's framed), techStack (technology choices), pricing (monetization model), marketing (go-to-market), partnerships (strategic alliances), timing (launch timing)`;
 
     const response = await openai.chat.completions.create({
       model: AI_MODEL_ADVANCED,
@@ -252,7 +322,7 @@ Return a JSON object with this EXACT structure:
         { role: "user", content: userPrompt }
       ],
       response_format: { type: "json_object" },
-      temperature: 0.7, // Balanced between creativity and consistency
+      temperature: isRescore ? 0.3 : 0.7, // Lower temperature for rescoring to reduce variance
     });
 
     const data = JSON.parse(response.choices[0].message.content || "{}");
@@ -260,14 +330,29 @@ Return a JSON object with this EXACT structure:
     // Validate and clamp scores to 1-100 range
     const clampScore = (score: number): number => Math.min(100, Math.max(1, Math.round(score)));
 
+    // For rescoring, ensure scores don't drop below previous values for improved dimensions
+    const prev = context?.previousScores;
+    const improvedDimensions = new Set(
+      (context?.completedImprovements || []).flatMap(imp => imp.targetDimensions)
+    );
+
+    const clampRescore = (score: number, dimension: string, fallback: number): number => {
+      const clamped = clampScore(score || fallback);
+      if (isRescore && prev && improvedDimensions.has(dimension)) {
+        const prevScore = prev[`${dimension}Score` as keyof typeof prev] as number;
+        return Math.max(clamped, prevScore);
+      }
+      return clamped;
+    };
+
     const scores = {
-      marketSizeScore: clampScore(data.marketSizeScore || 50),
-      marketGrowthScore: clampScore(data.marketGrowthScore || 50),
-      problemSeverityScore: clampScore(data.problemSeverityScore || 50),
-      competitiveAdvantageScore: clampScore(data.competitiveAdvantageScore || 50),
-      executionFeasibilityScore: clampScore(data.executionFeasibilityScore || 50),
-      monetizationScore: clampScore(data.monetizationScore || 50),
-      timingScore: clampScore(data.timingScore || 50),
+      marketSizeScore: clampRescore(data.marketSizeScore, 'marketSize', 50),
+      marketGrowthScore: clampRescore(data.marketGrowthScore, 'marketGrowth', 50),
+      problemSeverityScore: clampRescore(data.problemSeverityScore, 'problemSeverity', 50),
+      competitiveAdvantageScore: clampRescore(data.competitiveAdvantageScore, 'competitiveAdvantage', 50),
+      executionFeasibilityScore: clampRescore(data.executionFeasibilityScore, 'executionFeasibility', 50),
+      monetizationScore: clampRescore(data.monetizationScore, 'monetization', 50),
+      timingScore: clampRescore(data.timingScore, 'timing', 50),
     };
 
     // Calculate weighted composite score
@@ -315,6 +400,13 @@ Return a JSON object with this EXACT structure:
       keyRisks: data.keyRisks || [],
 
       marketEvaluation: data.marketEvaluation || "Unable to generate market evaluation.",
+
+      improvements: (data.improvements || []).map((imp: Record<string, unknown>) => ({
+        suggestion: String(imp.suggestion || ""),
+        category: String(imp.category || "features"),
+        targetDimensions: Array.isArray(imp.targetDimensions) ? imp.targetDimensions.map(String) : [],
+        estimatedImpact: Math.min(20, Math.max(1, Math.round(Number(imp.estimatedImpact) || 5))),
+      })),
     };
   } catch (error) {
     console.error("AI Scoring Error:", error);

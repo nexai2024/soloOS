@@ -4,6 +4,8 @@ import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Lightbulb, Sparkles, Loader2, ArrowLeft } from "lucide-react";
+import { fetchPost, fetchPatch } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 
 interface IdeaFormProps {
     initialData?: {
@@ -15,6 +17,7 @@ interface IdeaFormProps {
 
 export function IdeaForm({ initialData, ideaId }: IdeaFormProps) {
     const router = useRouter();
+    const toast = useToast();
     const [isPending, startTransition] = useTransition();
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
@@ -59,21 +62,18 @@ export function IdeaForm({ initialData, ideaId }: IdeaFormProps) {
         if (!validate()) return;
 
         startTransition(async () => {
-            const formData = new FormData();
-            formData.append("title", title);
-            formData.append("description", description);
+            const body = { title, description };
+            const result = ideaId
+                ? await fetchPatch<{ id: string }>(`/api/ideas/${ideaId}`, body)
+                : await fetchPost<{ id: string }>("/api/ideas", body);
 
-            const response = await fetch(ideaId ? `/api/ideas/${ideaId}` : "/api/ideas", {
-                method: ideaId ? "PATCH" : "POST",
-                body: JSON.stringify({ title, description }),
-                headers: { "Content-Type": "application/json" }
-            });
-
-            if (response.ok) {
-                localStorage.removeItem(`idea-draft-${ideaId || "new"}`); // Clear draft
-                const data = await response.json();
-                router.push(`/ideas/${data.id}`);
+            if (result.ok) {
+                localStorage.removeItem(`idea-draft-${ideaId || "new"}`);
+                toast.success(ideaId ? "Idea updated" : "Idea created");
+                router.push(`/ideas/${result.data.id}`);
                 router.refresh();
+            } else {
+                toast.error(result.error);
             }
         });
     };
@@ -83,19 +83,13 @@ export function IdeaForm({ initialData, ideaId }: IdeaFormProps) {
         if (!title.trim()) return;
 
         setIsGeneratingSuggestion(true);
-        try {
-            const response = await fetch("/api/ideas/enhance", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, description })
-            });
-            const data = await response.json();
-            setAiSuggestion(data.suggestion);
-        } catch (error) {
-            console.error("Failed to generate suggestion:", error);
-        } finally {
-            setIsGeneratingSuggestion(false);
+        const result = await fetchPost<{ suggestion: string }>("/api/ideas/enhance", { title, description });
+        if (result.ok) {
+            setAiSuggestion(result.data.suggestion);
+        } else {
+            toast.error(result.error);
         }
+        setIsGeneratingSuggestion(false);
     };
 
     return (

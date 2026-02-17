@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 
 const updateProfileSchema = z.object({
@@ -13,81 +12,56 @@ const updateProfileSchema = z.object({
   bio: z.string().max(500).optional(),
 });
 
-export async function GET() {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const GET = withErrorHandler(async () => {
+  const user = await requireAuth();
 
-    const profile = await prisma.user.findUnique({
-      where: { id: user.id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        niche: true,
-        techStack: true,
-        interests: true,
-        experience: true,
-        targetAudience: true,
-        bio: true,
-        createdAt: true,
-      },
-    });
+  const profile = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      niche: true,
+      techStack: true,
+      interests: true,
+      experience: true,
+      targetAudience: true,
+      bio: true,
+      createdAt: true,
+    },
+  });
 
-    if (!profile) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+  if (!profile) throw new ApiError("User not found", 404);
 
-    return NextResponse.json(profile);
-  } catch (error) {
-    console.error("Failed to fetch profile:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch profile" },
-      { status: 500 }
-    );
+  return apiSuccess(profile);
+});
+
+export const PATCH = withErrorHandler(async (req) => {
+  const user = await requireAuth();
+  const body = await req.json();
+
+  let validated;
+  try { validated = updateProfileSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function PATCH(req: NextRequest) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const updatedUser = await prisma.user.update({
+    where: { id: user.id },
+    data: validated,
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      niche: true,
+      techStack: true,
+      interests: true,
+      experience: true,
+      targetAudience: true,
+      bio: true,
+    },
+  });
 
-    const body = await req.json();
-    const validated = updateProfileSchema.parse(body);
-
-    const updatedUser = await prisma.user.update({
-      where: { id: user.id },
-      data: validated,
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        niche: true,
-        techStack: true,
-        interests: true,
-        experience: true,
-        targetAudience: true,
-        bio: true,
-      },
-    });
-
-    return NextResponse.json(updatedUser);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to update profile:", error);
-    return NextResponse.json(
-      { error: "Failed to update profile" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess(updatedUser);
+});

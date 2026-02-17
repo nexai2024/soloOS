@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { aiComplete, AI_MODEL_ADVANCED } from "@/lib/ai-config";
 import { z } from "zod";
 
@@ -8,37 +7,31 @@ const generateSchema = z.object({
   types: z.array(z.enum(["personas", "problems", "validation", "competitors"])).min(1),
 });
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withErrorHandler(async (req, { params }) => {
+  const user = await requireAuth();
+  const { id } = await params;
+
+  const idea = await prisma.idea.findUnique({
+    where: { id },
+    include: {
+      personas: true,
+      problemStatements: true,
+      validationItems: true,
+      competitors: true,
+    },
+  });
+
+  if (!idea) throw new ApiError("Idea not found", 404);
+  if (idea.userId !== user.id) throw new ApiError("Forbidden", 403);
+
+  const body = await req.json();
+  let types: string[];
   try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id } = await params;
-    const idea = await prisma.idea.findUnique({
-      where: { id },
-      include: {
-        personas: true,
-        problemStatements: true,
-        validationItems: true,
-        competitors: true,
-      },
-    });
-
-    if (!idea) {
-      return NextResponse.json({ error: "Idea not found" }, { status: 404 });
-    }
-
-    if (idea.userId !== user.id) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
-
-    const body = await req.json();
-    const { types } = generateSchema.parse(body);
+    ({ types } = generateSchema.parse(body));
+  } catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
+  }
 
     const systemPrompt = `You are an expert startup advisor and product strategist. You help founders validate and develop their business ideas by generating detailed personas, problem statements, validation checklists, and competitor analyses.
 
@@ -259,22 +252,9 @@ Return JSON: { "competitors": [{ "name": "...", "url": "...", "strengths": ["...
       },
     });
 
-    return NextResponse.json({
+    return apiSuccess({
       message: `Generated ${types.join(", ")} successfully`,
       generated: results,
       idea: updatedIdea,
-    }, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to generate idea artifacts:", error);
-    return NextResponse.json(
-      { error: "Failed to generate idea artifacts" },
-      { status: 500 }
-    );
-  }
-}
+    }, 201);
+});

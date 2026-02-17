@@ -5,6 +5,8 @@ import { Persona } from "@/generated/prisma/client";
 import { PersonaCard } from "./PersonaCard";
 import { PersonaForm } from "./PersonaForm";
 import { Plus, AlertCircle } from "lucide-react";
+import { fetchPost, fetchDelete } from "@/lib/fetch";
+import { useToast } from "@/contexts/ToastContext";
 
 interface PersonasTabProps {
   ideaId: string;
@@ -16,41 +18,32 @@ export function PersonasTab({ ideaId, personas, onUpdate }: PersonasTabProps) {
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   const handleAdd = async (data: { name: string; role: string; painPoints: string[]; goals: string[] }) => {
     setError(null);
     setIsLoading(true);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/personas`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add persona");
-      }
-      const newPersona = await response.json();
-      onUpdate([...personas, newPersona]);
+    const result = await fetchPost<Persona>(`/api/ideas/${ideaId}/personas`, data);
+    if (result.ok) {
+      onUpdate([...personas, result.data]);
       setShowForm(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to add persona");
-    } finally {
-      setIsLoading(false);
+      toast.success("Persona added");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
+    setIsLoading(false);
   };
 
   const handleDelete = async (id: string) => {
     setError(null);
-    try {
-      const response = await fetch(`/api/ideas/${ideaId}/personas/${id}`, { method: "DELETE" });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete persona");
-      }
+    const result = await fetchDelete(`/api/ideas/${ideaId}/personas/${id}`);
+    if (result.ok) {
       onUpdate(personas.filter(p => p.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete persona");
+      toast.success("Persona deleted");
+    } else {
+      setError(result.error);
+      toast.error(result.error);
     }
   };
 

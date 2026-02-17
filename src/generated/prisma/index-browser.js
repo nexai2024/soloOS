@@ -122,6 +122,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  clerkId: 'clerkId',
   email: 'email',
   name: 'name',
   passwordHash: 'passwordHash',
@@ -176,6 +177,20 @@ exports.Prisma.IdeaScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
+};
+
+exports.Prisma.ScoreImprovementScalarFieldEnum = {
+  id: 'id',
+  suggestion: 'suggestion',
+  category: 'category',
+  targetDimensions: 'targetDimensions',
+  estimatedImpact: 'estimatedImpact',
+  status: 'status',
+  completedAt: 'completedAt',
+  dismissedAt: 'dismissedAt',
+  ideaId: 'ideaId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.PersonaScalarFieldEnum = {
@@ -531,6 +546,12 @@ exports.IdeaStatus = exports.$Enums.IdeaStatus = {
   ARCHIVED: 'ARCHIVED'
 };
 
+exports.ImprovementStatus = exports.$Enums.ImprovementStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  DISMISSED: 'DISMISSED'
+};
+
 exports.Severity = exports.$Enums.Severity = {
   LOW: 'LOW',
   MEDIUM: 'MEDIUM',
@@ -663,6 +684,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   Idea: 'Idea',
+  ScoreImprovement: 'ScoreImprovement',
   Persona: 'Persona',
   ProblemStatement: 'ProblemStatement',
   ValidationChecklist: 'ValidationChecklist',

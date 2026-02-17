@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { withErrorHandler, ApiError, requireAuth, apiSuccess } from "@/lib/api-utils";
 import { z } from "zod";
 import { randomBytes } from "crypto";
 
@@ -14,98 +13,68 @@ const createProductSchema = z.object({
   isPublic: z.boolean().optional(),
 });
 
-export async function POST(req: NextRequest) {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const POST = withErrorHandler(async (req) => {
+  const user = await requireAuth();
+  const body = await req.json();
 
-    const body = await req.json();
-    const validated = createProductSchema.parse(body);
-
-    // Check if slug is already taken
-    const existingSlug = await prisma.product.findUnique({
-      where: { slug: validated.slug },
-    });
-
-    if (existingSlug) {
-      return NextResponse.json(
-        { error: "This slug is already taken" },
-        { status: 400 }
-      );
-    }
-
-    const product = await prisma.product.create({
-      data: {
-        id: randomBytes(12).toString("hex"),
-        tenantId: user.id,
-        name: validated.name,
-        slug: validated.slug,
-        tagline: validated.tagline,
-        description: validated.description,
-        projectId: validated.projectId,
-        brandColor: validated.brandColor || "#6366f1",
-        isPublic: validated.isPublic || false,
-        updatedAt: new Date(),
-      },
-    });
-
-    return NextResponse.json(product, { status: 201 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
-    }
-    console.error("Failed to create product:", error);
-    return NextResponse.json(
-      { error: "Failed to create product" },
-      { status: 500 }
-    );
+  let validated;
+  try { validated = createProductSchema.parse(body); }
+  catch (error) {
+    if (error instanceof z.ZodError) throw new ApiError(error.issues[0].message, 400);
+    throw error;
   }
-}
 
-export async function GET() {
-  try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const existingSlug = await prisma.product.findUnique({
+    where: { slug: validated.slug },
+  });
+  if (existingSlug) throw new ApiError("This slug is already taken", 400);
 
-    const products = await prisma.product.findMany({
-      where: { tenantId: user.id },
-      orderBy: { createdAt: "desc" },
-      include: {
-        Project: {
-          select: { id: true, title: true, status: true },
-        },
-        WaitlistEntry: {
-          select: { id: true, status: true },
-        },
-        ProductChangelog: {
-          select: { id: true },
-          orderBy: { releasedAt: "desc" },
-          take: 5,
-        },
-        _count: {
-          select: {
-            WaitlistEntry: true,
-            ProductChangelog: true,
-            AdCampaign: true,
-            SocialPost: true,
-          },
+  const product = await prisma.product.create({
+    data: {
+      id: randomBytes(12).toString("hex"),
+      tenantId: user.id,
+      name: validated.name,
+      slug: validated.slug,
+      tagline: validated.tagline,
+      description: validated.description,
+      projectId: validated.projectId,
+      brandColor: validated.brandColor || "#6366f1",
+      isPublic: validated.isPublic || false,
+      updatedAt: new Date(),
+    },
+  });
+
+  return apiSuccess(product, 201);
+});
+
+export const GET = withErrorHandler(async () => {
+  const user = await requireAuth();
+
+  const products = await prisma.product.findMany({
+    where: { tenantId: user.id },
+    orderBy: { createdAt: "desc" },
+    include: {
+      Project: {
+        select: { id: true, title: true, status: true },
+      },
+      WaitlistEntry: {
+        select: { id: true, status: true },
+      },
+      ProductChangelog: {
+        select: { id: true },
+        orderBy: { releasedAt: "desc" },
+        take: 5,
+      },
+      _count: {
+        select: {
+          WaitlistEntry: true,
+          ProductChangelog: true,
+          AdCampaign: true,
+          SocialPost: true,
         },
       },
-    });
+    },
+  });
 
-    return NextResponse.json(products);
-  } catch (error) {
-    console.error("Failed to fetch products:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch products" },
-      { status: 500 }
-    );
-  }
-}
+  return apiSuccess(products);
+});

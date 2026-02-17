@@ -1,11 +1,13 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { useUser, useClerk } from '@clerk/nextjs';
 
 interface User {
   id: string;
   email: string;
   name: string;
+  imageUrl?: string;
 }
 
 interface AuthContextType {
@@ -22,22 +24,41 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const { user: clerkUser, isLoaded: clerkLoaded, isSignedIn } = useUser();
+  const { signOut } = useClerk();
+  const [fallbackUser, setFallbackUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check for existing session on mount
+  // Determine if Clerk is active (user is signed in via Clerk)
+  const clerkActive = clerkLoaded && isSignedIn && !!clerkUser;
+
+  // Build the user object from Clerk or fallback
+  const user: User | null = clerkActive
+    ? {
+        id: clerkUser.id,
+        email: clerkUser.primaryEmailAddress?.emailAddress || '',
+        name: clerkUser.fullName || clerkUser.firstName || '',
+        imageUrl: clerkUser.imageUrl,
+      }
+    : fallbackUser;
+
+  // Check for existing session on mount (fallback auth)
   useEffect(() => {
-    checkAuth();
-  }, []);
+    if (clerkLoaded && !isSignedIn) {
+      checkAuth();
+    } else if (clerkLoaded) {
+      setIsLoading(false);
+    }
+  }, [clerkLoaded, isSignedIn]);
 
   const checkAuth = async () => {
     try {
       const response = await fetch('/api/auth/me');
       const data = await response.json();
-      setUser(data.user);
-    } catch (err) {
-      setUser(null);
+      setFallbackUser(data.user);
+    } catch {
+      setFallbackUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(data.error || 'Login failed');
       }
 
-      setUser(data.user);
+      setFallbackUser(data.user);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
       setError(message);
@@ -85,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(data.error || 'Signup failed');
       }
 
-      setUser(data.user);
+      setFallbackUser(data.user);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Signup failed';
       setError(message);
@@ -98,14 +119,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(async () => {
     setIsLoading(true);
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      setUser(null);
+      if (clerkActive) {
+        await signOut();
+      } else {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        setFallbackUser(null);
+      }
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [clerkActive, signOut]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -118,7 +143,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signup,
       logout,
       isAuthenticated: !!user,
-      isLoading,
+      isLoading: !clerkLoaded || isLoading,
       error,
       clearError
     }}>
