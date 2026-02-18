@@ -386,12 +386,21 @@ exports.Prisma.NewsletterCampaignScalarFieldEnum = {
   name: 'name',
   subject: 'subject',
   body: 'body',
+  blocks: 'blocks',
+  templateId: 'templateId',
+  previewText: 'previewText',
+  fromName: 'fromName',
+  fromEmail: 'fromEmail',
   status: 'status',
   audienceType: 'audienceType',
   productId: 'productId',
   scheduledFor: 'scheduledFor',
   sentAt: 'sentAt',
   recipientCount: 'recipientCount',
+  openRate: 'openRate',
+  clickRate: 'clickRate',
+  unsubscribeCount: 'unsubscribeCount',
+  bounceCount: 'bounceCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isPublic: 'isPublic',
@@ -480,9 +489,19 @@ exports.Prisma.SocialPostScalarFieldEnum = {
   mediaUrl: 'mediaUrl',
   status: 'status',
   productId: 'productId',
+  socialAccountId: 'socialAccountId',
+  externalId: 'externalId',
   scheduledFor: 'scheduledFor',
   publishedAt: 'publishedAt',
   externalUrl: 'externalUrl',
+  likes: 'likes',
+  shares: 'shares',
+  comments: 'comments',
+  impressions: 'impressions',
+  clicks: 'clicks',
+  parentPostId: 'parentPostId',
+  threadOrder: 'threadOrder',
+  aiGenerated: 'aiGenerated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isPublic: 'isPublic',
@@ -507,6 +526,231 @@ exports.Prisma.WaitlistEntryScalarFieldEnum = {
   convertedUserId: 'convertedUserId',
   status: 'status',
   tenantId: 'tenantId'
+};
+
+exports.Prisma.BlogPostScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  excerpt: 'excerpt',
+  status: 'status',
+  featuredImage: 'featuredImage',
+  seoTitle: 'seoTitle',
+  seoDescription: 'seoDescription',
+  seoKeywords: 'seoKeywords',
+  canonicalUrl: 'canonicalUrl',
+  publishAt: 'publishAt',
+  publishedAt: 'publishedAt',
+  viewCount: 'viewCount',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  slug: 'slug',
+  color: 'color',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BlogTagScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BlogPostCategoryScalarFieldEnum = {
+  blogPostId: 'blogPostId',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.BlogPostTagScalarFieldEnum = {
+  blogPostId: 'blogPostId',
+  tagId: 'tagId'
+};
+
+exports.Prisma.NewsletterTemplateScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  blocks: 'blocks',
+  thumbnail: 'thumbnail',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NewsletterSubscriberScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  email: 'email',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  status: 'status',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NewsletterListScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  description: 'description',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NewsletterListSubscriberScalarFieldEnum = {
+  subscriberId: 'subscriberId',
+  listId: 'listId',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.SocialAccountScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  platform: 'platform',
+  accountName: 'accountName',
+  accountId: 'accountId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  tokenExpiresAt: 'tokenExpiresAt',
+  isConnected: 'isConnected',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ContentCalendarEntryScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  title: 'title',
+  entryType: 'entryType',
+  date: 'date',
+  color: 'color',
+  status: 'status',
+  blogPostId: 'blogPostId',
+  socialPostId: 'socialPostId',
+  newsletterId: 'newsletterId',
+  adCampaignId: 'adCampaignId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MarketingAnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  eventType: 'eventType',
+  source: 'source',
+  sourceId: 'sourceId',
+  metric: 'metric',
+  value: 'value',
+  date: 'date',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BrandVoiceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  toneKeywords: 'toneKeywords',
+  avoidKeywords: 'avoidKeywords',
+  sampleContent: 'sampleContent',
+  targetAudience: 'targetAudience',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AIContentGenerationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  contentType: 'contentType',
+  prompt: 'prompt',
+  result: 'result',
+  model: 'model',
+  tokensUsed: 'tokensUsed',
+  rating: 'rating',
+  wasUsed: 'wasUsed',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LandingPageScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AudienceSegmentScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  description: 'description',
+  filterQuery: 'filterQuery',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UTMLinkScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  url: 'url',
+  source: 'source',
+  medium: 'medium',
+  campaign: 'campaign',
+  term: 'term',
+  content: 'content',
+  clicks: 'clicks',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ABTestScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  type: 'type',
+  variantA: 'variantA',
+  variantB: 'variantB',
+  winnerId: 'winnerId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AffiliateLinkScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  url: 'url',
+  code: 'code',
+  clicks: 'clicks',
+  conversions: 'conversions',
+  revenueCents: 'revenueCents',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PressKitScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  title: 'title',
+  content: 'content',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -670,7 +914,9 @@ exports.SocialPlatform = exports.$Enums.SocialPlatform = {
 exports.SocialPostStatus = exports.$Enums.SocialPostStatus = {
   DRAFT: 'DRAFT',
   SCHEDULED: 'SCHEDULED',
-  PUBLISHED: 'PUBLISHED'
+  PUBLISHING: 'PUBLISHING',
+  PUBLISHED: 'PUBLISHED',
+  FAILED: 'FAILED'
 };
 
 exports.WaitlistStatus = exports.$Enums.WaitlistStatus = {
@@ -678,6 +924,61 @@ exports.WaitlistStatus = exports.$Enums.WaitlistStatus = {
   INVITED: 'INVITED',
   CONVERTED: 'CONVERTED',
   ARCHIVED: 'ARCHIVED'
+};
+
+exports.BlogPostStatus = exports.$Enums.BlogPostStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.SubscriberStatus = exports.$Enums.SubscriberStatus = {
+  ACTIVE: 'ACTIVE',
+  UNSUBSCRIBED: 'UNSUBSCRIBED',
+  BOUNCED: 'BOUNCED',
+  COMPLAINED: 'COMPLAINED'
+};
+
+exports.CalendarEntryType = exports.$Enums.CalendarEntryType = {
+  BLOG_POST: 'BLOG_POST',
+  SOCIAL_POST: 'SOCIAL_POST',
+  NEWSLETTER: 'NEWSLETTER',
+  AD_CAMPAIGN: 'AD_CAMPAIGN',
+  CUSTOM: 'CUSTOM'
+};
+
+exports.CalendarEntryStatus = exports.$Enums.CalendarEntryStatus = {
+  PLANNED: 'PLANNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.MarketingEventType = exports.$Enums.MarketingEventType = {
+  PAGE_VIEW: 'PAGE_VIEW',
+  EMAIL_OPEN: 'EMAIL_OPEN',
+  EMAIL_CLICK: 'EMAIL_CLICK',
+  SOCIAL_ENGAGEMENT: 'SOCIAL_ENGAGEMENT',
+  AD_CLICK: 'AD_CLICK',
+  AD_IMPRESSION: 'AD_IMPRESSION',
+  SUBSCRIBER_ADDED: 'SUBSCRIBER_ADDED',
+  SUBSCRIBER_REMOVED: 'SUBSCRIBER_REMOVED',
+  BLOG_VIEW: 'BLOG_VIEW',
+  CONVERSION: 'CONVERSION'
+};
+
+exports.AIContentType = exports.$Enums.AIContentType = {
+  BLOG_POST: 'BLOG_POST',
+  NEWSLETTER: 'NEWSLETTER',
+  AD_COPY: 'AD_COPY',
+  SOCIAL_POST: 'SOCIAL_POST',
+  SOCIAL_REPLY: 'SOCIAL_REPLY',
+  SEO_OPTIMIZATION: 'SEO_OPTIMIZATION',
+  AB_VARIANT: 'AB_VARIANT',
+  CALENDAR_PLAN: 'CALENDAR_PLAN',
+  HASHTAGS: 'HASHTAGS',
+  BRAND_REWRITE: 'BRAND_REWRITE'
 };
 
 exports.Prisma.ModelName = {
@@ -710,7 +1011,27 @@ exports.Prisma.ModelName = {
   Requirement: 'Requirement',
   SocialPost: 'SocialPost',
   TimeEntry: 'TimeEntry',
-  WaitlistEntry: 'WaitlistEntry'
+  WaitlistEntry: 'WaitlistEntry',
+  BlogPost: 'BlogPost',
+  BlogCategory: 'BlogCategory',
+  BlogTag: 'BlogTag',
+  BlogPostCategory: 'BlogPostCategory',
+  BlogPostTag: 'BlogPostTag',
+  NewsletterTemplate: 'NewsletterTemplate',
+  NewsletterSubscriber: 'NewsletterSubscriber',
+  NewsletterList: 'NewsletterList',
+  NewsletterListSubscriber: 'NewsletterListSubscriber',
+  SocialAccount: 'SocialAccount',
+  ContentCalendarEntry: 'ContentCalendarEntry',
+  MarketingAnalyticsEvent: 'MarketingAnalyticsEvent',
+  BrandVoice: 'BrandVoice',
+  AIContentGeneration: 'AIContentGeneration',
+  LandingPage: 'LandingPage',
+  AudienceSegment: 'AudienceSegment',
+  UTMLink: 'UTMLink',
+  ABTest: 'ABTest',
+  AffiliateLink: 'AffiliateLink',
+  PressKit: 'PressKit'
 };
 
 /**

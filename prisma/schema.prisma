@@ -355,22 +355,32 @@ model GitHubLink {
 }
 
 model NewsletterCampaign {
-  id             String             @id
-  tenantId       String
-  name           String
-  subject        String
-  body           String
-  status         NewsletterStatus   @default(DRAFT)
-  audienceType   NewsletterAudience
-  productId      String?
-  scheduledFor   DateTime?
-  sentAt         DateTime?
-  recipientCount Int?
-  createdAt      DateTime           @default(now())
-  updatedAt      DateTime
-  isPublic       Boolean            @default(false)
-  publicId       String             @unique
-  Product        Product?           @relation(fields: [productId], references: [id])
+  id               String             @id
+  tenantId         String
+  name             String
+  subject          String
+  body             String
+  blocks           Json?
+  templateId       String?
+  previewText      String?
+  fromName         String?
+  fromEmail        String?
+  status           NewsletterStatus   @default(DRAFT)
+  audienceType     NewsletterAudience
+  productId        String?
+  scheduledFor     DateTime?
+  sentAt           DateTime?
+  recipientCount   Int?
+  openRate         Float?
+  clickRate        Float?
+  unsubscribeCount Int?               @default(0)
+  bounceCount      Int?               @default(0)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime
+  isPublic         Boolean            @default(false)
+  publicId         String             @unique
+  Product          Product?           @relation(fields: [productId], references: [id])
+  Template         NewsletterTemplate? @relation(fields: [templateId], references: [id])
 
   @@index([productId])
   @@index([tenantId])
@@ -413,6 +423,7 @@ model Product {
   createdAt          DateTime             @default(now())
   updatedAt          DateTime
   AdCampaign         AdCampaign[]
+  BlogPost           BlogPost[]
   DevelopmentPhase   DevelopmentPhase[]
   NewsletterCampaign NewsletterCampaign[]
   Project            Project?             @relation(fields: [projectId], references: [id])
@@ -471,25 +482,41 @@ model Requirement {
 }
 
 model SocialPost {
-  id           String           @id
-  tenantId     String
-  platform     SocialPlatform
-  content      String
-  mediaUrl     String?
-  status       SocialPostStatus @default(DRAFT)
-  productId    String?
-  scheduledFor DateTime?
-  publishedAt  DateTime?
-  externalUrl  String?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime
-  isPublic     Boolean          @default(false)
-  publicId     String           @unique
-  Product      Product?         @relation(fields: [productId], references: [id])
+  id              String           @id
+  tenantId        String
+  platform        SocialPlatform
+  content         String
+  mediaUrl        String?
+  status          SocialPostStatus @default(DRAFT)
+  productId       String?
+  socialAccountId String?
+  externalId      String?
+  scheduledFor    DateTime?
+  publishedAt     DateTime?
+  externalUrl     String?
+  likes           Int?             @default(0)
+  shares          Int?             @default(0)
+  comments        Int?             @default(0)
+  impressions     Int?             @default(0)
+  clicks          Int?             @default(0)
+  parentPostId    String?
+  threadOrder     Int?             @default(0)
+  aiGenerated     Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime
+  isPublic        Boolean          @default(false)
+  publicId        String           @unique
+  Product         Product?         @relation(fields: [productId], references: [id])
+  SocialAccount   SocialAccount?   @relation(fields: [socialAccountId], references: [id])
+  ParentPost      SocialPost?      @relation("SocialPostThread", fields: [parentPostId], references: [id])
+  ThreadReplies   SocialPost[]     @relation("SocialPostThread")
+  CalendarEntries ContentCalendarEntry[]
 
   @@index([productId])
   @@index([status])
   @@index([tenantId])
+  @@index([socialAccountId])
+  @@index([parentPostId])
 }
 
 model TimeEntry {
@@ -643,7 +670,9 @@ enum SocialPlatform {
 enum SocialPostStatus {
   DRAFT
   SCHEDULED
+  PUBLISHING
   PUBLISHED
+  FAILED
 }
 
 enum WaitlistStatus {
@@ -657,4 +686,362 @@ enum ImprovementStatus {
   PENDING
   COMPLETED
   DISMISSED
+}
+
+// ==================== Marketing Platform Models ====================
+
+model BlogPost {
+  id            String            @id
+  tenantId      String
+  title         String
+  slug          String
+  content       Json?
+  excerpt       String?
+  status        BlogPostStatus    @default(DRAFT)
+  featuredImage String?
+  seoTitle      String?
+  seoDescription String?
+  seoKeywords   String[]          @default([])
+  canonicalUrl  String?
+  publishAt     DateTime?
+  publishedAt   DateTime?
+  viewCount     Int               @default(0)
+  productId     String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime
+  Product       Product?          @relation(fields: [productId], references: [id])
+  Categories    BlogPostCategory[]
+  Tags          BlogPostTag[]
+  CalendarEntries ContentCalendarEntry[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@index([status])
+  @@index([productId])
+}
+
+model BlogCategory {
+  id        String             @id
+  tenantId  String
+  name      String
+  slug      String
+  color     String             @default("#6366f1")
+  createdAt DateTime           @default(now())
+  Posts     BlogPostCategory[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+}
+
+model BlogTag {
+  id        String          @id
+  tenantId  String
+  name      String
+  slug      String
+  createdAt DateTime        @default(now())
+  Posts     BlogPostTag[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+}
+
+model BlogPostCategory {
+  blogPostId String
+  categoryId String
+  BlogPost   BlogPost     @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  Category   BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, categoryId])
+}
+
+model BlogPostTag {
+  blogPostId String
+  tagId      String
+  BlogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  Tag        BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, tagId])
+}
+
+model NewsletterTemplate {
+  id        String               @id
+  tenantId  String
+  name      String
+  blocks    Json?
+  thumbnail String?
+  isDefault Boolean              @default(false)
+  createdAt DateTime             @default(now())
+  updatedAt DateTime
+  Campaigns NewsletterCampaign[]
+
+  @@index([tenantId])
+}
+
+model NewsletterSubscriber {
+  id        String                    @id
+  tenantId  String
+  email     String
+  firstName String?
+  lastName  String?
+  status    SubscriberStatus          @default(ACTIVE)
+  source    String?
+  createdAt DateTime                  @default(now())
+  updatedAt DateTime
+  Lists     NewsletterListSubscriber[]
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@index([status])
+}
+
+model NewsletterList {
+  id          String                    @id
+  tenantId    String
+  name        String
+  description String?
+  color       String                    @default("#6366f1")
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime
+  Subscribers NewsletterListSubscriber[]
+
+  @@index([tenantId])
+}
+
+model NewsletterListSubscriber {
+  subscriberId String
+  listId       String
+  joinedAt     DateTime             @default(now())
+  Subscriber   NewsletterSubscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  List         NewsletterList       @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@id([subscriberId, listId])
+}
+
+model SocialAccount {
+  id            String         @id
+  tenantId      String
+  platform      SocialPlatform
+  accountName   String
+  accountId     String?
+  accessToken   String?
+  refreshToken  String?
+  tokenExpiresAt DateTime?
+  isConnected   Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime
+  Posts         SocialPost[]
+
+  @@unique([tenantId, platform, accountName])
+  @@index([tenantId])
+}
+
+model ContentCalendarEntry {
+  id            String              @id
+  tenantId      String
+  title         String
+  entryType     CalendarEntryType
+  date          DateTime
+  color         String?
+  status        CalendarEntryStatus @default(PLANNED)
+  blogPostId    String?
+  socialPostId  String?
+  newsletterId  String?
+  adCampaignId  String?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime
+  BlogPost      BlogPost?           @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+  SocialPost    SocialPost?         @relation(fields: [socialPostId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId])
+  @@index([date])
+  @@index([entryType])
+}
+
+model MarketingAnalyticsEvent {
+  id        String             @id
+  tenantId  String
+  eventType MarketingEventType
+  source    String
+  sourceId  String?
+  metric    String
+  value     Float
+  date      DateTime
+  metadata  Json?
+  createdAt DateTime           @default(now())
+
+  @@index([tenantId])
+  @@index([date])
+  @@index([eventType])
+  @@index([source, sourceId])
+}
+
+model BrandVoice {
+  id             String   @id
+  tenantId       String
+  name           String
+  toneKeywords   String[] @default([])
+  avoidKeywords  String[] @default([])
+  sampleContent  String?
+  targetAudience String?
+  isDefault      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+
+  @@index([tenantId])
+}
+
+model AIContentGeneration {
+  id          String        @id
+  tenantId    String
+  contentType AIContentType
+  prompt      String
+  result      String
+  model       String
+  tokensUsed  Int?
+  rating      Int?
+  wasUsed     Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+
+  @@index([tenantId])
+  @@index([contentType])
+}
+
+// Phase 2/3 stub models (schema only, no UI)
+model LandingPage {
+  id        String   @id
+  tenantId  String
+  title     String
+  slug      String
+  content   Json?
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+}
+
+model AudienceSegment {
+  id          String   @id
+  tenantId    String
+  name        String
+  description String?
+  filterQuery Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  @@index([tenantId])
+}
+
+model UTMLink {
+  id        String   @id
+  tenantId  String
+  url       String
+  source    String
+  medium    String
+  campaign  String
+  term      String?
+  content   String?
+  clicks    Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([tenantId])
+}
+
+model ABTest {
+  id        String   @id
+  tenantId  String
+  name      String
+  type      String
+  variantA  Json
+  variantB  Json
+  winnerId  String?
+  status    String   @default("DRAFT")
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([tenantId])
+}
+
+model AffiliateLink {
+  id           String   @id
+  tenantId     String
+  name         String
+  url          String
+  code         String
+  clicks       Int      @default(0)
+  conversions  Int      @default(0)
+  revenueCents Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([tenantId])
+}
+
+model PressKit {
+  id        String   @id
+  tenantId  String
+  title     String
+  content   Json?
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([tenantId])
+}
+
+// ==================== Marketing Enums ====================
+
+enum BlogPostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+  COMPLAINED
+}
+
+enum CalendarEntryType {
+  BLOG_POST
+  SOCIAL_POST
+  NEWSLETTER
+  AD_CAMPAIGN
+  CUSTOM
+}
+
+enum CalendarEntryStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum MarketingEventType {
+  PAGE_VIEW
+  EMAIL_OPEN
+  EMAIL_CLICK
+  SOCIAL_ENGAGEMENT
+  AD_CLICK
+  AD_IMPRESSION
+  SUBSCRIBER_ADDED
+  SUBSCRIBER_REMOVED
+  BLOG_VIEW
+  CONVERSION
+}
+
+enum AIContentType {
+  BLOG_POST
+  NEWSLETTER
+  AD_COPY
+  SOCIAL_POST
+  SOCIAL_REPLY
+  SEO_OPTIMIZATION
+  AB_VARIANT
+  CALENDAR_PLAN
+  HASHTAGS
+  BRAND_REWRITE
 }

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { scoreIdea } from "@/lib/idea-scorer";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { e164 } from "zod";
 
 export async function createIdea(formData: FormData) {
   const title = formData.get("title") as string;
@@ -40,3 +41,41 @@ export async function promoteToProject(id: string) {
   });
   revalidatePath(`/ideas/${id}`);
 }
+
+export async function archiveIdea(id: string) {
+  await prisma.idea.update({
+    where: { id },
+    data: { status: "ARCHIVED" }
+  });
+  revalidatePath(`/ideas/${id}`);
+} 
+
+export async function deleteIdea(id: string) {
+  await prisma.idea.delete({
+    where: { id }
+  });
+  revalidatePath(`/ideas/${id}`);
+} 
+
+export async function getIdeaaForUser(userId: string) {
+   return await prisma.idea.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' }
+  });
+}
+
+
+export async function getIdeaById(id: string) {
+  return await prisma.idea.findUnique({
+    where: { id }
+  });
+  revalidatePath(`/ideas`);
+} 
+
+export async function validateIdea(id: string) {
+  await prisma.idea.update({
+    where: { id },
+    data: { status: "VALIDATING" }
+  });
+  revalidatePath(`/ideas/${id}`);
+} 

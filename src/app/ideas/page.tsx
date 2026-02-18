@@ -2,12 +2,17 @@ import { prisma } from "@/lib/prisma";
 import { IdeaCard } from "@/components/ideas/IdeaCard";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function IdeasPage() {
-  const ideas = await prisma.idea.findMany({
-    orderBy: { createdAt: 'desc' }
-  });
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
 
+  const ideas = await prisma.idea.findMany({
+    where: { userId: user.id },
+    orderBy: { createdAt: "desc" },
+  });
   return (
     <div className="max-w-5xl mx-auto p-8">
       {/* Back Navigation */}
