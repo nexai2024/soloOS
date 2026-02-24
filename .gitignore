@@ -27,3 +27,6 @@ generated/prisma
 
 .vercel
 .env*.local
+
+# clerk configuration (can include secrets)
+/.clerk/
