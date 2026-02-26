@@ -32574,6 +32574,9 @@ export namespace Prisma {
     brandColor: string | null
     logoUrl: string | null
     heroImageUrl: string | null
+    slogan: string | null
+    shortDescription: string | null
+    longDescription: string | null
     isPublic: boolean | null
     showProgress: boolean | null
     showPhases: boolean | null
@@ -32595,6 +32598,9 @@ export namespace Prisma {
     brandColor: string | null
     logoUrl: string | null
     heroImageUrl: string | null
+    slogan: string | null
+    shortDescription: string | null
+    longDescription: string | null
     isPublic: boolean | null
     showProgress: boolean | null
     showPhases: boolean | null
@@ -32616,6 +32622,10 @@ export namespace Prisma {
     brandColor: number
     logoUrl: number
     heroImageUrl: number
+    slogan: number
+    shortDescription: number
+    longDescription: number
+    marketingContent: number
     isPublic: number
     showProgress: number
     showPhases: number
@@ -32647,6 +32657,9 @@ export namespace Prisma {
     brandColor?: true
     logoUrl?: true
     heroImageUrl?: true
+    slogan?: true
+    shortDescription?: true
+    longDescription?: true
     isPublic?: true
     showProgress?: true
     showPhases?: true
@@ -32668,6 +32681,9 @@ export namespace Prisma {
     brandColor?: true
     logoUrl?: true
     heroImageUrl?: true
+    slogan?: true
+    shortDescription?: true
+    longDescription?: true
     isPublic?: true
     showProgress?: true
     showPhases?: true
@@ -32689,6 +32705,10 @@ export namespace Prisma {
     brandColor?: true
     logoUrl?: true
     heroImageUrl?: true
+    slogan?: true
+    shortDescription?: true
+    longDescription?: true
+    marketingContent?: true
     isPublic?: true
     showProgress?: true
     showPhases?: true
@@ -32797,6 +32817,10 @@ export namespace Prisma {
     brandColor: string
     logoUrl: string | null
     heroImageUrl: string | null
+    slogan: string | null
+    shortDescription: string | null
+    longDescription: string | null
+    marketingContent: JsonValue | null
     isPublic: boolean
     showProgress: boolean
     showPhases: boolean
@@ -32837,6 +32861,10 @@ export namespace Prisma {
     brandColor?: boolean
     logoUrl?: boolean
     heroImageUrl?: boolean
+    slogan?: boolean
+    shortDescription?: boolean
+    longDescription?: boolean
+    marketingContent?: boolean
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -32867,6 +32895,10 @@ export namespace Prisma {
     brandColor?: boolean
     logoUrl?: boolean
     heroImageUrl?: boolean
+    slogan?: boolean
+    shortDescription?: boolean
+    longDescription?: boolean
+    marketingContent?: boolean
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -32889,6 +32921,10 @@ export namespace Prisma {
     brandColor?: boolean
     logoUrl?: boolean
     heroImageUrl?: boolean
+    slogan?: boolean
+    shortDescription?: boolean
+    longDescription?: boolean
+    marketingContent?: boolean
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -32911,6 +32947,10 @@ export namespace Prisma {
     brandColor?: boolean
     logoUrl?: boolean
     heroImageUrl?: boolean
+    slogan?: boolean
+    shortDescription?: boolean
+    longDescription?: boolean
+    marketingContent?: boolean
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -32921,7 +32961,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "projectId" | "name" | "slug" | "tagline" | "description" | "brandColor" | "logoUrl" | "heroImageUrl" | "isPublic" | "showProgress" | "showPhases" | "showTasks" | "showChangelog" | "publicPageViews" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tenantId" | "projectId" | "name" | "slug" | "tagline" | "description" | "brandColor" | "logoUrl" | "heroImageUrl" | "slogan" | "shortDescription" | "longDescription" | "marketingContent" | "isPublic" | "showProgress" | "showPhases" | "showTasks" | "showChangelog" | "publicPageViews" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AdCampaign?: boolean | Product$AdCampaignArgs<ExtArgs>
     BlogPost?: boolean | Product$BlogPostArgs<ExtArgs>
@@ -32963,6 +33003,10 @@ export namespace Prisma {
       brandColor: string
       logoUrl: string | null
       heroImageUrl: string | null
+      slogan: string | null
+      shortDescription: string | null
+      longDescription: string | null
+      marketingContent: Prisma.JsonValue | null
       isPublic: boolean
       showProgress: boolean
       showPhases: boolean
@@ -33412,6 +33456,10 @@ export namespace Prisma {
     readonly brandColor: FieldRef<"Product", 'String'>
     readonly logoUrl: FieldRef<"Product", 'String'>
     readonly heroImageUrl: FieldRef<"Product", 'String'>
+    readonly slogan: FieldRef<"Product", 'String'>
+    readonly shortDescription: FieldRef<"Product", 'String'>
+    readonly longDescription: FieldRef<"Product", 'String'>
+    readonly marketingContent: FieldRef<"Product", 'Json'>
     readonly isPublic: FieldRef<"Product", 'Boolean'>
     readonly showProgress: FieldRef<"Product", 'Boolean'>
     readonly showPhases: FieldRef<"Product", 'Boolean'>
@@ -64286,6 +64334,10 @@ export namespace Prisma {
     brandColor: 'brandColor',
     logoUrl: 'logoUrl',
     heroImageUrl: 'heroImageUrl',
+    slogan: 'slogan',
+    shortDescription: 'shortDescription',
+    longDescription: 'longDescription',
+    marketingContent: 'marketingContent',
     isPublic: 'isPublic',
     showProgress: 'showProgress',
     showPhases: 'showPhases',
@@ -67119,6 +67171,10 @@ export namespace Prisma {
     brandColor?: StringFilter<"Product"> | string
     logoUrl?: StringNullableFilter<"Product"> | string | null
     heroImageUrl?: StringNullableFilter<"Product"> | string | null
+    slogan?: StringNullableFilter<"Product"> | string | null
+    shortDescription?: StringNullableFilter<"Product"> | string | null
+    longDescription?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     isPublic?: BoolFilter<"Product"> | boolean
     showProgress?: BoolFilter<"Product"> | boolean
     showPhases?: BoolFilter<"Product"> | boolean
@@ -67148,6 +67204,10 @@ export namespace Prisma {
     brandColor?: SortOrder
     logoUrl?: SortOrderInput | SortOrder
     heroImageUrl?: SortOrderInput | SortOrder
+    slogan?: SortOrderInput | SortOrder
+    shortDescription?: SortOrderInput | SortOrder
+    longDescription?: SortOrderInput | SortOrder
+    marketingContent?: SortOrderInput | SortOrder
     isPublic?: SortOrder
     showProgress?: SortOrder
     showPhases?: SortOrder
@@ -67180,6 +67240,10 @@ export namespace Prisma {
     brandColor?: StringFilter<"Product"> | string
     logoUrl?: StringNullableFilter<"Product"> | string | null
     heroImageUrl?: StringNullableFilter<"Product"> | string | null
+    slogan?: StringNullableFilter<"Product"> | string | null
+    shortDescription?: StringNullableFilter<"Product"> | string | null
+    longDescription?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     isPublic?: BoolFilter<"Product"> | boolean
     showProgress?: BoolFilter<"Product"> | boolean
     showPhases?: BoolFilter<"Product"> | boolean
@@ -67209,6 +67273,10 @@ export namespace Prisma {
     brandColor?: SortOrder
     logoUrl?: SortOrderInput | SortOrder
     heroImageUrl?: SortOrderInput | SortOrder
+    slogan?: SortOrderInput | SortOrder
+    shortDescription?: SortOrderInput | SortOrder
+    longDescription?: SortOrderInput | SortOrder
+    marketingContent?: SortOrderInput | SortOrder
     isPublic?: SortOrder
     showProgress?: SortOrder
     showPhases?: SortOrder
@@ -67238,6 +67306,10 @@ export namespace Prisma {
     brandColor?: StringWithAggregatesFilter<"Product"> | string
     logoUrl?: StringNullableWithAggregatesFilter<"Product"> | string | null
     heroImageUrl?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    slogan?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    shortDescription?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    longDescription?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    marketingContent?: JsonNullableWithAggregatesFilter<"Product">
     isPublic?: BoolWithAggregatesFilter<"Product"> | boolean
     showProgress?: BoolWithAggregatesFilter<"Product"> | boolean
     showPhases?: BoolWithAggregatesFilter<"Product"> | boolean
@@ -71431,6 +71503,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -71460,6 +71536,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -71487,6 +71567,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -71516,6 +71600,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -71544,6 +71632,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -71564,6 +71656,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -71585,6 +71681,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -75770,6 +75870,10 @@ export namespace Prisma {
     brandColor?: SortOrder
     logoUrl?: SortOrder
     heroImageUrl?: SortOrder
+    slogan?: SortOrder
+    shortDescription?: SortOrder
+    longDescription?: SortOrder
+    marketingContent?: SortOrder
     isPublic?: SortOrder
     showProgress?: SortOrder
     showPhases?: SortOrder
@@ -75795,6 +75899,9 @@ export namespace Prisma {
     brandColor?: SortOrder
     logoUrl?: SortOrder
     heroImageUrl?: SortOrder
+    slogan?: SortOrder
+    shortDescription?: SortOrder
+    longDescription?: SortOrder
     isPublic?: SortOrder
     showProgress?: SortOrder
     showPhases?: SortOrder
@@ -75816,6 +75923,9 @@ export namespace Prisma {
     brandColor?: SortOrder
     logoUrl?: SortOrder
     heroImageUrl?: SortOrder
+    slogan?: SortOrder
+    shortDescription?: SortOrder
+    longDescription?: SortOrder
     isPublic?: SortOrder
     showProgress?: SortOrder
     showPhases?: SortOrder
@@ -82506,6 +82616,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -82533,6 +82647,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -82917,6 +83035,10 @@ export namespace Prisma {
     brandColor?: StringFilter<"Product"> | string
     logoUrl?: StringNullableFilter<"Product"> | string | null
     heroImageUrl?: StringNullableFilter<"Product"> | string | null
+    slogan?: StringNullableFilter<"Product"> | string | null
+    shortDescription?: StringNullableFilter<"Product"> | string | null
+    longDescription?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     isPublic?: BoolFilter<"Product"> | boolean
     showProgress?: BoolFilter<"Product"> | boolean
     showPhases?: BoolFilter<"Product"> | boolean
@@ -83843,6 +83965,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -83871,6 +83997,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -83913,6 +84043,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -83941,6 +84075,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -84276,6 +84414,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -84304,6 +84446,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -84382,6 +84528,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -84410,6 +84560,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -84607,6 +84761,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -84635,6 +84793,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -84704,6 +84866,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -84732,6 +84898,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -85641,6 +85811,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -85669,6 +85843,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -85711,6 +85889,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -85739,6 +85921,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86077,6 +86263,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86105,6 +86295,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86347,6 +86541,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86375,6 +86573,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86626,6 +86828,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86654,6 +86860,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86696,6 +86906,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86724,6 +86938,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86750,6 +86968,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86778,6 +87000,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -86896,6 +87122,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -86924,6 +87154,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -88460,6 +88694,10 @@ export namespace Prisma {
     brandColor?: string
     logoUrl?: string | null
     heroImageUrl?: string | null
+    slogan?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: boolean
     showProgress?: boolean
     showPhases?: boolean
@@ -88596,6 +88834,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -88623,6 +88865,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean
@@ -88650,6 +88896,10 @@ export namespace Prisma {
     brandColor?: StringFieldUpdateOperationsInput | string
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     heroImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    slogan?: NullableStringFieldUpdateOperationsInput | string | null
+    shortDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    longDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     showProgress?: BoolFieldUpdateOperationsInput | boolean
     showPhases?: BoolFieldUpdateOperationsInput | boolean

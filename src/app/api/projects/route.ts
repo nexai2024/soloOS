@@ -55,6 +55,9 @@ export const GET = withErrorHandler(async () => {
       },
       idea: {
         select: { id: true, title: true }
+      },
+      Product: {
+        select: { id: true, name: true }
       }
     }
   });

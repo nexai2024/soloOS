@@ -25,7 +25,27 @@ export const GET = withErrorHandler(async (req, { params }) => {
     where: { id, tenantId: user.id },
     include: {
       Project: {
-        select: { id: true, title: true, status: true },
+        select: {
+          id: true,
+          title: true,
+          status: true,
+          idea: {
+            select: {
+              id: true,
+              scoreImprovements: {
+                orderBy: { createdAt: "desc" },
+                select: {
+                  id: true,
+                  suggestion: true,
+                  category: true,
+                  estimatedImpact: true,
+                  status: true,
+                  createdAt: true,
+                },
+              },
+            },
+          },
+        },
       },
       WaitlistEntry: {
         orderBy: { email: "asc" },

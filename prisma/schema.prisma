@@ -414,6 +414,10 @@ model Product {
   brandColor         String               @default("#6366f1")
   logoUrl            String?
   heroImageUrl       String?
+  slogan             String?
+  shortDescription   String?
+  longDescription    String?
+  marketingContent   Json?
   isPublic           Boolean              @default(false)
   showProgress       Boolean              @default(true)
   showPhases         Boolean              @default(true)

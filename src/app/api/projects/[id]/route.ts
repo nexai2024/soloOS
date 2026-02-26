@@ -15,14 +15,17 @@ export const GET = withErrorHandler(async (req, { params }) => {
   const project = await prisma.project.findUnique({
     where: { id },
     include: {
-      milestones: { orderBy: { dueDate: "asc" } },
+      milestones: { orderBy: { dueDate: "asc" }, include: { Task: { select: { id: true, title: true, status: true } } } },
       features: {
         orderBy: { createdAt: "desc" },
-        include: { tasks: true }
+        include: { tasks: { select: { id: true, title: true, status: true } } }
       },
-      tasks: { orderBy: { createdAt: "desc" } },
+      tasks: { orderBy: { createdAt: "desc" }, include: { feature: { select: { id: true, title: true } }, Milestone: { select: { id: true, title: true } } } },
       idea: true,
-      Product: { select: { id: true, name: true, slug: true } }
+      Product: { select: { id: true, name: true, slug: true } },
+      ProjectDoc: { orderBy: { updatedAt: "desc" } },
+      ProjectPersona: true,
+      Requirement: { orderBy: { createdAt: "desc" } }
     }
   });
 
@@ -52,11 +55,14 @@ export const PATCH = withErrorHandler(async (req, { params }) => {
     where: { id },
     data: validated,
     include: {
-      milestones: true,
-      features: true,
-      tasks: true,
+      milestones: { orderBy: { dueDate: "asc" }, include: { Task: { select: { id: true, title: true, status: true } } } },
+      features: { orderBy: { createdAt: "desc" }, include: { tasks: { select: { id: true, title: true, status: true } } } },
+      tasks: { orderBy: { createdAt: "desc" }, include: { feature: { select: { id: true, title: true } }, Milestone: { select: { id: true, title: true } } } },
       idea: true,
-      Product: { select: { id: true, name: true, slug: true } }
+      Product: { select: { id: true, name: true, slug: true } },
+      ProjectDoc: { orderBy: { updatedAt: "desc" } },
+      ProjectPersona: true,
+      Requirement: { orderBy: { createdAt: "desc" } }
     }
   });
 

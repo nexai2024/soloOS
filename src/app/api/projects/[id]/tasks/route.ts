@@ -7,6 +7,8 @@ const createTaskSchema = z.object({
   description: z.string().optional(),
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "URGENT"]).default("MEDIUM"),
   featureId: z.string().optional(),
+  milestoneId: z.string().optional(),
+  estimatedHours: z.number().optional(),
   dueDate: z.string().datetime().optional()
 });
 
@@ -32,6 +34,8 @@ export const POST = withErrorHandler(async (req, { params }) => {
       description: validated.description,
       priority: validated.priority,
       featureId: validated.featureId,
+      milestoneId: validated.milestoneId,
+      estimatedHours: validated.estimatedHours,
       dueDate: validated.dueDate ? new Date(validated.dueDate) : undefined,
       projectId
     }
