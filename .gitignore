@@ -27,3 +27,4 @@ generated/prisma
 
 .vercel
 .env*.local
+.env
